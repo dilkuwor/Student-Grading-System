@@ -1,0 +1,41 @@
+﻿@model IEnumerable<GPA.Models.User>
+
+@{
+    ViewBag.Title = "UserReport";
+}
+
+<h2>UserReport</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            User Name
+        </th>
+        <th>
+            Role
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+
+        </tr>
+    }
+
+</table>
+<div style="padding:10px; border:1px solid black">
+    <div><a href="@Url.Action("Report",new {id= "PDF"})"> Get Report PDF</a></div>
+    <div><a href="@Url.Action("Report",new {id= "Excel"})"> Get Report Excel</a></div>
+    <div><a href="@Url.Action("Report",new {id= "Word"})"> Get Report Word</a></div>
+    <div><a href="@Url.Action("Report",new {id= "Image"})"> Get Report Image</a></div>
+</div>
