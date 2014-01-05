@@ -109,6 +109,7 @@ namespace GPA.Models.Manager
 
         }
 
+
         public String GetUserVerificationCode(int userId)
         {
             string verification = "";
