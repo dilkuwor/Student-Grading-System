@@ -194,6 +194,20 @@ namespace GPA.Controllers
         }
 
 
-       
+        [AllowAnonymous]
+        public ActionResult ApplicationSetting()
+        {
+            ApplicationSettingViewModel asvm = new ApplicationSettingViewModel();
+            return View(asvm);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult ApplicationSetting(ApplicationSettingViewModel asvm)
+        {
+            Properties.Settings.Default.Save();
+
+            return View(asvm);
+        }
     }
 }
