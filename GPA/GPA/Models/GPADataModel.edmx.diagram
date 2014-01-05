@@ -24,7 +24,7 @@
         <AssociationConnector Association="GPAModel.FK_UserRole_Roles" ManuallyRouted="false" />
         <AssociationConnector Association="GPAModel.FK_RoleTask_Tasks" ManuallyRouted="false" />
         <AssociationConnector Association="GPAModel.FK_UserRole_Users" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="GPAModel.Feedback" Width="1.5" PointX="5.25" PointY="7.125" />
+        <EntityTypeShape EntityType="GPAModel.Feedback" Width="1.5" PointX="5.25" PointY="19" />
         <AssociationConnector Association="GPAModel.FK_Feedbacks_RegistrationDetails" />
         <AssociationConnector Association="GPAModel.FK_Feedbacks_Registrations" />
       </Diagram>

@@ -32,6 +32,7 @@
           <Property Name="FromID" Type="int" Nullable="false" />
           <Property Name="ToID" Type="int" Nullable="false" />
           <Property Name="Subject" Type="varchar" MaxLength="50" />
+          <Property Name="Date" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Grades">
           <Key>
@@ -351,7 +352,7 @@
           <NavigationProperty Name="User" Relationship="Self.FK_Registrations_Users" FromRole="Registrations" ToRole="Users" />
           <NavigationProperty Name="Feedbacks" Relationship="GPAModel.FK_Feedbacks_RegistrationDetails" FromRole="Registration" ToRole="Feedback" />
           <NavigationProperty Name="Feedbacks1" Relationship="GPAModel.FK_Feedbacks_Registrations" FromRole="Registration" ToRole="Feedback" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="Role_ID" />
@@ -578,7 +579,7 @@
             <End Role="Registration" EntitySet="Registrations" />
             <End Role="Feedback" EntitySet="Feedbacks" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Feedback">
           <Key>
             <PropertyRef Name="FeedbackID" />
@@ -588,6 +589,7 @@
           <Property Name="FromID" Type="Int32" Nullable="false" />
           <Property Name="ToID" Type="Int32" Nullable="false" />
           <Property Name="Subject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Registration" Relationship="GPAModel.FK_Feedbacks_RegistrationDetails" FromRole="Feedback" ToRole="Registration" />
           <NavigationProperty Name="Registration1" Relationship="GPAModel.FK_Feedbacks_Registrations" FromRole="Feedback" ToRole="Registration" />
         </EntityType>
@@ -615,7 +617,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -726,6 +728,7 @@
           <EntitySetMapping Name="Feedbacks">
             <EntityTypeMapping TypeName="GPAModel.Feedback">
               <MappingFragment StoreEntitySet="Feedbacks">
+                <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Subject" ColumnName="Subject" />
                 <ScalarProperty Name="ToID" ColumnName="ToID" />
                 <ScalarProperty Name="FromID" ColumnName="FromID" />

@@ -1,12 +1,104 @@
-﻿
+﻿@model GPA.Models.FeedbackViewModel
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
 
-<div class="panel panel-primary">...</div>
-<div class="panel panel-success">...</div>
-<div class="panel panel-info">...</div>
-<div class="panel panel-warning">...</div>
-<div class="panel panel-danger">...</div>
+<div class="panel panel-default">
+    <div class="panel-heading">Feedback</div>
+    <div class="panel-body">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FeedbackReadViewModel.FromId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FeedbackReadViewModel.Subject)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FeedbackReadViewModel.Message)
+                </th>
+                <th>
+                    Date 
+                </th>
+                <th>
+
+                </th>
+               
+            </tr>
+
+            @foreach (var item in Model.FeedbackReadViewModel.Feedbacks)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.From)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comment)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.UserDetail.Email)
+                    </td>*@
+                    <td>
+                       
+                        @Html.ActionLink("Details", "Details", new { id = item.FeedbackID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.FeedbackID })
+                        @Html.ActionLink("Reply", "Delete", new { id = item.FeedbackID })
+                    </td>
+                </tr>
+            }
+
+        </table>
+      
+        
+       
+
+    </div>
+    
+</div>
+<div>
+    <input type="submit" id="btnFeedback"  value="Send Feedback" class="btn btn-default" onclick="javascript: showDiv();" />
+</div>
+<script src="@Url.Content("~/Scripts/gpascript.js")" type="text/javascript"></script>
+<div class="panel panel-default" id="sendFeedback" style="visibility:hidden; display:none; margin-top:10px;">
+    <div class="panel-heading">
+        <h3 class="panel-title">Send Feedback</h3>
+    </div>
+@using (Html.BeginForm("SendFeedback", "Feedback", FormMethod.Post, new {  role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="panel-body">
+       
+        <h4>@Html.LabelFor(m => m.FeedbackSendViewModel.Subject)</h4>
+        @Html.TextBoxFor(m => m.FeedbackSendViewModel.Subject, new { @class = "form-control", @placeholder="Enter Subject"})
+       
+        <h4>@Html.LabelFor(m => m.FeedbackSendViewModel.ToID)</h4>
+        @Html.DropDownListFor(model => model.FeedbackSendViewModel.ToID, Model.FeedbackSendViewModel.UserList, new { @class = "form-control" })
+        <h4>@Html.LabelFor(m => m.FeedbackSendViewModel.Message)</h4>
+        @Html.TextAreaFor(m => m.FeedbackSendViewModel.Message, new { @class = "form-control", @placeholder = "Enter Message", @style  = "height:150px;width:350px;" })
+
+        <div>
+            <input type="submit" value="send" class="btn btn-default" style="margin-top:10px;" />
+        </div>
+    </div>
+    
+    
+    
+}
+
+   
+</div>
+@if ((string)TempData["MessageSent"] == "True")
+    {
+    <div class="alert alert-success" style="margin-top:10px;">
+        Message Sent
+    </div>
+    }
