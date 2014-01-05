@@ -161,14 +161,17 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\FeedBackController.cs" />
+    <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="DAL\Extended\UserFeedback.cs" />
+    <Compile Include="DAL\Manager\FeedbackManager.cs" />
     <Compile Include="DAL\Manager\SessionManager.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="DAL\Manager\CourseManager.cs" />
     <Compile Include="DAL\Manager\StudentManager.cs" />
     <Compile Include="DAL\Util\Helper.cs" />
+    <Compile Include="DAL\Util\TextValue.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -182,6 +185,7 @@
     <Compile Include="Models\Feedback.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FeedbackViewModel.cs" />
     <Compile Include="Models\GPADataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -265,6 +269,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\gpascript.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -310,9 +315,8 @@
     <Content Include="Views\Student\Details.cshtml" />
     <Content Include="Views\Student\Edit.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
-    <Content Include="Views\FeedBacks\Index.cshtml" />
     <Content Include="Views\Account\ApplicationSetting.cshtml" />
-    <Content Include="Views\FeedBack\Index.cshtml" />
+    <Content Include="Views\Feedback\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
