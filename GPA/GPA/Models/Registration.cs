@@ -34,8 +34,8 @@ namespace GPA.Models
         public int UserID { get; set; }
     
         public virtual ICollection<CourseUser> CourseUsers { get; set; }
-        public virtual User User { get; set; }
         public virtual ICollection<Feedback> Feedbacks { get; set; }
         public virtual ICollection<Feedback> Feedbacks1 { get; set; }
+        public virtual User User { get; set; }
     }
 }

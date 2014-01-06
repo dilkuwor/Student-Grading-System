@@ -29,6 +29,7 @@ namespace GPA.Models
     
         public virtual DbSet<Cours> Courses { get; set; }
         public virtual DbSet<CourseUser> CourseUsers { get; set; }
+        public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<Grade> Grades { get; set; }
         public virtual DbSet<Registration> Registrations { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
@@ -37,7 +38,6 @@ namespace GPA.Models
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Feedback> Feedbacks { get; set; }
     
         public virtual int FindGPA(Nullable<int> param1)
         {
