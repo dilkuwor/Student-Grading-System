@@ -10,22 +10,22 @@ using GPA.Models;
 
 namespace GPA.Controllers
 {
-    public class StudentController : Controller
+    public class StaffsController : Controller
     {
         private GPAEntities db = new GPAEntities();
 
-        // GET: /Student/
-        public ActionResult Index(string searchString)
+        // GET: /Staffs/
+        public ActionResult Index(String searchString)
         {
-            var students = db.Users.Where(s => s.Role == "Admin").Include(u => u.Registrations);
+            var students = db.Users.Where(s => s.Role == "Staff").Include(u => u.Registrations);
             if (!String.IsNullOrEmpty(searchString))
             {
-                students = students.Where(s => s.UserName.ToUpper().Contains(searchString.ToUpper()) && s.Role == "Admin");
+                students = students.Where(s => s.UserName.ToUpper().Contains(searchString.ToUpper()) && s.Role == "Staff");
             }
             return View(students.ToList());
         }
-            
-        // GET: /Student/Details/5
+
+        // GET: /Staffs/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -40,19 +40,18 @@ namespace GPA.Controllers
             return View(user);
         }
 
-        // GET: /Student/Create
+        // GET: /Staffs/Create
         public ActionResult Create()
         {
-            ViewBag.User_ID = new SelectList(db.Registrations, "UserRef_ID", "Email");
             return View();
         }
 
-        // POST: /Student/Create
+        // POST: /Staffs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="User_ID,UserName,Password,VerificationCode")] User user)
+        public ActionResult Create([Bind(Include="UserID,UserName,Password,VerificationCode,Role")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -61,11 +60,10 @@ namespace GPA.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.User_ID = new SelectList(db.Registrations, "UserRef_ID", "Email", user.UserID);
             return View(user);
         }
 
-        // GET: /Student/Edit/5
+        // GET: /Staffs/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -77,16 +75,15 @@ namespace GPA.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.User_ID = new SelectList(db.Registrations, "UserRef_ID", "Email", user.UserID);
             return View(user);
         }
 
-        // POST: /Student/Edit/5
+        // POST: /Staffs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="User_ID,UserName,Password,VerificationCode")] User user)
+        public ActionResult Edit([Bind(Include="UserID,UserName,Password,VerificationCode,Role")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -94,11 +91,10 @@ namespace GPA.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.User_ID = new SelectList(db.Registrations, "UserRef_ID", "Email", user.UserID);
             return View(user);
         }
 
-        // GET: /Student/Delete/5
+        // GET: /Staffs/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -113,7 +109,7 @@ namespace GPA.Controllers
             return View(user);
         }
 
-        // POST: /Student/Delete/5
+        // POST: /Staffs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

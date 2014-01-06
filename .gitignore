@@ -17,7 +17,6 @@ local.properties
 .loadpath
 FindGPA_Result.cs
 GPADataModel.edmx.sql
-
 # External tool builders
 .externalToolBuilders/
 
