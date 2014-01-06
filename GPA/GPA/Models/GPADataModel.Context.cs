@@ -12,6 +12,8 @@ namespace GPA.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class GPAEntities : DbContext
     {
@@ -27,6 +29,7 @@ namespace GPA.Models
     
         public virtual DbSet<Cours> Courses { get; set; }
         public virtual DbSet<CourseUser> CourseUsers { get; set; }
+        public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<Grade> Grades { get; set; }
         public virtual DbSet<Registration> Registrations { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
@@ -35,6 +38,14 @@ namespace GPA.Models
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Feedback> Feedbacks { get; set; }
+    
+        public virtual int FindGPA(Nullable<int> param1)
+        {
+            var param1Parameter = param1.HasValue ?
+                new ObjectParameter("Param1", param1) :
+                new ObjectParameter("Param1", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("FindGPA", param1Parameter);
+        }
     }
 }

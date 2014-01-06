@@ -53,7 +53,9 @@ namespace GPA.DAL.Manager
                              ToID = f.ToID,
                              Subject = f.Subject,
                              FromID = f.FromID,
-                             Date = f.Date
+                             Date = f.Date,
+                             FeedbackID = f.FeedbackID,
+                             ShortMessage = f.Comment.Substring(0,50)+"........."
 
                          }).ToList();
                 
@@ -93,14 +95,39 @@ namespace GPA.DAL.Manager
             }
         }
 
+        /// <summary>
+        /// Deletes feedback by feedback id
+        /// </summary>
+        /// <param name="feedbackid"></param>
         public void DeleteFeedback(int feedbackid)
         {
             using (var db = new GPAEntities())
             {
-               // Feedback feedback = 
+                Feedback feedback = db.Feedbacks.Where(r => r.FeedbackID == feedbackid).SingleOrDefault();
+                db.Feedbacks.Remove(feedback);
+                db.SaveChanges();
 
             }
         }
+
+
+        public UserFeedback PrepareReplyMessage(UserFeedback feedback)
+        {
+            UserFeedback newfeed = feedback;
+            newfeed.Subject = "Re: "+feedback.Subject;
+            newfeed.Comment = System.Environment.NewLine+feedback.Comment;
+
+            return newfeed;
+
+
+
+        }
+
+
+
+
+
+
 
         
     }
