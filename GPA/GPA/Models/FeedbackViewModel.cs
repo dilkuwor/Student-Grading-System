@@ -13,7 +13,7 @@ namespace GPA.Models
         public FeedbackReadViewModel FeedbackReadViewModel { get; set; }
         public FeedbackSendViewModel FeedbackSendViewModel { get; set; }
         //FeedBackMood: Read,Send,Reply
-        public bool FeedBackMood { get; set; }
+        public string FeedBackMood { get; set; }
         
     }
 
@@ -45,8 +45,9 @@ namespace GPA.Models
         public int ToId { get; set; }
 
         public string Subject { get; set; }
-       
 
+        public int FeedbackID { get; set; }
+        public UserFeedback FeedbackDetail { get; set; }
         public List<UserFeedback> Feedbacks { get; set; }
     }
 

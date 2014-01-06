@@ -1,11 +1,13 @@
 ﻿using GPA.Models;
 using Microsoft.Reporting.WebForms;
-using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Web.Mvc;
+using GPA.Models.Manager;
+using System;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
+
 
 
 namespace GPA.Controllers
@@ -14,8 +16,10 @@ namespace GPA.Controllers
     {
         public ActionResult Index()
         {
+            CreateSession(19);
             return View();
         }
+
 
 
 
@@ -76,6 +80,26 @@ namespace GPA.Controllers
                 out streams,
                 out warnings);
             return File(renderedBytes, mimeType);
+        }
+
+
+        /// <summary>
+        ///     Temp
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        public void CreateSession(int userId)
+        {
+            User currentUser = null;
+            using (var db = new GPAEntities())
+            {
+                currentUser = db.Users.Where(r => r.UserID == userId).Single();
+            }
+            AccountManager am = new AccountManager();
+            Session["UserExist"] = "True";
+            Session["User"] = currentUser.UserName;
+            Session["CurrentUser"] = currentUser;
+
         }
 
         public ActionResult About()

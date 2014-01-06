@@ -9,5 +9,6 @@ namespace GPA.DAL.Extended
     public class UserFeedback:Feedback
     {
         public string From { get; set; }
+        public string ShortMessage { get; set; }
     }
 }

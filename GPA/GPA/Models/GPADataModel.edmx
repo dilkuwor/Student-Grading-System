@@ -15,14 +15,6 @@
           <Property Name="CourseName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Credit" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="CourseUser">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Courses_Id" Type="int" Nullable="false" />
-          <Property Name="Users_Id" Type="int" Nullable="false" />
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-        </EntityType>
         <EntityType Name="Feedbacks">
           <Key>
             <PropertyRef Name="FeedbackID" />
@@ -65,24 +57,6 @@
           <Property Name="Role_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="RoleTask">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleRef_ID" Type="int" Nullable="false" />
-          <Property Name="TaskRef_ID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="StudentGrade">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="CourseId" />
-          </Key>
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="CourseId" Type="int" Nullable="false" />
-          <Property Name="GradeId" Type="int" Nullable="false" />
-          <Property Name="Status" Type="bit" Nullable="false" />
-        </EntityType>
         <EntityType Name="Tasks">
           <Key>
             <PropertyRef Name="TaskId" />
@@ -90,14 +64,6 @@
           <Property Name="TaskId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserRole">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="UserRefID" Type="int" Nullable="false" />
-          <Property Name="RoleRef_ID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -109,30 +75,6 @@
           <Property Name="VerificationCode" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Role" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <Association Name="FK_CourseUser_Courses">
-          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
-          <End Role="CourseUser" Type="Self.CourseUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Courses">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CourseUser">
-              <PropertyRef Name="Courses_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CourseUser_Registration">
-          <End Role="Registrations" Type="Self.Registrations" Multiplicity="1" />
-          <End Role="CourseUser" Type="Self.CourseUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Registrations">
-              <PropertyRef Name="RegistrationID" />
-            </Principal>
-            <Dependent Role="CourseUser">
-              <PropertyRef Name="Users_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Feedbacks_RegistrationDetails">
           <End Role="Registrations" Type="Self.Registrations" Multiplicity="1" />
           <End Role="Feedbacks" Type="Self.Feedbacks" Multiplicity="*" />
@@ -157,18 +99,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_GradeStudent_GPA">
-          <End Role="Grades" Type="Self.Grades" Multiplicity="1" />
-          <End Role="StudentGrade" Type="Self.StudentGrade" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Grades">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StudentGrade">
-              <PropertyRef Name="GradeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Registrations_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Registrations" Type="Self.Registrations" Multiplicity="*" />
@@ -181,86 +111,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RoleTask_Roles">
-          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
-          <End Role="RoleTask" Type="Self.RoleTask" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Roles">
-              <PropertyRef Name="Role_ID" />
-            </Principal>
-            <Dependent Role="RoleTask">
-              <PropertyRef Name="RoleRef_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RoleTask_Tasks">
-          <End Role="Tasks" Type="Self.Tasks" Multiplicity="1" />
-          <End Role="RoleTask" Type="Self.RoleTask" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tasks">
-              <PropertyRef Name="TaskId" />
-            </Principal>
-            <Dependent Role="RoleTask">
-              <PropertyRef Name="TaskRef_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Student_GPACourse">
-          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
-          <End Role="StudentGrade" Type="Self.StudentGrade" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Courses">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StudentGrade">
-              <PropertyRef Name="CourseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserRole_Roles">
-          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
-          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Roles">
-              <PropertyRef Name="Role_ID" />
-            </Principal>
-            <Dependent Role="UserRole">
-              <PropertyRef Name="RoleRef_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserRole_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="UserRole">
-              <PropertyRef Name="UserRefID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <Function Name="FindGPA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Param1" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="GPAModelStoreContainer">
           <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CourseUser" EntityType="Self.CourseUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Feedbacks" EntityType="Self.Feedbacks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Grades" EntityType="Self.Grades" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Registrations" EntityType="Self.Registrations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RoleTask" EntityType="Self.RoleTask" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="StudentGrade" EntityType="Self.StudentGrade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_CourseUser_Courses" Association="Self.FK_CourseUser_Courses">
-            <End Role="Courses" EntitySet="Courses" />
-            <End Role="CourseUser" EntitySet="CourseUser" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CourseUser_Registration" Association="Self.FK_CourseUser_Registration">
-            <End Role="Registrations" EntitySet="Registrations" />
-            <End Role="CourseUser" EntitySet="CourseUser" />
-          </AssociationSet>
           <AssociationSet Name="FK_Feedbacks_RegistrationDetails" Association="Self.FK_Feedbacks_RegistrationDetails">
             <End Role="Registrations" EntitySet="Registrations" />
             <End Role="Feedbacks" EntitySet="Feedbacks" />
@@ -269,33 +130,9 @@
             <End Role="Registrations" EntitySet="Registrations" />
             <End Role="Feedbacks" EntitySet="Feedbacks" />
           </AssociationSet>
-          <AssociationSet Name="FK_GradeStudent_GPA" Association="Self.FK_GradeStudent_GPA">
-            <End Role="Grades" EntitySet="Grades" />
-            <End Role="StudentGrade" EntitySet="StudentGrade" />
-          </AssociationSet>
           <AssociationSet Name="FK_Registrations_Users" Association="Self.FK_Registrations_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Registrations" EntitySet="Registrations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RoleTask_Roles" Association="Self.FK_RoleTask_Roles">
-            <End Role="Roles" EntitySet="Roles" />
-            <End Role="RoleTask" EntitySet="RoleTask" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RoleTask_Tasks" Association="Self.FK_RoleTask_Tasks">
-            <End Role="Tasks" EntitySet="Tasks" />
-            <End Role="RoleTask" EntitySet="RoleTask" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Student_GPACourse" Association="Self.FK_Student_GPACourse">
-            <End Role="Courses" EntitySet="Courses" />
-            <End Role="StudentGrade" EntitySet="StudentGrade" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserRole_Roles" Association="Self.FK_UserRole_Roles">
-            <End Role="Roles" EntitySet="Roles" />
-            <End Role="UserRole" EntitySet="UserRole" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserRole_Users" Association="Self.FK_UserRole_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -579,6 +416,9 @@
             <End Role="Registration" EntitySet="Registrations" />
             <End Role="Feedback" EntitySet="Feedbacks" />
           </AssociationSet>
+          <FunctionImport Name="FindGPA">
+            <Parameter Name="Param1" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="Feedback">
           <Key>
@@ -621,125 +461,88 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="GPAModelStoreContainer" CdmEntityContainer="GPAEntities">
-          <EntitySetMapping Name="Courses">
-            <EntityTypeMapping TypeName="GPAModel.Cours">
-              <MappingFragment StoreEntitySet="Courses">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="SubCode" ColumnName="SubCode" />
-                <ScalarProperty Name="Level" ColumnName="Level" />
-                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
-                <ScalarProperty Name="Credit" ColumnName="Credit" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CourseUsers">
-            <EntityTypeMapping TypeName="GPAModel.CourseUser">
-              <MappingFragment StoreEntitySet="CourseUser">
-                <ScalarProperty Name="Courses_Id" ColumnName="Courses_Id" />
-                <ScalarProperty Name="Users_Id" ColumnName="Users_Id" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Grades">
-            <EntityTypeMapping TypeName="GPAModel.Grade">
-              <MappingFragment StoreEntitySet="Grades">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="GradeScore" ColumnName="GradeScore" />
-                <ScalarProperty Name="GradeNumber" ColumnName="GradeNumber" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Registrations">
-            <EntityTypeMapping TypeName="GPAModel.Registration">
-              <MappingFragment StoreEntitySet="Registrations">
-                <ScalarProperty Name="RegistrationID" ColumnName="RegistrationID" />
-                <ScalarProperty Name="FName" ColumnName="FName" />
-                <ScalarProperty Name="LName" ColumnName="LName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Zip" ColumnName="Zip" />
-                <ScalarProperty Name="LandNumber" ColumnName="LandNumber" />
-                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="GPAModel.Role">
-              <MappingFragment StoreEntitySet="Roles">
-                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RoleTasks">
-            <EntityTypeMapping TypeName="GPAModel.RoleTask">
-              <MappingFragment StoreEntitySet="RoleTask">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="RoleRef_ID" ColumnName="RoleRef_ID" />
-                <ScalarProperty Name="TaskRef_ID" ColumnName="TaskRef_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StudentGrades">
-            <EntityTypeMapping TypeName="GPAModel.StudentGrade">
-              <MappingFragment StoreEntitySet="StudentGrade">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
-                <ScalarProperty Name="GradeId" ColumnName="GradeId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tasks">
-            <EntityTypeMapping TypeName="GPAModel.Task">
-              <MappingFragment StoreEntitySet="Tasks">
-                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserRoles">
-            <EntityTypeMapping TypeName="GPAModel.UserRole">
-              <MappingFragment StoreEntitySet="UserRole">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserRefID" ColumnName="UserRefID" />
-                <ScalarProperty Name="RoleRef_ID" ColumnName="RoleRef_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="GPAModel.User">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
-                <ScalarProperty Name="Role" ColumnName="Role" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Feedbacks">
-            <EntityTypeMapping TypeName="GPAModel.Feedback">
-              <MappingFragment StoreEntitySet="Feedbacks">
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Subject" ColumnName="Subject" />
-                <ScalarProperty Name="ToID" ColumnName="ToID" />
-                <ScalarProperty Name="FromID" ColumnName="FromID" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="FeedbackID" ColumnName="FeedbackID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GPAModelStoreContainer" CdmEntityContainer="GPAEntities">
+    <EntitySetMapping Name="Courses">
+      <EntityTypeMapping TypeName="IsTypeOf(GPAModel.Cours)">
+        <MappingFragment StoreEntitySet="Courses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SubCode" ColumnName="SubCode" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+          <ScalarProperty Name="Credit" ColumnName="Credit" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Grades">
+      <EntityTypeMapping TypeName="IsTypeOf(GPAModel.Grade)">
+        <MappingFragment StoreEntitySet="Grades">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="GradeScore" ColumnName="GradeScore" />
+          <ScalarProperty Name="GradeNumber" ColumnName="GradeNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Registrations">
+      <EntityTypeMapping TypeName="IsTypeOf(GPAModel.Registration)">
+        <MappingFragment StoreEntitySet="Registrations">
+          <ScalarProperty Name="RegistrationID" ColumnName="RegistrationID" />
+          <ScalarProperty Name="FName" ColumnName="FName" />
+          <ScalarProperty Name="LName" ColumnName="LName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="LandNumber" ColumnName="LandNumber" />
+          <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="IsTypeOf(GPAModel.Role)">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tasks">
+      <EntityTypeMapping TypeName="IsTypeOf(GPAModel.Task)">
+        <MappingFragment StoreEntitySet="Tasks">
+          <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(GPAModel.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Feedbacks">
+      <EntityTypeMapping TypeName="IsTypeOf(GPAModel.Feedback)">
+        <MappingFragment StoreEntitySet="Feedbacks">
+          <ScalarProperty Name="FeedbackID" ColumnName="FeedbackID" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="FromID" ColumnName="FromID" />
+          <ScalarProperty Name="ToID" ColumnName="ToID" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="FindGPA" FunctionName="GPAModel.Store.FindGPA" />
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -753,7 +556,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
