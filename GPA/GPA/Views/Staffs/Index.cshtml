@@ -5,7 +5,8 @@
 }
 
 <h2>Index</h2>
-@using (Html.BeginForm("Index", "Student", FormMethod.Get))
+
+@using (Html.BeginForm("Index", "Staffs", FormMethod.Get))
 {
     <p>
         Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
@@ -15,6 +16,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
 <table class="table">
     <tr>
         <th>
@@ -26,9 +28,9 @@
         <th>
             @Html.DisplayNameFor(model => model.VerificationCode)
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.)
-        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Role)
+        </th>
         <th></th>
     </tr>
 
@@ -43,9 +45,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.VerificationCode)
         </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.UserDetail.Email)
-        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.Role)
+        </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.UserID }) |
             @Html.ActionLink("Details", "Details", new { id=item.UserID }) |

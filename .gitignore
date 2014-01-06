@@ -15,7 +15,8 @@ local.properties
 .classpath
 .settings/
 .loadpath
-
+GPADataModel.edmx.sql
+GPADataModel.edmx.sql
 # External tool builders
 .externalToolBuilders/
 
