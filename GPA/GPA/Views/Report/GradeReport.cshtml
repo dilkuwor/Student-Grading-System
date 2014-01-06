@@ -1,35 +1,67 @@
-﻿
+﻿@model GPA.Models.ReportViewModel
 @{
     ViewBag.Title = "GradeReport";
-    var data = Model;
 }
 
 <h2>GradeReport</h2>
 
+<div class="panel panel-default">
+    <div class="panel-heading">Feedback</div>
+    <div class="panel-body">
+        <table class="table">
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                   Course Name
+                </th>
+                <th>
+                    Credit
+                </th>
+                <th>
+                   Grade
+                </th>
+                <th>
+                       GAP
+                </th>
 
-<table class="table">
-    <tr>
-        <th>
-            User Name
-        </th>
-        <th>
-            Role
-        </th>
+            </tr>
 
-        <th></th>
-    </tr>
+            @foreach (var item in Model.GPAesult)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
 
-    @foreach (var item in Model)
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Credit)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GradeNumber)
+                    </td>
+                    <td>
+                            @Html.DisplayFor(modelItem => item.StudentCourseGrade)
+                        </td>
+                   
+                </tr>
+            }
+
+        </table>
+
+
+
+
+    </div>
+    @if ((string)TempData["MessageDeleted"] == "True")
     {
-        <tr>
-            <td>
-                @*@Html.DisplayFor(modelItem => )*@
-            </td>
-            <td>
-                @*@Html.DisplayFor(modelItem => item.Role)*@
-            </td>
-
-        </tr>
+        <div class="alert alert-success" style="margin-top:10px;">
+            Message Sent
+        </div>
     }
-
+</div>
 

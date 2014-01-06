@@ -36,6 +36,8 @@ namespace GPA.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult GradeReport(ReportViewModel model)
         {
+            ReportViewModel model1 = new ReportViewModel();
+
             using (var ctx = new GPAEntities())
             {
                 var idParam = new SqlParameter
@@ -43,8 +45,9 @@ namespace GPA.Controllers
                     ParameterName = "StudentID",
                     Value = int.Parse(model.UserID.ToString())
                 };
-                var gradeList = ctx.Database.SqlQuery<Registration>("exec FindGPA @StudentId ", idParam).ToList<Registration>();
-                return View(gradeList);
+                var gradeList = ctx.Database.SqlQuery<FindGPA1_Result>("exec FindGPA @StudentId ", idParam).ToList<FindGPA1_Result>();
+                model.GPAesult = gradeList;
+                return View(model);
 
             }
 
