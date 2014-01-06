@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "GradeReport";
+    var data = Model;
+}
+
+<h2>GradeReport</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            User Name
+        </th>
+        <th>
+            Role
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @*@Html.DisplayFor(modelItem => )*@
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Role)*@
+            </td>
+
+        </tr>
+    }
+
+

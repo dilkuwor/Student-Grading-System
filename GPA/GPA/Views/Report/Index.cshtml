@@ -1,0 +1,20 @@
+﻿@model GPA.Models.ReportViewModel
+
+@{
+    ViewBag.Title = "UserReport";
+}
+
+<h2>UserReport</h2>
+@using (Html.BeginForm("GradeReport", "Report", FormMethod.Post, new { role = "form" }))
+        {
+     @Html.AntiForgeryToken()
+
+<h4>@Html.LabelFor(m => m.UserID)</h4>
+
+@Html.DropDownListFor(model => model.UserID, Model.UserList, new { @class = "form-control" })
+
+
+<div>
+    <input type="submit"  value="Send Feedback" class="btn btn-default"  />
+</div>
+}
