@@ -188,6 +188,7 @@ namespace GPA.Controllers
 
         public void ClearSession()
         {
+            Session.Clear();
             Session["UserExist"] = null;
             Session["User"] = null;
             Session["CurrentUser"] = null;

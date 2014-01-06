@@ -242,7 +242,7 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="FindGPA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Param1" Type="int" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="GPAModelStoreContainer">
           <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
@@ -629,7 +629,6 @@
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="GPAModelStoreContainer" CdmEntityContainer="GPAEntities">
-    <FunctionImportMapping FunctionImportName="FindGPA" FunctionName="GPAModel.Store.FindGPA" />
           <EntitySetMapping Name="Courses">
             <EntityTypeMapping TypeName="GPAModel.Cours">
               <MappingFragment StoreEntitySet="Courses">
