@@ -15,10 +15,14 @@ namespace GPA.Controllers
         private GPAEntities db = new GPAEntities();
 
         // GET: /Student/
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
-            var users = db.Users.Include(u => u.Registrations);
-            return View(users.ToList());
+            var students = db.Users.Where(s => s.Role == "Admin").Include(u => u.Registrations);
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                students = students.Where(s => s.UserName.ToUpper().Contains(searchString.ToUpper()) && s.Role == "Admin");
+            }
+            return View(students.ToList());
         }
 
         // GET: /Student/Details/5

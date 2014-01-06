@@ -16,7 +16,7 @@ namespace GPA.Controllers
     {
         public ActionResult Index()
         {
-            CreateSession(19);
+            CreateSession(1);
             return View();
         }
 
