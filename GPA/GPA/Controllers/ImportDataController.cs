@@ -18,8 +18,6 @@ namespace GPA.Controllers
         }
         public ActionResult Importexcel()
         {
-
-
             if (Request.Files["FileUpload1"].ContentLength > 0)
             {
                 string extension = System.IO.Path.GetExtension(Request.Files["FileUpload1"].FileName);
@@ -28,11 +26,15 @@ namespace GPA.Controllers
                     System.IO.File.Delete(path1);
 
                 Request.Files["FileUpload1"].SaveAs(path1);
-                string sqlConnectionString =
-                    System.Configuration.ConfigurationManager.ConnectionStrings["GPAConnectionString"].ToString();
+                string sqlConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GPAEntities"].ConnectionString.Substring(System.Configuration.ConfigurationManager.ConnectionStrings["GPAEntities"].ConnectionString.IndexOf(';') + 1);
+
+                sqlConnectionString = sqlConnectionString.Substring(sqlConnectionString.IndexOf('"') + 1);
+                sqlConnectionString = sqlConnectionString.Substring(0, sqlConnectionString.IndexOf("MultipleActiveResultSets"));
+
 
                 //Create connection string to Excel work book
                 string excelConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path1 + ";Extended Properties=Excel 12.0;Persist Security Info=False";
+
                 //Create Connection to Excel work book
                 OleDbConnection excelConnection = new OleDbConnection(excelConnectionString);
                 //Create OleDbCommand to fetch data from Excel
@@ -42,21 +44,13 @@ namespace GPA.Controllers
                 excelConnection.Open();
                 OleDbDataReader dReader;
                 dReader = cmd.ExecuteReader();
-
                 SqlBulkCopy sqlBulk = new SqlBulkCopy(sqlConnectionString);
                 //Give your Destination table name
                 sqlBulk.DestinationTableName = "Users";
                 sqlBulk.WriteToServer(dReader);
                 excelConnection.Close();
-
-                // SQL Server Connection String
-
-
             }
-
-            
-
-            return RedirectToAction("UserReport","Home");
+            return RedirectToAction("UserReport", "Home");
         }
     }
 }
