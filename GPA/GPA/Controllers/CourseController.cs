@@ -39,6 +39,14 @@ namespace GPA.Controllers
 
 
         }
+
+        public ActionResult CourseSignup(int courseid)
+        {
+            User currentUser = (User)Session["currentUser"];
+            StudentManager smanager = new StudentManager();
+            smanager.ApplyForCourse(courseid, currentUser.UserID);
+            return RedirectToAction("Index","Home");
+        }
         
         [HttpPost]
         [AllowAnonymous]

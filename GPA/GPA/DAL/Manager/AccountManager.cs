@@ -154,7 +154,21 @@ namespace GPA.Models.Manager
 
 
 
+        /// <summary>
+        /// Returns the registerd user object by theire user id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public Registration FindUserByUserID(int userId)
+        {
+            Registration user;
+            using (var db = new GPAEntities())
+            {
+                user = db.Registrations.Where(r => r.UserID == userId).Single();
+            }
+            return user;
 
+        }
 
 
 

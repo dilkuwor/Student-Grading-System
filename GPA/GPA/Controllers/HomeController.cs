@@ -7,6 +7,7 @@ using GPA.Models.Manager;
 using System;
 using System.Linq;
 using System.Web;
+using GPA.DAL.Manager;
 
 
 
@@ -16,11 +17,24 @@ namespace GPA.Controllers
     {
         public ActionResult Index()
         {
-            CreateSession(1);
-            return View();
+            DashbordViewModel model = new DashbordViewModel();
+
+            //if the user is registered check his role and display different layout
+            StudentViewModel studentModel = new StudentViewModel();
+            
+            StudentManager smanager = new StudentManager();
+            studentModel.Courses = smanager.GetRegisteredCourse(19);
+            studentModel.ECourses = smanager.GetCustomCourses(19);
+            model.StudentViewModel = studentModel;
+            CreateSession(19);
+            return View(model);
         }
 
 
+        public ActionResult CourseSignup(int courseid)
+        {
+            return RedirectToAction("Index", "Home");
+        }
 
 
         public ActionResult UserReport()

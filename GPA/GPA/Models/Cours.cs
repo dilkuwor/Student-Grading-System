@@ -18,6 +18,7 @@ namespace GPA.Models
         {
             this.CourseUsers = new HashSet<CourseUser>();
             this.StudentGrades = new HashSet<StudentGrade>();
+            this.CourseEnrolments = new HashSet<CourseEnrolment>();
         }
     
         public int Id { get; set; }
@@ -28,5 +29,6 @@ namespace GPA.Models
     
         public virtual ICollection<CourseUser> CourseUsers { get; set; }
         public virtual ICollection<StudentGrade> StudentGrades { get; set; }
+        public virtual ICollection<CourseEnrolment> CourseEnrolments { get; set; }
     }
 }
