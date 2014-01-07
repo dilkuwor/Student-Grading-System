@@ -21,7 +21,7 @@ namespace GPA.Controllers
             ReportViewModel model = new ReportViewModel();
 
             AccountManager accountmanager = new AccountManager();
-            model.UserList = from ruser in accountmanager.GetUserList()
+            model.UserList = from ruser in accountmanager.GetUserListByRole("Student")
                              select new SelectListItem
                              {
                                  Text = ruser.FName + " " + ruser.LName,

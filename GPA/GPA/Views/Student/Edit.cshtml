@@ -1,4 +1,10 @@
-﻿@model GPA.Models.User
+﻿@*
+    Modified by: Laxman Adhikari 
+    Date Modified: 1/6/2014
+    Ensure proper use of details fields
+*@
+
+@model GPA.Models.User
 
 @{
     ViewBag.Title = "Edit";
@@ -15,7 +21,7 @@
         <h4>User</h4>
         <hr />
         @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.User_ID)
+        @Html.HiddenFor(model => model.UserID)
 
         <div class="form-group">
             @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-2" })

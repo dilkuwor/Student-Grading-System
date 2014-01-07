@@ -38,14 +38,12 @@ namespace GPA.Models.Manager
         /// Returns the list of users
         /// </summary>
         /// <returns></returns>
-        public List<Registration> GetUserList()
+        public List<Registration> GetUserListByRole(string role)
         {
             var users = new List<Registration>();
             using (var db = new GPAEntities())
             {
-                //can check roles for the user because
-                users  = db.Registrations.ToList();
-                
+                users  = db.Registrations.Where(r => r.User.Role == role).ToList();
             }
             return users;
         }
