@@ -32,8 +32,7 @@ namespace GPA.Controllers
             cvm.Courses = cm.getCourses();
             if (!String.IsNullOrEmpty(searchString))
             {
-                cvm.Courses = cm.getCoursesByName(searchString);
-                
+                cvm.Courses = cm.getCoursesByName(searchString);                
             }
             return View(cvm);
         }
@@ -48,6 +47,13 @@ namespace GPA.Controllers
                             select d;
                 return View(pageName, query.First());
             }
+
+        }
+
+    
+        public ActionResult Create()
+        {
+            return View();
 
         }
 
