@@ -3,36 +3,45 @@
     ViewBag.Title = "GradeReport";
 }
 
-<h2>GradeReport</h2>
+<h2>Student Grade Report</h2>
 
 <div class="panel panel-default">
-    <div class="panel-heading">Feedback</div>
+    <div class="panel-heading"> Select Option to Export the report</div>
     <div class="panel-body">
+    <div><a href="@Url.Action("Report", new { id = "PDF", userId = ViewBag.UserId })"> Report in PDF</a></div>
+    <div><a href="@Url.Action("Report", new { id = "Excel", userId = ViewBag.UserId })">Report in Excel</a></div>
+    <div><a href="@Url.Action("Report", new { id = "Word", userId = ViewBag.UserId })"> Report in Word</a></div>
+    <div><a href="@Url.Action("Report", new { id = "Image", userId = ViewBag.UserId })"> Report in Image</a></div>
+    </div>
+          @*Name: @Html.DisplayFor(modelItem => Model.GPAesult[0].Name)
+        StudentId: @Html.DisplayFor(modelItem => Model.GPAesult[0].StudentID)
         <table class="table">
             <tr>
                 <th>
-                    Name
+                    Courses Id
                 </th>
                 <th>
-                   Course Name
+                    Course Name
                 </th>
                 <th>
                     Credit
                 </th>
                 <th>
-                   Grade
+                    Grade Score
                 </th>
                 <th>
-                       GAP
+                    Grade Number
                 </th>
-
+                <th>
+                    Subject Grade
+                </th>
             </tr>
 
             @foreach (var item in Model.GPAesult)
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Name)
+                        @Html.DisplayFor(modelItem => item.CourseID)
                     </td>
 
                     <td>
@@ -42,26 +51,24 @@
                         @Html.DisplayFor(modelItem => item.Credit)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.GradeScore)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.GradeNumber)
                     </td>
                     <td>
-                            @Html.DisplayFor(modelItem => item.StudentCourseGrade)
-                        </td>
-                   
+                        @Html.DisplayFor(modelItem => item.StudentCourseGrade)
+                    </td>
+
                 </tr>
             }
 
-        </table>
-
-
-
-
+        </table>*@
     </div>
-    @if ((string)TempData["MessageDeleted"] == "True")
-    {
-        <div class="alert alert-success" style="margin-top:10px;">
-            Message Sent
-        </div>
-    }
-</div>
-
+   
+    @*<div style="padding:10px; border:1px solid black">
+        <div><a href="@Url.Action("Report", new { id = "PDF", userId = ViewBag.UserId })"> Get Report PDF</a></div>
+        <div><a href="@Url.Action("Report", new { id = "Excel", userId = ViewBag.UserId })"> Get Report Excel</a></div>
+        <div><a href="@Url.Action("Report", new { id = "Word", userId = ViewBag.UserId })"> Get Report Word</a></div>
+        <div><a href="@Url.Action("Report", new { id = "Image", userId = ViewBag.UserId })"> Get Report Image</a></div>
+    </div>*@

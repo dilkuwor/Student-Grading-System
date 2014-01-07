@@ -55,7 +55,7 @@ namespace GPA.DAL.Manager
                              FromID = f.FromID,
                              Date = f.Date,
                              FeedbackID = f.FeedbackID,
-                             ShortMessage = f.Comment.Substring(0,50)+"........."
+                             ShortMessage = f.Comment.Substring(0,60)+"  ........."
 
                          }).ToList();
                 
@@ -122,13 +122,6 @@ namespace GPA.DAL.Manager
 
 
         }
-
-
-
-
-
-
-
         
     }
 }

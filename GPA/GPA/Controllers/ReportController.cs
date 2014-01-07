@@ -21,7 +21,7 @@ namespace GPA.Controllers
             ReportViewModel model = new ReportViewModel();
 
             AccountManager accountmanager = new AccountManager();
-            model.UserList = from ruser in accountmanager.GetUserList()
+            model.UserList = from ruser in accountmanager.GetUserListByRole("Student")
                              select new SelectListItem
                              {
                                  Text = ruser.FName + " " + ruser.LName,
@@ -45,25 +45,18 @@ namespace GPA.Controllers
                     ParameterName = "StudentID",
                     Value = int.Parse(model.UserID.ToString())
                 };
-                var gradeList = ctx.Database.SqlQuery<FindGPA1_Result>("exec FindGPA @StudentId ", idParam).ToList<FindGPA1_Result>();
+                var gradeList = ctx.Database.SqlQuery<FindGPA_Result>("exec FindGPA @StudentId ", idParam).ToList<FindGPA_Result>();
                 model.GPAesult = gradeList;
+                ViewBag.UserID = model.UserID;
                 return View(model);
 
             }
-
-            ////var 
-            //using (GPAEntities dc = new GPAEntities())
-            //{
-            //    var v = dc.Users.ToList();
-            //    return View(v);
-            //}
-
         }
 
         public ActionResult Report(string id, string userId)
         {
             LocalReport lr = new LocalReport();
-            string path = Path.Combine(Server.MapPath("~/Content"), "UserReport.rdlc");
+            string path = Path.Combine(Server.MapPath("~/Content"), "StudentGrade.rdlc");
             if (System.IO.File.Exists(path))
             {
                 lr.ReportPath = path;
@@ -72,14 +65,8 @@ namespace GPA.Controllers
             {
                 return View("Index");
             }
-            List<GPA.Models.User> cm = new List<GPA.Models.User>();
 
-            //using (GPAEntities dc = new GPAEntities())
-            //{
-            //    cm = dc.Users.ToList();
-            //}
-
-            List<GPA.Models.User> gradeList = new List<GPA.Models.User>();
+            List<FindGPA_Result> gradeList = new List<FindGPA_Result>();
             using (var ctx = new GPAEntities())
             {
                 var idParam = new SqlParameter
@@ -87,31 +74,11 @@ namespace GPA.Controllers
                     ParameterName = "StudentID",
                     Value = int.Parse(userId)
                 };
-                gradeList = ctx.Database.SqlQuery<User>("exec FindGPA @StudentId ", idParam).ToList<User>();
+                gradeList = ctx.Database.SqlQuery<FindGPA_Result>("exec FindGPA @StudentId ", idParam).ToList<FindGPA_Result>();
             }
 
-
-            SqlConnection sqlcon = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["GPAConnectionString"].ConnectionString);
-
-            SqlCommand com = new SqlCommand();
-            com.Connection = sqlcon;
-            com.CommandType = CommandType.StoredProcedure;
-            com.CommandText = "FindGPA";
-
-            SqlParameter parameter = new SqlParameter();
-            parameter.Direction = ParameterDirection.Input;
-            parameter.DbType = DbType.Int32;
-            parameter.Value = int.Parse(userId);
-            com.Parameters.Add(parameter);
-
-            DataSet ds = new DataSet();
-            SqlDataAdapter da = new SqlDataAdapter(com);
-            da.Fill(ds);
-
-            ReportDataSource reportDataSource = new ReportDataSource("DataSet1", cm);
-            reportDataSource.Value = da;
-
-            lr.DataSources.Add(reportDataSource);
+            ReportDataSource reportDataSource = new ReportDataSource("StudentGrade", gradeList);
+            lr.DataSources.Add(reportDataSource);      
             string reportType = id;
             string mimeType;
             string encoding;

@@ -15,8 +15,8 @@ local.properties
 .classpath
 .settings/
 .loadpath
-FindGPA_Result.cs
 GPADataModel.edmx.sql
+Web.config
 # External tool builders
 .externalToolBuilders/
 

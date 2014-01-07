@@ -1,4 +1,10 @@
-﻿@model GPA.Models.User
+﻿@*
+    Modified by: Laxman Adhikari
+    Date Modified: 1/6/2014
+    Ensure proper use of details fields
+*@
+
+@model GPA.Models.User
 
 @{
     ViewBag.Title = "Details";
@@ -34,17 +40,9 @@
             @Html.DisplayFor(model => model.VerificationCode)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserDetail.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserDetail.Email)
-        </dd>
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.User_ID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UserID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

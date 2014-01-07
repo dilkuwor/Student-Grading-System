@@ -40,7 +40,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dependencies\Microsoft.ReportViewer.WebForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -169,6 +173,7 @@
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\StaffsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="DAL\Extended\ECourse.cs" />
     <Compile Include="DAL\Extended\UserFeedback.cs" />
     <Compile Include="DAL\Manager\FeedbackManager.cs" />
     <Compile Include="DAL\Manager\SessionManager.cs" />
@@ -177,6 +182,11 @@
     <Compile Include="DAL\Manager\StudentManager.cs" />
     <Compile Include="DAL\Util\Helper.cs" />
     <Compile Include="DAL\Util\TextValue.cs" />
+    <Compile Include="FindGPADataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FindGPADataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -194,15 +204,19 @@
     <Compile Include="Models\Cours.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CourseEnrolment.cs">
+      <DependentUpon>GPADataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CourseUser.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CourseViewModel.cs" />
+    <Compile Include="Models\DashbordViewModel.cs" />
     <Compile Include="Models\Feedback.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FeedbackViewModel.cs" />
-    <Compile Include="Models\FindGPA1_Result.cs">
+    <Compile Include="Models\FindGPA_Result.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GPADataModel.Context.cs">
@@ -238,6 +252,7 @@
     <Compile Include="Models\StudentGrade.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StudentViewModel.cs" />
     <Compile Include="Models\Task.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
@@ -259,6 +274,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\core.css" />
+    <Content Include="Dependencies\Microsoft.ReportViewer.WebForms.dll" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -286,6 +302,17 @@
     </Content>
     <Content Include="GPADataSet.xsc">
       <DependentUpon>GPADataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="FindGPADataSet.xsc">
+      <DependentUpon>FindGPADataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="FindGPADataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>FindGPADataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="FindGPADataSet.xss">
+      <DependentUpon>FindGPADataSet.xsd</DependentUpon>
     </Content>
     <None Include="GPADataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
@@ -372,11 +399,14 @@
     <Content Include="Views\Staffs\Details.cshtml" />
     <Content Include="Views\Staffs\Edit.cshtml" />
     <Content Include="Views\Staffs\Index.cshtml" />
+    <Content Include="Views\Student\StudentDashbord.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Views\Report\GradeReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Dependencies\" />
+    <Folder Include="Views\Dashbord\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -405,7 +435,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>54639</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

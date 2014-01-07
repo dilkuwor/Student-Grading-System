@@ -11,7 +11,7 @@ namespace GPA.Models
 {
     using System;
     
-    public partial class FindGPA1_Result
+    public partial class FindGPA_Result
     {
         public string Name { get; set; }
         public int StudentID { get; set; }

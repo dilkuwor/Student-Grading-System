@@ -18,6 +18,6 @@ namespace GPA.Models
             UserList = new List<SelectListItem>();
         }
 
-        public List<FindGPA1_Result> GPAesult { get; set; }
+        public List<FindGPA_Result> GPAesult { get; set; }
     }
 }

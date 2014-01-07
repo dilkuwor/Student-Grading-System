@@ -24,10 +24,16 @@ namespace GPA.Controllers
         CourseManager cm = new CourseManager();
         //
         // GET: /AddCourse/
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
             CourseViewModel cvm = new CourseViewModel();
+
             cvm.Courses = cm.getCourses();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                cvm.Courses = cm.getCoursesByName(searchString);
+                
+            }
             return View(cvm);
         }
 
@@ -72,6 +78,14 @@ namespace GPA.Controllers
             }
         }
 
+        public ActionResult CourseSignup(int courseid)
+        {
+            User currentUser = (User)Session["currentUser"];
+            StudentManager smanager = new StudentManager();
+            smanager.ApplyForCourse(courseid, currentUser.UserID);
+            return RedirectToAction("Index","Home");
+        }
+        
         [HttpPost]
         [AllowAnonymous]
         public ActionResult Save(CourseViewModel cvm)
