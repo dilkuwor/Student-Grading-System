@@ -221,9 +221,6 @@
     <Compile Include="Models\FindGPA_Result.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\FindGPA_Result1.cs">
-      <DependentUpon>GPADataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\GPADataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -406,13 +403,12 @@
     <Content Include="Views\Student\StudentDashbord.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Views\Dashbord\" />
     <Content Include="Views\Report\GradeReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Dependencies\" />
+    <Folder Include="Views\Dashbord\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -441,7 +437,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>54639</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

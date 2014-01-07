@@ -16,10 +16,10 @@ namespace GPA.Models
     {
         public Registration()
         {
+            this.CourseEnrolments = new HashSet<CourseEnrolment>();
             this.CourseUsers = new HashSet<CourseUser>();
             this.Feedbacks = new HashSet<Feedback>();
             this.Feedbacks1 = new HashSet<Feedback>();
-            this.CourseEnrolments = new HashSet<CourseEnrolment>();
         }
     
         public int RegistrationID { get; set; }
@@ -34,10 +34,10 @@ namespace GPA.Models
         public string MobileNumber { get; set; }
         public int UserID { get; set; }
     
+        public virtual ICollection<CourseEnrolment> CourseEnrolments { get; set; }
         public virtual ICollection<CourseUser> CourseUsers { get; set; }
         public virtual ICollection<Feedback> Feedbacks { get; set; }
         public virtual ICollection<Feedback> Feedbacks1 { get; set; }
         public virtual User User { get; set; }
-        public virtual ICollection<CourseEnrolment> CourseEnrolments { get; set; }
     }
 }
