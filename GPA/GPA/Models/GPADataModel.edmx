@@ -15,7 +15,7 @@
           <Property Name="CourseName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Credit" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="CourseUser">
+        <EntityType Name="CourseUsers">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -65,7 +65,7 @@
           <Property Name="Role_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="RoleTask">
+        <EntityType Name="RoleTasks">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -73,7 +73,7 @@
           <Property Name="RoleRef_ID" Type="int" Nullable="false" />
           <Property Name="TaskRef_ID" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="StudentGrade">
+        <EntityType Name="StudentGrades">
           <Key>
             <PropertyRef Name="UserId" />
             <PropertyRef Name="CourseId" />
@@ -91,7 +91,7 @@
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
-        <EntityType Name="UserRole">
+        <EntityType Name="UserRoles">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -111,24 +111,24 @@
         </EntityType>
         <Association Name="FK_CourseUser_Courses">
           <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
-          <End Role="CourseUser" Type="Self.CourseUser" Multiplicity="*" />
+          <End Role="CourseUsers" Type="Self.CourseUsers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Courses">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="CourseUser">
+            <Dependent Role="CourseUsers">
               <PropertyRef Name="Courses_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CourseUser_Registration">
           <End Role="Registrations" Type="Self.Registrations" Multiplicity="1" />
-          <End Role="CourseUser" Type="Self.CourseUser" Multiplicity="*" />
+          <End Role="CourseUsers" Type="Self.CourseUsers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Registrations">
               <PropertyRef Name="RegistrationID" />
             </Principal>
-            <Dependent Role="CourseUser">
+            <Dependent Role="CourseUsers">
               <PropertyRef Name="Users_Id" />
             </Dependent>
           </ReferentialConstraint>
@@ -159,12 +159,12 @@
         </Association>
         <Association Name="FK_GradeStudent_GPA">
           <End Role="Grades" Type="Self.Grades" Multiplicity="1" />
-          <End Role="StudentGrade" Type="Self.StudentGrade" Multiplicity="*" />
+          <End Role="StudentGrades" Type="Self.StudentGrades" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Grades">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="StudentGrade">
+            <Dependent Role="StudentGrades">
               <PropertyRef Name="GradeId" />
             </Dependent>
           </ReferentialConstraint>
@@ -183,60 +183,60 @@
         </Association>
         <Association Name="FK_RoleTask_Roles">
           <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
-          <End Role="RoleTask" Type="Self.RoleTask" Multiplicity="*" />
+          <End Role="RoleTasks" Type="Self.RoleTasks" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Roles">
               <PropertyRef Name="Role_ID" />
             </Principal>
-            <Dependent Role="RoleTask">
+            <Dependent Role="RoleTasks">
               <PropertyRef Name="RoleRef_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RoleTask_Tasks">
           <End Role="Tasks" Type="Self.Tasks" Multiplicity="1" />
-          <End Role="RoleTask" Type="Self.RoleTask" Multiplicity="*" />
+          <End Role="RoleTasks" Type="Self.RoleTasks" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tasks">
               <PropertyRef Name="TaskId" />
             </Principal>
-            <Dependent Role="RoleTask">
+            <Dependent Role="RoleTasks">
               <PropertyRef Name="TaskRef_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Student_GPACourse">
           <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
-          <End Role="StudentGrade" Type="Self.StudentGrade" Multiplicity="*" />
+          <End Role="StudentGrades" Type="Self.StudentGrades" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Courses">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="StudentGrade">
+            <Dependent Role="StudentGrades">
               <PropertyRef Name="CourseId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserRole_Roles">
           <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
-          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Roles">
               <PropertyRef Name="Role_ID" />
             </Principal>
-            <Dependent Role="UserRole">
+            <Dependent Role="UserRoles">
               <PropertyRef Name="RoleRef_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserRole_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="UserID" />
             </Principal>
-            <Dependent Role="UserRole">
+            <Dependent Role="UserRoles">
               <PropertyRef Name="UserRefID" />
             </Dependent>
           </ReferentialConstraint>
@@ -246,23 +246,23 @@
         </Function>
         <EntityContainer Name="GPAModelStoreContainer">
           <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CourseUser" EntityType="Self.CourseUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CourseUsers" EntityType="Self.CourseUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Feedbacks" EntityType="Self.Feedbacks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Grades" EntityType="Self.Grades" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Registrations" EntityType="Self.Registrations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RoleTask" EntityType="Self.RoleTask" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="StudentGrade" EntityType="Self.StudentGrade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleTasks" EntityType="Self.RoleTasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentGrades" EntityType="Self.StudentGrades" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CourseUser_Courses" Association="Self.FK_CourseUser_Courses">
             <End Role="Courses" EntitySet="Courses" />
-            <End Role="CourseUser" EntitySet="CourseUser" />
+            <End Role="CourseUsers" EntitySet="CourseUsers" />
           </AssociationSet>
           <AssociationSet Name="FK_CourseUser_Registration" Association="Self.FK_CourseUser_Registration">
             <End Role="Registrations" EntitySet="Registrations" />
-            <End Role="CourseUser" EntitySet="CourseUser" />
+            <End Role="CourseUsers" EntitySet="CourseUsers" />
           </AssociationSet>
           <AssociationSet Name="FK_Feedbacks_RegistrationDetails" Association="Self.FK_Feedbacks_RegistrationDetails">
             <End Role="Registrations" EntitySet="Registrations" />
@@ -274,7 +274,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_GradeStudent_GPA" Association="Self.FK_GradeStudent_GPA">
             <End Role="Grades" EntitySet="Grades" />
-            <End Role="StudentGrade" EntitySet="StudentGrade" />
+            <End Role="StudentGrades" EntitySet="StudentGrades" />
           </AssociationSet>
           <AssociationSet Name="FK_Registrations_Users" Association="Self.FK_Registrations_Users">
             <End Role="Users" EntitySet="Users" />
@@ -282,23 +282,23 @@
           </AssociationSet>
           <AssociationSet Name="FK_RoleTask_Roles" Association="Self.FK_RoleTask_Roles">
             <End Role="Roles" EntitySet="Roles" />
-            <End Role="RoleTask" EntitySet="RoleTask" />
+            <End Role="RoleTasks" EntitySet="RoleTasks" />
           </AssociationSet>
           <AssociationSet Name="FK_RoleTask_Tasks" Association="Self.FK_RoleTask_Tasks">
             <End Role="Tasks" EntitySet="Tasks" />
-            <End Role="RoleTask" EntitySet="RoleTask" />
+            <End Role="RoleTasks" EntitySet="RoleTasks" />
           </AssociationSet>
           <AssociationSet Name="FK_Student_GPACourse" Association="Self.FK_Student_GPACourse">
             <End Role="Courses" EntitySet="Courses" />
-            <End Role="StudentGrade" EntitySet="StudentGrade" />
+            <End Role="StudentGrades" EntitySet="StudentGrades" />
           </AssociationSet>
           <AssociationSet Name="FK_UserRole_Roles" Association="Self.FK_UserRole_Roles">
             <End Role="Roles" EntitySet="Roles" />
-            <End Role="UserRole" EntitySet="UserRole" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
           </AssociationSet>
           <AssociationSet Name="FK_UserRole_Users" Association="Self.FK_UserRole_Users">
             <End Role="Users" EntitySet="Users" />
-            <End Role="UserRole" EntitySet="UserRole" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -306,9 +306,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="GPAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="GPAEntities" annotation:LazyLoadingEnabled="true">
-          <FunctionImport Name="FindGPA">
-          <Parameter Name="Param1" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="Courses" EntityType="GPAModel.Cours" />
           <EntitySet Name="CourseUsers" EntityType="GPAModel.CourseUser" />
           <EntitySet Name="Feedbacks" EntityType="GPAModel.Feedback" />
@@ -364,7 +361,20 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
-          </EntityContainer>
+          <FunctionImport Name="FindGPA" ReturnType="Collection(GPAModel.FindGPA_Result1)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="FindGPA_Result">
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="Int32" Name="StudentID" Nullable="false" />
+          <Property Type="Int32" Name="CourseID" Nullable="false" />
+          <Property Type="String" Name="CourseName" Nullable="false" />
+          <Property Type="Int32" Name="Credit" Nullable="false" />
+          <Property Type="String" Name="GradeScore" Nullable="false" />
+          <Property Type="Double" Name="GradeNumber" Nullable="false" />
+          <Property Type="Double" Name="StudentCourseGrade" Nullable="false" />
+        </ComplexType>
         <EntityType Name="Cours">
           <Key>
             <PropertyRef Name="Id" />
@@ -623,6 +633,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="FindGPA_Result1">
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="Int32" Name="StudentID" Nullable="false" />
+          <Property Type="Int32" Name="CourseID" Nullable="false" />
+          <Property Type="String" Name="CourseName" Nullable="false" />
+          <Property Type="Int32" Name="Credit" Nullable="false" />
+          <Property Type="String" Name="GradeScore" Nullable="false" />
+          <Property Type="Double" Name="GradeNumber" Nullable="false" />
+          <Property Type="Double" Name="StudentCourseGrade" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -642,7 +662,7 @@
           </EntitySetMapping>
           <EntitySetMapping Name="CourseUsers">
             <EntityTypeMapping TypeName="GPAModel.CourseUser">
-              <MappingFragment StoreEntitySet="CourseUser">
+              <MappingFragment StoreEntitySet="CourseUsers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Users_Id" ColumnName="Users_Id" />
                 <ScalarProperty Name="Courses_Id" ColumnName="Courses_Id" />
@@ -697,7 +717,7 @@
           </EntitySetMapping>
           <EntitySetMapping Name="RoleTasks">
             <EntityTypeMapping TypeName="GPAModel.RoleTask">
-              <MappingFragment StoreEntitySet="RoleTask">
+              <MappingFragment StoreEntitySet="RoleTasks">
                 <ScalarProperty Name="TaskRef_ID" ColumnName="TaskRef_ID" />
                 <ScalarProperty Name="RoleRef_ID" ColumnName="RoleRef_ID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -706,7 +726,7 @@
           </EntitySetMapping>
           <EntitySetMapping Name="StudentGrades">
             <EntityTypeMapping TypeName="GPAModel.StudentGrade">
-              <MappingFragment StoreEntitySet="StudentGrade">
+              <MappingFragment StoreEntitySet="StudentGrades">
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="GradeId" ColumnName="GradeId" />
                 <ScalarProperty Name="CourseId" ColumnName="CourseId" />
@@ -725,7 +745,7 @@
           </EntitySetMapping>
           <EntitySetMapping Name="UserRoles">
             <EntityTypeMapping TypeName="GPAModel.UserRole">
-              <MappingFragment StoreEntitySet="UserRole">
+              <MappingFragment StoreEntitySet="UserRoles">
                 <ScalarProperty Name="RoleRef_ID" ColumnName="RoleRef_ID" />
                 <ScalarProperty Name="UserRefID" ColumnName="UserRefID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -743,7 +763,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          </EntityContainerMapping>
+          <FunctionImportMapping FunctionImportName="FindGPA" FunctionName="GPAModel.Store.FindGPA">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GPAModel.FindGPA_Result1">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="Credit" ColumnName="Credit" />
+                <ScalarProperty Name="GradeScore" ColumnName="GradeScore" />
+                <ScalarProperty Name="GradeNumber" ColumnName="GradeNumber" />
+                <ScalarProperty Name="StudentCourseGrade" ColumnName="StudentCourseGrade" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
