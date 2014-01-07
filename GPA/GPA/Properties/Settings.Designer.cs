@@ -29,7 +29,7 @@ namespace GPA.Properties
 
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("smtp.gmail.com")]
         public string SMTPServerName
         {
             get
@@ -44,7 +44,7 @@ namespace GPA.Properties
 
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("587")]
         public string SMTPServerPort
         {
             get
@@ -59,7 +59,7 @@ namespace GPA.Properties
 
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("gpa.application@gmail.com")]
         public string SMTPUser
         {
             get
@@ -74,7 +74,7 @@ namespace GPA.Properties
 
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("gp@application")]
         public string SMTPPass
         {
             get

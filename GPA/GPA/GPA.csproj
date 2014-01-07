@@ -181,6 +181,7 @@
     <Compile Include="DAL\Manager\CourseManager.cs" />
     <Compile Include="DAL\Manager\StudentManager.cs" />
     <Compile Include="DAL\Util\Helper.cs" />
+    <Compile Include="DAL\Util\SendEmail.cs" />
     <Compile Include="DAL\Util\TextValue.cs" />
     <Compile Include="FindGPADataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -362,6 +363,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Content\ajax-loader.gif" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -416,6 +418,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Report\GradeReport.cshtml" />
+    <Content Include="Views\Feedback\_FeedbackResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
