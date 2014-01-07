@@ -221,6 +221,15 @@
     <Compile Include="Models\FindGPA_Result.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetEcourses_Result.cs">
+      <DependentUpon>GPADataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetEcourses_Result1.cs">
+      <DependentUpon>GPADataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetEcourses_Result2.cs">
+      <DependentUpon>GPADataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GPADataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

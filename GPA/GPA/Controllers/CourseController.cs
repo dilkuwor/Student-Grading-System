@@ -1,5 +1,6 @@
 ﻿using GPA.DAL.Manager;
 using GPA.Models;
+using GPA.Models.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,8 +44,10 @@ namespace GPA.Controllers
         public ActionResult CourseSignup(int courseid)
         {
             User currentUser = (User)Session["currentUser"];
+            AccountManager amanager = new AccountManager();
+            
             StudentManager smanager = new StudentManager();
-            smanager.ApplyForCourse(courseid, currentUser.UserID);
+            smanager.ApplyForCourse(courseid, amanager.FindUserByUserID(currentUser.UserID).RegistrationID);
             return RedirectToAction("Index","Home");
         }
         

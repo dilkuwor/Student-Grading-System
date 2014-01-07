@@ -48,5 +48,14 @@ namespace GPA.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FindGPA_Result>("FindGPA", userIDParameter);
         }
+    
+        public virtual ObjectResult<GetEcourses_Result2> GetEcourses(Nullable<int> userID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEcourses_Result2>("GetEcourses", userIDParameter);
+        }
     }
 }
