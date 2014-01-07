@@ -20,7 +20,9 @@ namespace GPA.Models
     public class FeedbackSendViewModel
     {
         
+        [Required(ErrorMessage="Message can't be empty")]
         public string Message { get; set; }
+        [Required]
         public string Subject { get; set; }
         public int MyProperty { get; set; }
 

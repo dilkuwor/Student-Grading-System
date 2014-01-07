@@ -38,6 +38,7 @@ namespace GPA.Models
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<CourseEnrolment> CourseEnrolments { get; set; }
     
         public virtual int FindGPA(Nullable<int> param1)
         {

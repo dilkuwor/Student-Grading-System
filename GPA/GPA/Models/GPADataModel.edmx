@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="GPAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CourseEnrolment">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserRef_ID" Type="int" Nullable="false" />
+          <Property Name="CourseRef_ID" Type="int" Nullable="false" />
+          <Property Name="Date" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="IsApproved" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Courses">
           <Key>
             <PropertyRef Name="Id" />
@@ -109,6 +119,30 @@
           <Property Name="VerificationCode" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Role" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <Association Name="FK_CourseRequest_CourseRequest">
+          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+          <End Role="CourseEnrolment" Type="Self.CourseEnrolment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CourseEnrolment">
+              <PropertyRef Name="CourseRef_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CourseRequest_Registrations">
+          <End Role="Registrations" Type="Self.Registrations" Multiplicity="1" />
+          <End Role="CourseEnrolment" Type="Self.CourseEnrolment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Registrations">
+              <PropertyRef Name="RegistrationID" />
+            </Principal>
+            <Dependent Role="CourseEnrolment">
+              <PropertyRef Name="UserRef_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CourseUser_Courses">
           <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
           <End Role="CourseUser" Type="Self.CourseUser" Multiplicity="*" />
@@ -245,6 +279,7 @@
           <Parameter Name="UserID" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="GPAModelStoreContainer">
+          <EntitySet Name="CourseEnrolment" EntityType="Self.CourseEnrolment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CourseUser" EntityType="Self.CourseUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Feedbacks" EntityType="Self.Feedbacks" Schema="dbo" store:Type="Tables" />
@@ -256,6 +291,14 @@
           <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CourseRequest_CourseRequest" Association="Self.FK_CourseRequest_CourseRequest">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="CourseEnrolment" EntitySet="CourseEnrolment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseRequest_Registrations" Association="Self.FK_CourseRequest_Registrations">
+            <End Role="Registrations" EntitySet="Registrations" />
+            <End Role="CourseEnrolment" EntitySet="CourseEnrolment" />
+          </AssociationSet>
           <AssociationSet Name="FK_CourseUser_Courses" Association="Self.FK_CourseUser_Courses">
             <End Role="Courses" EntitySet="Courses" />
             <End Role="CourseUser" EntitySet="CourseUser" />
@@ -364,6 +407,15 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
+          <EntitySet Name="CourseEnrolments" EntityType="GPAModel.CourseEnrolment" />
+          <AssociationSet Name="FK_CourseRequest_CourseRequest" Association="GPAModel.FK_CourseRequest_CourseRequest">
+            <End Role="Cours" EntitySet="Courses" />
+            <End Role="CourseEnrolment" EntitySet="CourseEnrolments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseRequest_Registrations" Association="GPAModel.FK_CourseRequest_Registrations">
+            <End Role="Registration" EntitySet="Registrations" />
+            <End Role="CourseEnrolment" EntitySet="CourseEnrolments" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Cours">
           <Key>
@@ -376,6 +428,7 @@
           <Property Name="Credit" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CourseUsers" Relationship="GPAModel.FK_CourseUser_Courses" FromRole="Cours" ToRole="CourseUser" />
           <NavigationProperty Name="StudentGrades" Relationship="GPAModel.FK_Student_GPACourse" FromRole="Cours" ToRole="StudentGrade" />
+          <NavigationProperty Name="CourseEnrolments" Relationship="GPAModel.FK_CourseRequest_CourseRequest" FromRole="Cours" ToRole="CourseEnrolment" />
         </EntityType>
         <EntityType Name="CourseUser">
           <Key>
@@ -428,6 +481,7 @@
           <NavigationProperty Name="Feedbacks" Relationship="GPAModel.FK_Feedbacks_RegistrationDetails" FromRole="Registration" ToRole="Feedback" />
           <NavigationProperty Name="Feedbacks1" Relationship="GPAModel.FK_Feedbacks_Registrations" FromRole="Registration" ToRole="Feedback" />
           <NavigationProperty Name="User" Relationship="GPAModel.FK_Registrations_Users" FromRole="Registration" ToRole="User" />
+          <NavigationProperty Name="CourseEnrolments" Relationship="GPAModel.FK_CourseRequest_Registrations" FromRole="Registration" ToRole="CourseEnrolment" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -623,6 +677,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CourseEnrolment">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserRef_ID" Type="Int32" Nullable="false" />
+          <Property Name="CourseRef_ID" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Cours" Relationship="GPAModel.FK_CourseRequest_CourseRequest" FromRole="CourseEnrolment" ToRole="Cours" />
+          <NavigationProperty Name="Registration" Relationship="GPAModel.FK_CourseRequest_Registrations" FromRole="CourseEnrolment" ToRole="Registration" />
+        </EntityType>
+        <Association Name="FK_CourseRequest_CourseRequest">
+          <End Type="GPAModel.Cours" Role="Cours" Multiplicity="1" />
+          <End Type="GPAModel.CourseEnrolment" Role="CourseEnrolment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cours">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CourseEnrolment">
+              <PropertyRef Name="CourseRef_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CourseRequest_Registrations">
+          <End Type="GPAModel.Registration" Role="Registration" Multiplicity="1" />
+          <End Type="GPAModel.CourseEnrolment" Role="CourseEnrolment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Registration">
+              <PropertyRef Name="RegistrationID" />
+            </Principal>
+            <Dependent Role="CourseEnrolment">
+              <PropertyRef Name="UserRef_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -740,6 +830,17 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CourseEnrolments">
+            <EntityTypeMapping TypeName="GPAModel.CourseEnrolment">
+              <MappingFragment StoreEntitySet="CourseEnrolment">
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="CourseRef_ID" ColumnName="CourseRef_ID" />
+                <ScalarProperty Name="UserRef_ID" ColumnName="UserRef_ID" />
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

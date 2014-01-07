@@ -1,5 +1,7 @@
-﻿@{
+﻿@model GPA.Models.DashbordViewModel
+@{
     ViewBag.Title = "Home Page";
+    var model = Model;
 }
 
 <div class="jumbotron">
@@ -17,4 +19,7 @@
     <div class="col-md-4">
         
     </div>
+
+   @{Html.RenderPartial("~/Views/Student/StudentDashbord.cshtml", model);}
+   
 </div>

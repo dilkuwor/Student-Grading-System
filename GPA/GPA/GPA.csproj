@@ -40,7 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.ReportViewer.WebForms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -168,6 +168,7 @@
     <Compile Include="Controllers\ImportDataController.cs" />
     <Compile Include="Controllers\StaffsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="DAL\Extended\ECourse.cs" />
     <Compile Include="DAL\Extended\UserFeedback.cs" />
     <Compile Include="DAL\Manager\FeedbackManager.cs" />
     <Compile Include="DAL\Manager\SessionManager.cs" />
@@ -188,10 +189,14 @@
     <Compile Include="Models\Cours.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CourseEnrolment.cs">
+      <DependentUpon>GPADataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CourseUser.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CourseViewModel.cs" />
+    <Compile Include="Models\DashbordViewModel.cs" />
     <Compile Include="Models\Feedback.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
@@ -228,6 +233,7 @@
     <Compile Include="Models\StudentGrade.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StudentViewModel.cs" />
     <Compile Include="Models\Task.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
@@ -350,9 +356,11 @@
     <Content Include="Views\Staffs\Details.cshtml" />
     <Content Include="Views\Staffs\Edit.cshtml" />
     <Content Include="Views\Staffs\Index.cshtml" />
+    <Content Include="Views\Student\StudentDashbord.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Dashbord\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

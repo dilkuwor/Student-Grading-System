@@ -27,7 +27,10 @@
         <AssociationConnector Association="GPAModel.FK_UserRole_Roles" />
         <AssociationConnector Association="GPAModel.FK_RoleTask_Tasks" />
         <AssociationConnector Association="GPAModel.FK_UserRole_Users" />
-      </Diagram>
+        <EntityTypeShape EntityType="GPAModel.CourseEnrolment" Width="1.5" PointX="8.25" PointY="9" />
+        <AssociationConnector Association="GPAModel.FK_CourseRequest_CourseRequest" />
+        <AssociationConnector Association="GPAModel.FK_CourseRequest_Registrations" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

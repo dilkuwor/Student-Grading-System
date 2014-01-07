@@ -4,6 +4,7 @@ using GPA.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -64,7 +65,15 @@ namespace GPA.Controllers
             feedback.ToID = model.FeedbackSendViewModel.ToID;
             fmanager.SendFeedback(feedback);
             TempData["MessageSent"] = "True";
-            return RedirectToAction("Index");
+
+            if (!Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index");
+            }
+            var httpStatus = HttpStatusCode.OK;
+            return new HttpStatusCodeResult(httpStatus);
+
+           // return RedirectToAction("Index");
         }
 
 
@@ -85,7 +94,13 @@ namespace GPA.Controllers
             TempData["MessageSent"] = "False";
             FeedbackManager fmanager = new FeedbackManager();
             fmanager.DeleteFeedback(id);
-            return RedirectToAction("Index");
+            if (!Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index");
+            }
+            var httpStatus = HttpStatusCode.OK;
+            return new HttpStatusCodeResult(httpStatus);
+            //return RedirectToAction("Index");
         }
 
         public ActionResult FeedbackDetails(int id)

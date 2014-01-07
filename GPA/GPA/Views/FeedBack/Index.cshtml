@@ -1,6 +1,9 @@
 ﻿@model GPA.Models.FeedbackViewModel
 @{
     ViewBag.Title = "Index";
+    
+   
+    var auction = Model;
 }
 
 <h2>Index</h2>
@@ -65,7 +68,7 @@
     @if ((string)TempData["MessageDeleted"] == "True")
 {
     <div class="alert alert-success" style="margin-top:10px;">
-        Message Sent
+        Message Deleted
     </div>
 }
 </div>
@@ -132,21 +135,22 @@
     <div class="panel-heading">
         <h3 class="panel-title">Send Feedback</h3>
     </div>
-@using (Html.BeginForm("SendFeedback", "Feedback", FormMethod.Post, new {  role = "form" }))
+@using (Html.BeginForm("SendFeedback", "Feedback", FormMethod.Post, new {  role = "form", id = "myform" }))
 {
     @Html.AntiForgeryToken()
     <div class="panel-body">
        
         <h4>@Html.LabelFor(m => m.FeedbackSendViewModel.Subject)</h4>
         @Html.TextBoxFor(m => m.FeedbackSendViewModel.Subject, new { @class = "form-control", @placeholder="Enter Subject"})
-       
+        @Html.ValidationMessageFor(m => m.FeedbackSendViewModel.Subject)
         <h4>@Html.LabelFor(m => m.FeedbackSendViewModel.ToID)</h4>
         @Html.DropDownListFor(model => model.FeedbackSendViewModel.ToID, Model.FeedbackSendViewModel.UserList, new { @class = "form-control" })
         <h4>@Html.LabelFor(m => m.FeedbackSendViewModel.Message)</h4>
         @Html.TextAreaFor(m => m.FeedbackSendViewModel.Message, new { @class = "form-control", @placeholder = "Enter Message", @style  = "height:150px;width:350px;" })
+        @Html.ValidationMessageFor(m => m.FeedbackSendViewModel.Message)
 
         <div>
-            <input type="submit" value="send" class="btn btn-default" style="margin-top:10px;" />
+            <input id="mybtn" type="submit" value="send" class="itis btn btn-default" style="margin-top:10px;" />
         </div>
     </div>
     
@@ -163,15 +167,15 @@
     </div>
     }
 
-@section Scripts{
+@*@section Scripts{
     <script type="text/javascript">
         $(function () {
 
-            $('.post').on('click', function () {
+            $('#mybtn').on('click', function () {
                 var form = $(this).parent("form");
                 $.ajax({
                     type: "POST",
-                    url: form.attr(''),
+                    url: form.attr('action'),
                     data: form.serialize()
                 })
                 .success(function () {
@@ -187,4 +191,9 @@
 
     </script>
 
+}*@
+    
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }
