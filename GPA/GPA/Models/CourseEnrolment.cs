@@ -21,6 +21,6 @@ namespace GPA.Models
         public bool IsApproved { get; set; }
     
         public virtual Cours Cours { get; set; }
-        public virtual Registration Registration { get; set; }
+        public virtual UserDetail UserDetail { get; set; }
     }
 }

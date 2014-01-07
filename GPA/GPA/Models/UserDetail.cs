@@ -12,9 +12,9 @@ namespace GPA.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Registration
+    public partial class UserDetail
     {
-        public Registration()
+        public UserDetail()
         {
             this.CourseEnrolments = new HashSet<CourseEnrolment>();
             this.CourseUsers = new HashSet<CourseUser>();

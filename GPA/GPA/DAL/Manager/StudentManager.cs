@@ -10,7 +10,7 @@ using System.Web;
  * Date Started: 01/01/2014
  * Description: Handles Student business logic
  * Module Name: User Administration Module
- * Developer Name: Dil Kuwor/Laxman
+ * Developer Name: Dil Kuwor
  * Version: 0.1
  * Date Modified:
  * 
@@ -126,10 +126,7 @@ namespace GPA.DAL.Manager
                                   IsRequested = IsCourseRequested(studentid, c.Id)
 
                               }).ToList();
-
-
-
-
+                
             }
 
             return courses;

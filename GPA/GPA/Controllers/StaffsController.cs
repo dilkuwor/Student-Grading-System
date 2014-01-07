@@ -17,7 +17,7 @@ namespace GPA.Controllers
         // GET: /Staffs/
         public ActionResult Index(String searchString)
         {
-            var students = db.Users.Where(s => s.Role == "Staff").Include(u => u.Registrations);
+            var students = db.Users.Where(s => s.Role == "Staff").Include(u => u.UserDetails);
             if (!String.IsNullOrEmpty(searchString))
             {
                 students = students.Where(s => s.UserName.ToUpper().Contains(searchString.ToUpper()) && s.Role == "Staff");

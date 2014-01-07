@@ -16,7 +16,7 @@ namespace GPA.Models.Manager
 
             using (var db = new GPAEntities())
             {
-                Registration user = new Registration();
+                UserDetail user = new UserDetail();
                 user.FName = model.RegisterUserViewModel.FName;
                 user.LName = model.RegisterUserViewModel.LName;
                 user.Email = model.RegisterUserViewModel.Email;
@@ -26,7 +26,7 @@ namespace GPA.Models.Manager
                 user.LandNumber = model.RegisterUserViewModel.LandNumber;
                 user.MobileNumber = model.RegisterUserViewModel.MobileNumber;
                 user.UserID = userId;
-                db.Registrations.Add(user);
+                db.UserDetails.Add(user);
                 db.SaveChanges();
 
 
@@ -38,12 +38,12 @@ namespace GPA.Models.Manager
         /// Returns the list of users
         /// </summary>
         /// <returns></returns>
-        public List<Registration> GetUserListByRole(string role)
+        public List<UserDetail> GetUserListByRole(string role)
         {
-            var users = new List<Registration>();
+            var users = new List<UserDetail>();
             using (var db = new GPAEntities())
             {
-                users  = db.Registrations.Where(r => r.User.Role == role).ToList();
+                users = db.UserDetails.Where(r => r.User.Role == role).ToList();
             }
             return users;
         }
@@ -80,7 +80,7 @@ namespace GPA.Models.Manager
             Boolean flag = false;
             using (var db = new GPAEntities())
             {
-                var userRegistraion = db.Registrations.Where(r => r.UserID == user.UserID).SingleOrDefault();
+                var userRegistraion = db.UserDetails.Where(r => r.UserID == user.UserID).SingleOrDefault();
                 if (userRegistraion != null)
                 {
                     flag = true;
@@ -157,12 +157,12 @@ namespace GPA.Models.Manager
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public Registration FindUserByUserID(int userId)
+        public UserDetail FindUserByUserID(int userId)
         {
-            Registration user;
+            UserDetail user;
             using (var db = new GPAEntities())
             {
-                user = db.Registrations.Where(r => r.UserID == userId).Single();
+                user = db.UserDetails.Where(r => r.UserID == userId).Single();
             }
             return user;
 

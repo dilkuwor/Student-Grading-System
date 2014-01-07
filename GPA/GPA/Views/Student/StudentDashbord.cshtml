@@ -43,7 +43,7 @@
 
 
 <div class="panel panel-default disabled">
-    <div class="panel-heading">Course Taken</div>
+    <div class="panel-heading">Course Registration</div>
     <div class="panel-body">
         <table class="table col-lg-6">
             <tr>
@@ -63,7 +63,7 @@
             {
                 if (item.IsRequested )
                 {
-                    <tr style="color:red;background-color:#b6ff00">
+                    <tr style="color: red; background-color: #CEE3F0">
                     <td>
                         @Html.DisplayFor(modelItem => item.Id)
                     </td>
@@ -81,7 +81,7 @@
                 }
                 else
                 {
-                    <tr style="color:green;background-color:gray">
+                    <tr style="color: green; background-color: #F5F5F5">
                         <td>
                             @Html.DisplayFor(modelItem => item.Id)
                         </td>

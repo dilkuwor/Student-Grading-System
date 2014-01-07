@@ -60,7 +60,7 @@ namespace GPA.Controllers
             feedback.Subject = model.FeedbackSendViewModel.Subject;
             User currentUser = (User)Session["currentUser"];
             FeedbackManager fmanager = new FeedbackManager();
-            Registration current = fmanager.FindUserByUserID(currentUser.UserID);
+            UserDetail current = fmanager.FindUserByUserID(currentUser.UserID);
             feedback.FromID = current.RegistrationID;
             feedback.ToID = model.FeedbackSendViewModel.ToID;
             fmanager.SendFeedback(feedback);

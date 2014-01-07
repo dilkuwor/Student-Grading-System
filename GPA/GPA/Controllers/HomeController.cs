@@ -20,9 +20,9 @@ namespace GPA.Controllers
             DashbordViewModel model = new DashbordViewModel();
 
             AccountManager amanager = new AccountManager();
-            
-            
-            Registration ruser = amanager.FindUserByUserID(19);
+
+            //Test
+            UserDetail ruser = amanager.FindUserByUserID(1);
           
             //if the user is registered check his role and display different layout
             StudentViewModel studentModel = new StudentViewModel();
@@ -31,7 +31,7 @@ namespace GPA.Controllers
             studentModel.Courses = smanager.GetAlreadyTakenCoursesByUserID(ruser.RegistrationID);
             studentModel.ECourses = smanager.GetECourses(ruser.RegistrationID);
             model.StudentViewModel = studentModel;
-            CreateSession(19);
+            CreateSession(1);
             return View(model);
         }
 

@@ -21,7 +21,7 @@ namespace GPA.Models
         public string Subject { get; set; }
         public string Date { get; set; }
     
-        public virtual Registration Registration { get; set; }
-        public virtual Registration Registration1 { get; set; }
+        public virtual UserDetail UserDetail { get; set; }
+        public virtual UserDetail UserDetail1 { get; set; }
     }
 }

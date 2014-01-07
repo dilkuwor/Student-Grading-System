@@ -5,7 +5,7 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="GPAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="CourseEnrolment">
+        <EntityType Name="CourseEnrolments">
           <Key>
             <PropertyRef Name="RequestID" />
           </Key>
@@ -25,7 +25,7 @@
           <Property Name="CourseName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Credit" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="CourseUser">
+        <EntityType Name="CourseUsers">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -49,10 +49,43 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="GradeScore" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="GradeScore" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="GradeNumber" Type="float" Nullable="false" />
         </EntityType>
-        <EntityType Name="Registrations">
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Role_ID" />
+          </Key>
+          <Property Name="Role_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RoleTasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleRef_ID" Type="int" Nullable="false" />
+          <Property Name="TaskRef_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StudentGrades">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="CourseId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="GradeId" Type="int" Nullable="false" />
+          <Property Name="ExtraCredit" Type="int" />
+        </EntityType>
+        <EntityType Name="Tasks">
+          <Key>
+            <PropertyRef Name="TaskId" />
+          </Key>
+          <Property Name="TaskId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserDetails">
           <Key>
             <PropertyRef Name="RegistrationID" />
           </Key>
@@ -68,40 +101,7 @@
           <Property Name="MobileNumber" Type="varchar" MaxLength="50" />
           <Property Name="UserID" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Roles">
-          <Key>
-            <PropertyRef Name="Role_ID" />
-          </Key>
-          <Property Name="Role_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="RoleTask">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleRef_ID" Type="int" Nullable="false" />
-          <Property Name="TaskRef_ID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="StudentGrade">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="CourseId" />
-          </Key>
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="CourseId" Type="int" Nullable="false" />
-          <Property Name="GradeId" Type="int" Nullable="false" />
-          <Property Name="Status" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Tasks">
-          <Key>
-            <PropertyRef Name="TaskId" />
-          </Key>
-          <Property Name="TaskId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserRole">
+        <EntityType Name="UserRoles">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -121,57 +121,57 @@
         </EntityType>
         <Association Name="FK_CourseRequest_CourseRequest">
           <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
-          <End Role="CourseEnrolment" Type="Self.CourseEnrolment" Multiplicity="*" />
+          <End Role="CourseEnrolments" Type="Self.CourseEnrolments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Courses">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="CourseEnrolment">
+            <Dependent Role="CourseEnrolments">
               <PropertyRef Name="CourseRef_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CourseRequest_Registrations">
-          <End Role="Registrations" Type="Self.Registrations" Multiplicity="1" />
-          <End Role="CourseEnrolment" Type="Self.CourseEnrolment" Multiplicity="*" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
+          <End Role="CourseEnrolments" Type="Self.CourseEnrolments" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Registrations">
+            <Principal Role="UserDetails">
               <PropertyRef Name="RegistrationID" />
             </Principal>
-            <Dependent Role="CourseEnrolment">
+            <Dependent Role="CourseEnrolments">
               <PropertyRef Name="UserRef_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CourseUser_Courses">
           <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
-          <End Role="CourseUser" Type="Self.CourseUser" Multiplicity="*" />
+          <End Role="CourseUsers" Type="Self.CourseUsers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Courses">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="CourseUser">
+            <Dependent Role="CourseUsers">
               <PropertyRef Name="Courses_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CourseUser_Registration">
-          <End Role="Registrations" Type="Self.Registrations" Multiplicity="1" />
-          <End Role="CourseUser" Type="Self.CourseUser" Multiplicity="*" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
+          <End Role="CourseUsers" Type="Self.CourseUsers" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Registrations">
+            <Principal Role="UserDetails">
               <PropertyRef Name="RegistrationID" />
             </Principal>
-            <Dependent Role="CourseUser">
+            <Dependent Role="CourseUsers">
               <PropertyRef Name="Users_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Feedbacks_RegistrationDetails">
-          <End Role="Registrations" Type="Self.Registrations" Multiplicity="1" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
           <End Role="Feedbacks" Type="Self.Feedbacks" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Registrations">
+            <Principal Role="UserDetails">
               <PropertyRef Name="RegistrationID" />
             </Principal>
             <Dependent Role="Feedbacks">
@@ -180,10 +180,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Feedbacks_Registrations">
-          <End Role="Registrations" Type="Self.Registrations" Multiplicity="1" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
           <End Role="Feedbacks" Type="Self.Feedbacks" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Registrations">
+            <Principal Role="UserDetails">
               <PropertyRef Name="RegistrationID" />
             </Principal>
             <Dependent Role="Feedbacks">
@@ -193,84 +193,84 @@
         </Association>
         <Association Name="FK_GradeStudent_GPA">
           <End Role="Grades" Type="Self.Grades" Multiplicity="1" />
-          <End Role="StudentGrade" Type="Self.StudentGrade" Multiplicity="*" />
+          <End Role="StudentGrades" Type="Self.StudentGrades" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Grades">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="StudentGrade">
+            <Dependent Role="StudentGrades">
               <PropertyRef Name="GradeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Registrations_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Registrations" Type="Self.Registrations" Multiplicity="*" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="UserID" />
             </Principal>
-            <Dependent Role="Registrations">
+            <Dependent Role="UserDetails">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RoleTask_Roles">
           <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
-          <End Role="RoleTask" Type="Self.RoleTask" Multiplicity="*" />
+          <End Role="RoleTasks" Type="Self.RoleTasks" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Roles">
               <PropertyRef Name="Role_ID" />
             </Principal>
-            <Dependent Role="RoleTask">
+            <Dependent Role="RoleTasks">
               <PropertyRef Name="RoleRef_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RoleTask_Tasks">
           <End Role="Tasks" Type="Self.Tasks" Multiplicity="1" />
-          <End Role="RoleTask" Type="Self.RoleTask" Multiplicity="*" />
+          <End Role="RoleTasks" Type="Self.RoleTasks" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tasks">
               <PropertyRef Name="TaskId" />
             </Principal>
-            <Dependent Role="RoleTask">
+            <Dependent Role="RoleTasks">
               <PropertyRef Name="TaskRef_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Student_GPACourse">
           <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
-          <End Role="StudentGrade" Type="Self.StudentGrade" Multiplicity="*" />
+          <End Role="StudentGrades" Type="Self.StudentGrades" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Courses">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="StudentGrade">
+            <Dependent Role="StudentGrades">
               <PropertyRef Name="CourseId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserRole_Roles">
           <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
-          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Roles">
               <PropertyRef Name="Role_ID" />
             </Principal>
-            <Dependent Role="UserRole">
+            <Dependent Role="UserRoles">
               <PropertyRef Name="RoleRef_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserRole_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="UserID" />
             </Principal>
-            <Dependent Role="UserRole">
+            <Dependent Role="UserRoles">
               <PropertyRef Name="UserRefID" />
             </Dependent>
           </ReferentialConstraint>
@@ -282,157 +282,75 @@
           <Parameter Name="UserID" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="GPAModelStoreContainer">
-          <EntitySet Name="CourseEnrolment" EntityType="Self.CourseEnrolment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CourseEnrolments" EntityType="Self.CourseEnrolments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CourseUser" EntityType="Self.CourseUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CourseUsers" EntityType="Self.CourseUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Feedbacks" EntityType="Self.Feedbacks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Grades" EntityType="Self.Grades" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Registrations" EntityType="Self.Registrations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RoleTask" EntityType="Self.RoleTask" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="StudentGrade" EntityType="Self.StudentGrade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleTasks" EntityType="Self.RoleTasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentGrades" EntityType="Self.StudentGrades" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CourseRequest_CourseRequest" Association="Self.FK_CourseRequest_CourseRequest">
             <End Role="Courses" EntitySet="Courses" />
-            <End Role="CourseEnrolment" EntitySet="CourseEnrolment" />
+            <End Role="CourseEnrolments" EntitySet="CourseEnrolments" />
           </AssociationSet>
           <AssociationSet Name="FK_CourseRequest_Registrations" Association="Self.FK_CourseRequest_Registrations">
-            <End Role="Registrations" EntitySet="Registrations" />
-            <End Role="CourseEnrolment" EntitySet="CourseEnrolment" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="CourseEnrolments" EntitySet="CourseEnrolments" />
           </AssociationSet>
           <AssociationSet Name="FK_CourseUser_Courses" Association="Self.FK_CourseUser_Courses">
             <End Role="Courses" EntitySet="Courses" />
-            <End Role="CourseUser" EntitySet="CourseUser" />
+            <End Role="CourseUsers" EntitySet="CourseUsers" />
           </AssociationSet>
           <AssociationSet Name="FK_CourseUser_Registration" Association="Self.FK_CourseUser_Registration">
-            <End Role="Registrations" EntitySet="Registrations" />
-            <End Role="CourseUser" EntitySet="CourseUser" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="CourseUsers" EntitySet="CourseUsers" />
           </AssociationSet>
           <AssociationSet Name="FK_Feedbacks_RegistrationDetails" Association="Self.FK_Feedbacks_RegistrationDetails">
-            <End Role="Registrations" EntitySet="Registrations" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
             <End Role="Feedbacks" EntitySet="Feedbacks" />
           </AssociationSet>
           <AssociationSet Name="FK_Feedbacks_Registrations" Association="Self.FK_Feedbacks_Registrations">
-            <End Role="Registrations" EntitySet="Registrations" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
             <End Role="Feedbacks" EntitySet="Feedbacks" />
           </AssociationSet>
           <AssociationSet Name="FK_GradeStudent_GPA" Association="Self.FK_GradeStudent_GPA">
             <End Role="Grades" EntitySet="Grades" />
-            <End Role="StudentGrade" EntitySet="StudentGrade" />
+            <End Role="StudentGrades" EntitySet="StudentGrades" />
           </AssociationSet>
           <AssociationSet Name="FK_Registrations_Users" Association="Self.FK_Registrations_Users">
             <End Role="Users" EntitySet="Users" />
-            <End Role="Registrations" EntitySet="Registrations" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_RoleTask_Roles" Association="Self.FK_RoleTask_Roles">
             <End Role="Roles" EntitySet="Roles" />
-            <End Role="RoleTask" EntitySet="RoleTask" />
+            <End Role="RoleTasks" EntitySet="RoleTasks" />
           </AssociationSet>
           <AssociationSet Name="FK_RoleTask_Tasks" Association="Self.FK_RoleTask_Tasks">
             <End Role="Tasks" EntitySet="Tasks" />
-            <End Role="RoleTask" EntitySet="RoleTask" />
+            <End Role="RoleTasks" EntitySet="RoleTasks" />
           </AssociationSet>
           <AssociationSet Name="FK_Student_GPACourse" Association="Self.FK_Student_GPACourse">
             <End Role="Courses" EntitySet="Courses" />
-            <End Role="StudentGrade" EntitySet="StudentGrade" />
+            <End Role="StudentGrades" EntitySet="StudentGrades" />
           </AssociationSet>
           <AssociationSet Name="FK_UserRole_Roles" Association="Self.FK_UserRole_Roles">
             <End Role="Roles" EntitySet="Roles" />
-            <End Role="UserRole" EntitySet="UserRole" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
           </AssociationSet>
           <AssociationSet Name="FK_UserRole_Users" Association="Self.FK_UserRole_Users">
             <End Role="Users" EntitySet="Users" />
-            <End Role="UserRole" EntitySet="UserRole" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GPAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="GPAEntities" annotation:LazyLoadingEnabled="true">
-          <FunctionImport Name="FindGPA" ReturnType="Collection(GPAModel.FindGPA_Result)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="CourseEnrolments" EntityType="GPAModel.CourseEnrolment" />
-          <EntitySet Name="Courses" EntityType="GPAModel.Cours" />
-          <EntitySet Name="CourseUsers" EntityType="GPAModel.CourseUser" />
-          <EntitySet Name="Feedbacks" EntityType="GPAModel.Feedback" />
-          <EntitySet Name="Grades" EntityType="GPAModel.Grade" />
-          <EntitySet Name="Registrations" EntityType="GPAModel.Registration" />
-          <EntitySet Name="Roles" EntityType="GPAModel.Role" />
-          <EntitySet Name="RoleTasks" EntityType="GPAModel.RoleTask" />
-          <EntitySet Name="StudentGrades" EntityType="GPAModel.StudentGrade" />
-          <EntitySet Name="Tasks" EntityType="GPAModel.Task" />
-          <EntitySet Name="UserRoles" EntityType="GPAModel.UserRole" />
-          <EntitySet Name="Users" EntityType="GPAModel.User" />
-          <AssociationSet Name="FK_CourseRequest_CourseRequest" Association="GPAModel.FK_CourseRequest_CourseRequest">
-            <End Role="Cours" EntitySet="Courses" />
-            <End Role="CourseEnrolment" EntitySet="CourseEnrolments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CourseRequest_Registrations" Association="GPAModel.FK_CourseRequest_Registrations">
-            <End Role="Registration" EntitySet="Registrations" />
-            <End Role="CourseEnrolment" EntitySet="CourseEnrolments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CourseUser_Courses" Association="GPAModel.FK_CourseUser_Courses">
-            <End Role="Cours" EntitySet="Courses" />
-            <End Role="CourseUser" EntitySet="CourseUsers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Student_GPACourse" Association="GPAModel.FK_Student_GPACourse">
-            <End Role="Cours" EntitySet="Courses" />
-            <End Role="StudentGrade" EntitySet="StudentGrades" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CourseUser_Registration" Association="GPAModel.FK_CourseUser_Registration">
-            <End Role="Registration" EntitySet="Registrations" />
-            <End Role="CourseUser" EntitySet="CourseUsers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Feedbacks_RegistrationDetails" Association="GPAModel.FK_Feedbacks_RegistrationDetails">
-            <End Role="Registration" EntitySet="Registrations" />
-            <End Role="Feedback" EntitySet="Feedbacks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Feedbacks_Registrations" Association="GPAModel.FK_Feedbacks_Registrations">
-            <End Role="Registration" EntitySet="Registrations" />
-            <End Role="Feedback" EntitySet="Feedbacks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GradeStudent_GPA" Association="GPAModel.FK_GradeStudent_GPA">
-            <End Role="Grade" EntitySet="Grades" />
-            <End Role="StudentGrade" EntitySet="StudentGrades" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Registrations_Users" Association="GPAModel.FK_Registrations_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Registration" EntitySet="Registrations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RoleTask_Roles" Association="GPAModel.FK_RoleTask_Roles">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="RoleTask" EntitySet="RoleTasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserRole_Roles" Association="GPAModel.FK_UserRole_Roles">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="UserRole" EntitySet="UserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RoleTask_Tasks" Association="GPAModel.FK_RoleTask_Tasks">
-            <End Role="Task" EntitySet="Tasks" />
-            <End Role="RoleTask" EntitySet="RoleTasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserRole_Users" Association="GPAModel.FK_UserRole_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="UserRole" EntitySet="UserRoles" />
-          </AssociationSet>
-          <FunctionImport Name="GetEcourses" ReturnType="Collection(GPAModel.GetEcourses_Result2)">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-          </FunctionImport>
-        </EntityContainer>
-        <ComplexType Name="FindGPA_Result">
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="Int32" Name="StudentID" Nullable="false" />
-          <Property Type="Int32" Name="CourseID" Nullable="false" />
-          <Property Type="String" Name="CourseName" Nullable="false" />
-          <Property Type="Int32" Name="Credit" Nullable="false" />
-          <Property Type="String" Name="GradeScore" Nullable="false" />
-          <Property Type="Double" Name="GradeNumber" Nullable="false" />
-          <Property Type="Double" Name="StudentCourseGrade" Nullable="false" />
-        </ComplexType>
         <EntityType Name="CourseEnrolment">
           <Key>
             <PropertyRef Name="RequestID" />
@@ -440,23 +358,23 @@
           <Property Name="RequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserRef_ID" Type="Int32" Nullable="false" />
           <Property Name="CourseRef_ID" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IsApproved" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Cours" Relationship="GPAModel.FK_CourseRequest_CourseRequest" FromRole="CourseEnrolment" ToRole="Cours" />
-          <NavigationProperty Name="Registration" Relationship="GPAModel.FK_CourseRequest_Registrations" FromRole="CourseEnrolment" ToRole="Registration" />
+          <NavigationProperty Name="Cours" Relationship="Self.FK_CourseRequest_CourseRequest" FromRole="CourseEnrolments" ToRole="Courses" />
+          <NavigationProperty Name="UserDetail" Relationship="Self.FK_CourseRequest_Registrations" FromRole="CourseEnrolments" ToRole="UserDetails" />
         </EntityType>
         <EntityType Name="Cours">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SubCode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Level" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CourseName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SubCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Level" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CourseName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Credit" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CourseEnrolments" Relationship="GPAModel.FK_CourseRequest_CourseRequest" FromRole="Cours" ToRole="CourseEnrolment" />
-          <NavigationProperty Name="CourseUsers" Relationship="GPAModel.FK_CourseUser_Courses" FromRole="Cours" ToRole="CourseUser" />
-          <NavigationProperty Name="StudentGrades" Relationship="GPAModel.FK_Student_GPACourse" FromRole="Cours" ToRole="StudentGrade" />
+          <NavigationProperty Name="CourseEnrolments" Relationship="Self.FK_CourseRequest_CourseRequest" FromRole="Courses" ToRole="CourseEnrolments" />
+          <NavigationProperty Name="CourseUsers" Relationship="Self.FK_CourseUser_Courses" FromRole="Courses" ToRole="CourseUsers" />
+          <NavigationProperty Name="StudentGrades" Relationship="Self.FK_Student_GPACourse" FromRole="Courses" ToRole="StudentGrades" />
         </EntityType>
         <EntityType Name="CourseUser">
           <Key>
@@ -465,60 +383,39 @@
           <Property Name="Courses_Id" Type="Int32" Nullable="false" />
           <Property Name="Users_Id" Type="Int32" Nullable="false" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Cours" Relationship="GPAModel.FK_CourseUser_Courses" FromRole="CourseUser" ToRole="Cours" />
-          <NavigationProperty Name="Registration" Relationship="GPAModel.FK_CourseUser_Registration" FromRole="CourseUser" ToRole="Registration" />
+          <NavigationProperty Name="Cours" Relationship="Self.FK_CourseUser_Courses" FromRole="CourseUsers" ToRole="Courses" />
+          <NavigationProperty Name="UserDetail" Relationship="Self.FK_CourseUser_Registration" FromRole="CourseUsers" ToRole="UserDetails" />
         </EntityType>
         <EntityType Name="Feedback">
           <Key>
             <PropertyRef Name="FeedbackID" />
           </Key>
           <Property Name="FeedbackID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Comment" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="FromID" Type="Int32" Nullable="false" />
           <Property Name="ToID" Type="Int32" Nullable="false" />
           <Property Name="Subject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Date" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Registration" Relationship="GPAModel.FK_Feedbacks_RegistrationDetails" FromRole="Feedback" ToRole="Registration" />
-          <NavigationProperty Name="Registration1" Relationship="GPAModel.FK_Feedbacks_Registrations" FromRole="Feedback" ToRole="Registration" />
+          <NavigationProperty Name="UserDetail" Relationship="Self.FK_Feedbacks_RegistrationDetails" FromRole="Feedbacks" ToRole="UserDetails" />
+          <NavigationProperty Name="UserDetail1" Relationship="Self.FK_Feedbacks_Registrations" FromRole="Feedbacks" ToRole="UserDetails" />
         </EntityType>
         <EntityType Name="Grade">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GradeScore" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GradeScore" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="GradeNumber" Type="Double" Nullable="false" />
-          <NavigationProperty Name="StudentGrades" Relationship="GPAModel.FK_GradeStudent_GPA" FromRole="Grade" ToRole="StudentGrade" />
-        </EntityType>
-        <EntityType Name="Registration">
-          <Key>
-            <PropertyRef Name="RegistrationID" />
-          </Key>
-          <Property Name="RegistrationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="LName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="State" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Zip" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="LandNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CourseEnrolments" Relationship="GPAModel.FK_CourseRequest_Registrations" FromRole="Registration" ToRole="CourseEnrolment" />
-          <NavigationProperty Name="CourseUsers" Relationship="GPAModel.FK_CourseUser_Registration" FromRole="Registration" ToRole="CourseUser" />
-          <NavigationProperty Name="Feedbacks" Relationship="GPAModel.FK_Feedbacks_RegistrationDetails" FromRole="Registration" ToRole="Feedback" />
-          <NavigationProperty Name="Feedbacks1" Relationship="GPAModel.FK_Feedbacks_Registrations" FromRole="Registration" ToRole="Feedback" />
-          <NavigationProperty Name="User" Relationship="GPAModel.FK_Registrations_Users" FromRole="Registration" ToRole="User" />
+          <NavigationProperty Name="StudentGrades" Relationship="Self.FK_GradeStudent_GPA" FromRole="Grades" ToRole="StudentGrades" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="Role_ID" />
           </Key>
           <Property Name="Role_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="RoleTasks" Relationship="GPAModel.FK_RoleTask_Roles" FromRole="Role" ToRole="RoleTask" />
-          <NavigationProperty Name="UserRoles" Relationship="GPAModel.FK_UserRole_Roles" FromRole="Role" ToRole="UserRole" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="RoleTasks" Relationship="Self.FK_RoleTask_Roles" FromRole="Roles" ToRole="RoleTasks" />
+          <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_Roles" FromRole="Roles" ToRole="UserRoles" />
         </EntityType>
         <EntityType Name="RoleTask">
           <Key>
@@ -527,8 +424,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleRef_ID" Type="Int32" Nullable="false" />
           <Property Name="TaskRef_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Role" Relationship="GPAModel.FK_RoleTask_Roles" FromRole="RoleTask" ToRole="Role" />
-          <NavigationProperty Name="Task" Relationship="GPAModel.FK_RoleTask_Tasks" FromRole="RoleTask" ToRole="Task" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_RoleTask_Roles" FromRole="RoleTasks" ToRole="Roles" />
+          <NavigationProperty Name="Task" Relationship="Self.FK_RoleTask_Tasks" FromRole="RoleTasks" ToRole="Tasks" />
         </EntityType>
         <EntityType Name="StudentGrade">
           <Key>
@@ -538,18 +435,39 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="CourseId" Type="Int32" Nullable="false" />
           <Property Name="GradeId" Type="Int32" Nullable="false" />
-          <Property Name="Status" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Cours" Relationship="GPAModel.FK_Student_GPACourse" FromRole="StudentGrade" ToRole="Cours" />
-          <NavigationProperty Name="Grade" Relationship="GPAModel.FK_GradeStudent_GPA" FromRole="StudentGrade" ToRole="Grade" />
+          <Property Name="ExtraCredit" Type="Int32" />
+          <NavigationProperty Name="Cours" Relationship="Self.FK_Student_GPACourse" FromRole="StudentGrades" ToRole="Courses" />
+          <NavigationProperty Name="Grade" Relationship="Self.FK_GradeStudent_GPA" FromRole="StudentGrades" ToRole="Grades" />
         </EntityType>
         <EntityType Name="Task">
           <Key>
             <PropertyRef Name="TaskId" />
           </Key>
           <Property Name="TaskId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="RoleTasks" Relationship="GPAModel.FK_RoleTask_Tasks" FromRole="Task" ToRole="RoleTask" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="RoleTasks" Relationship="Self.FK_RoleTask_Tasks" FromRole="Tasks" ToRole="RoleTasks" />
+        </EntityType>
+        <EntityType Name="UserDetail">
+          <Key>
+            <PropertyRef Name="RegistrationID" />
+          </Key>
+          <Property Name="RegistrationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Zip" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LandNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CourseEnrolments" Relationship="Self.FK_CourseRequest_Registrations" FromRole="UserDetails" ToRole="CourseEnrolments" />
+          <NavigationProperty Name="CourseUsers" Relationship="Self.FK_CourseUser_Registration" FromRole="UserDetails" ToRole="CourseUsers" />
+          <NavigationProperty Name="Feedbacks" Relationship="Self.FK_Feedbacks_RegistrationDetails" FromRole="UserDetails" ToRole="Feedbacks" />
+          <NavigationProperty Name="Feedbacks1" Relationship="Self.FK_Feedbacks_Registrations" FromRole="UserDetails" ToRole="Feedbacks" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Registrations_Users" FromRole="UserDetails" ToRole="Users" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -558,204 +476,416 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="UserRefID" Type="Int32" Nullable="false" />
           <Property Name="RoleRef_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Role" Relationship="GPAModel.FK_UserRole_Roles" FromRole="UserRole" ToRole="Role" />
-          <NavigationProperty Name="User" Relationship="GPAModel.FK_UserRole_Users" FromRole="UserRole" ToRole="User" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_UserRole_Roles" FromRole="UserRoles" ToRole="Roles" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserRole_Users" FromRole="UserRoles" ToRole="Users" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserID" />
           </Key>
           <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="VerificationCode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Role" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Registrations" Relationship="GPAModel.FK_Registrations_Users" FromRole="User" ToRole="Registration" />
-          <NavigationProperty Name="UserRoles" Relationship="GPAModel.FK_UserRole_Users" FromRole="User" ToRole="UserRole" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VerificationCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="UserDetails" Relationship="Self.FK_Registrations_Users" FromRole="Users" ToRole="UserDetails" />
+          <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_Users" FromRole="Users" ToRole="UserRoles" />
         </EntityType>
         <Association Name="FK_CourseRequest_CourseRequest">
-          <End Type="GPAModel.Cours" Role="Cours" Multiplicity="1" />
-          <End Type="GPAModel.CourseEnrolment" Role="CourseEnrolment" Multiplicity="*" />
+          <End Role="Courses" Type="Self.Cours" Multiplicity="1" />
+          <End Role="CourseEnrolments" Type="Self.CourseEnrolment" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Cours">
+            <Principal Role="Courses">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="CourseEnrolment">
+            <Dependent Role="CourseEnrolments">
               <PropertyRef Name="CourseRef_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CourseRequest_Registrations">
-          <End Type="GPAModel.Registration" Role="Registration" Multiplicity="1" />
-          <End Type="GPAModel.CourseEnrolment" Role="CourseEnrolment" Multiplicity="*" />
+          <End Role="UserDetails" Type="Self.UserDetail" Multiplicity="1" />
+          <End Role="CourseEnrolments" Type="Self.CourseEnrolment" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Registration">
+            <Principal Role="UserDetails">
               <PropertyRef Name="RegistrationID" />
             </Principal>
-            <Dependent Role="CourseEnrolment">
+            <Dependent Role="CourseEnrolments">
               <PropertyRef Name="UserRef_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CourseUser_Courses">
-          <End Type="GPAModel.Cours" Role="Cours" Multiplicity="1" />
-          <End Type="GPAModel.CourseUser" Role="CourseUser" Multiplicity="*" />
+          <End Role="Courses" Type="Self.Cours" Multiplicity="1" />
+          <End Role="CourseUsers" Type="Self.CourseUser" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Cours">
+            <Principal Role="Courses">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="CourseUser">
+            <Dependent Role="CourseUsers">
               <PropertyRef Name="Courses_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Student_GPACourse">
-          <End Type="GPAModel.Cours" Role="Cours" Multiplicity="1" />
-          <End Type="GPAModel.StudentGrade" Role="StudentGrade" Multiplicity="*" />
+          <End Role="Courses" Type="Self.Cours" Multiplicity="1" />
+          <End Role="StudentGrades" Type="Self.StudentGrade" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Cours">
+            <Principal Role="Courses">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="StudentGrade">
+            <Dependent Role="StudentGrades">
               <PropertyRef Name="CourseId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CourseUser_Registration">
-          <End Type="GPAModel.Registration" Role="Registration" Multiplicity="1" />
-          <End Type="GPAModel.CourseUser" Role="CourseUser" Multiplicity="*" />
+          <End Role="UserDetails" Type="Self.UserDetail" Multiplicity="1" />
+          <End Role="CourseUsers" Type="Self.CourseUser" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Registration">
+            <Principal Role="UserDetails">
               <PropertyRef Name="RegistrationID" />
             </Principal>
-            <Dependent Role="CourseUser">
+            <Dependent Role="CourseUsers">
               <PropertyRef Name="Users_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Feedbacks_RegistrationDetails">
-          <End Type="GPAModel.Registration" Role="Registration" Multiplicity="1" />
-          <End Type="GPAModel.Feedback" Role="Feedback" Multiplicity="*" />
+          <End Role="UserDetails" Type="Self.UserDetail" Multiplicity="1" />
+          <End Role="Feedbacks" Type="Self.Feedback" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Registration">
+            <Principal Role="UserDetails">
               <PropertyRef Name="RegistrationID" />
             </Principal>
-            <Dependent Role="Feedback">
+            <Dependent Role="Feedbacks">
               <PropertyRef Name="FromID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Feedbacks_Registrations">
-          <End Type="GPAModel.Registration" Role="Registration" Multiplicity="1" />
-          <End Type="GPAModel.Feedback" Role="Feedback" Multiplicity="*" />
+          <End Role="UserDetails" Type="Self.UserDetail" Multiplicity="1" />
+          <End Role="Feedbacks" Type="Self.Feedback" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Registration">
+            <Principal Role="UserDetails">
               <PropertyRef Name="RegistrationID" />
             </Principal>
-            <Dependent Role="Feedback">
+            <Dependent Role="Feedbacks">
               <PropertyRef Name="ToID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_GradeStudent_GPA">
-          <End Type="GPAModel.Grade" Role="Grade" Multiplicity="1" />
-          <End Type="GPAModel.StudentGrade" Role="StudentGrade" Multiplicity="*" />
+          <End Role="Grades" Type="Self.Grade" Multiplicity="1" />
+          <End Role="StudentGrades" Type="Self.StudentGrade" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Grade">
+            <Principal Role="Grades">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="StudentGrade">
+            <Dependent Role="StudentGrades">
               <PropertyRef Name="GradeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Registrations_Users">
-          <End Type="GPAModel.User" Role="User" Multiplicity="1" />
-          <End Type="GPAModel.Registration" Role="Registration" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Registration">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_RoleTask_Roles">
-          <End Type="GPAModel.Role" Role="Role" Multiplicity="1" />
-          <End Type="GPAModel.RoleTask" Role="RoleTask" Multiplicity="*" />
+          <End Role="Roles" Type="Self.Role" Multiplicity="1" />
+          <End Role="RoleTasks" Type="Self.RoleTask" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Role">
+            <Principal Role="Roles">
               <PropertyRef Name="Role_ID" />
             </Principal>
-            <Dependent Role="RoleTask">
+            <Dependent Role="RoleTasks">
               <PropertyRef Name="RoleRef_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserRole_Roles">
-          <End Type="GPAModel.Role" Role="Role" Multiplicity="1" />
-          <End Type="GPAModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <End Role="Roles" Type="Self.Role" Multiplicity="1" />
+          <End Role="UserRoles" Type="Self.UserRole" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Role">
+            <Principal Role="Roles">
               <PropertyRef Name="Role_ID" />
             </Principal>
-            <Dependent Role="UserRole">
+            <Dependent Role="UserRoles">
               <PropertyRef Name="RoleRef_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RoleTask_Tasks">
-          <End Type="GPAModel.Task" Role="Task" Multiplicity="1" />
-          <End Type="GPAModel.RoleTask" Role="RoleTask" Multiplicity="*" />
+          <End Role="Tasks" Type="Self.Task" Multiplicity="1" />
+          <End Role="RoleTasks" Type="Self.RoleTask" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Task">
+            <Principal Role="Tasks">
               <PropertyRef Name="TaskId" />
             </Principal>
-            <Dependent Role="RoleTask">
+            <Dependent Role="RoleTasks">
               <PropertyRef Name="TaskRef_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserRole_Users">
-          <End Type="GPAModel.User" Role="User" Multiplicity="1" />
-          <End Type="GPAModel.UserRole" Role="UserRole" Multiplicity="*" />
+        <Association Name="FK_Registrations_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="UserDetails" Type="Self.UserDetail" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="Users">
               <PropertyRef Name="UserID" />
             </Principal>
-            <Dependent Role="UserRole">
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="UserRoles" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserRoles">
               <PropertyRef Name="UserRefID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="GPAEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CourseEnrolments" EntityType="Self.CourseEnrolment" />
+          <EntitySet Name="Courses" EntityType="Self.Cours" />
+          <EntitySet Name="CourseUsers" EntityType="Self.CourseUser" />
+          <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
+          <EntitySet Name="Grades" EntityType="Self.Grade" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="RoleTasks" EntityType="Self.RoleTask" />
+          <EntitySet Name="StudentGrades" EntityType="Self.StudentGrade" />
+          <EntitySet Name="Tasks" EntityType="Self.Task" />
+          <EntitySet Name="UserDetails" EntityType="Self.UserDetail" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_CourseRequest_CourseRequest" Association="Self.FK_CourseRequest_CourseRequest">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="CourseEnrolments" EntitySet="CourseEnrolments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseRequest_Registrations" Association="Self.FK_CourseRequest_Registrations">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="CourseEnrolments" EntitySet="CourseEnrolments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseUser_Courses" Association="Self.FK_CourseUser_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="CourseUsers" EntitySet="CourseUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_GPACourse" Association="Self.FK_Student_GPACourse">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="StudentGrades" EntitySet="StudentGrades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseUser_Registration" Association="Self.FK_CourseUser_Registration">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="CourseUsers" EntitySet="CourseUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedbacks_RegistrationDetails" Association="Self.FK_Feedbacks_RegistrationDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="Feedbacks" EntitySet="Feedbacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedbacks_Registrations" Association="Self.FK_Feedbacks_Registrations">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="Feedbacks" EntitySet="Feedbacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GradeStudent_GPA" Association="Self.FK_GradeStudent_GPA">
+            <End Role="Grades" EntitySet="Grades" />
+            <End Role="StudentGrades" EntitySet="StudentGrades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleTask_Roles" Association="Self.FK_RoleTask_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="RoleTasks" EntitySet="RoleTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_Roles" Association="Self.FK_UserRole_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleTask_Tasks" Association="Self.FK_RoleTask_Tasks">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="RoleTasks" EntitySet="RoleTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registrations_Users" Association="Self.FK_Registrations_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_Users" Association="Self.FK_UserRole_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+          <FunctionImport Name="GetEcourses" ReturnType="Collection(GPAModel.GetEcourses_Result)">
+          <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FindGPA" ReturnType="Collection(GPAModel.FindGPA_Result1)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
         <ComplexType Name="GetEcourses_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="SubCode" Nullable="false" />
-          <Property Type="String" Name="Level" Nullable="false" />
+          <Property Type="String" Name="CourseName" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="FindGPA_Result">
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="Int32" Name="StudentID" Nullable="false" />
+          <Property Type="Int32" Name="CourseID" Nullable="false" />
           <Property Type="String" Name="CourseName" Nullable="false" />
           <Property Type="Int32" Name="Credit" Nullable="false" />
-          <Property Type="Int32" Name="Courses_Id" Nullable="true" />
-          <Property Type="Int32" Name="Users_Id" Nullable="true" />
-          <Property Type="Int32" Name="Id1" Nullable="true" />
+          <Property Type="String" Name="GradeScore" Nullable="false" MaxLength="10" />
+          <Property Type="Double" Name="GradeNumber" Nullable="false" />
+          <Property Type="Double" Name="StudentCourseGrade" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="GetEcourses_Result1">
-          <Property Type="Int32" Name="Id" Nullable="false" />
+        <ComplexType Name="FindGPA_Result1">
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="Int32" Name="StudentID" Nullable="false" />
+          <Property Type="Int32" Name="CourseID" Nullable="false" />
           <Property Type="String" Name="CourseName" Nullable="false" />
+          <Property Type="Int32" Name="Credit" Nullable="false" />
+          <Property Type="String" Name="GradeScore" Nullable="false" MaxLength="10" />
+          <Property Type="Double" Name="GradeNumber" Nullable="false" />
+          <Property Type="Double" Name="StudentCourseGrade" Nullable="false" />
+          <Property Type="Int32" Name="EC" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="GetEcourses_Result2">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="CourseName" Nullable="false" />
-        </ComplexType>
-        </Schema>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="GPAModelStoreContainer" CdmEntityContainer="GPAEntities">
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GPAModelStoreContainer" CdmEntityContainer="GPAEntities">
+          <EntitySetMapping Name="CourseEnrolments">
+            <EntityTypeMapping TypeName="GPAModel.CourseEnrolment">
+              <MappingFragment StoreEntitySet="CourseEnrolments">
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+                <ScalarProperty Name="UserRef_ID" ColumnName="UserRef_ID" />
+                <ScalarProperty Name="CourseRef_ID" ColumnName="CourseRef_ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="GPAModel.Cours">
+              <MappingFragment StoreEntitySet="Courses">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SubCode" ColumnName="SubCode" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="Credit" ColumnName="Credit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CourseUsers">
+            <EntityTypeMapping TypeName="GPAModel.CourseUser">
+              <MappingFragment StoreEntitySet="CourseUsers">
+                <ScalarProperty Name="Courses_Id" ColumnName="Courses_Id" />
+                <ScalarProperty Name="Users_Id" ColumnName="Users_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feedbacks">
+            <EntityTypeMapping TypeName="GPAModel.Feedback">
+              <MappingFragment StoreEntitySet="Feedbacks">
+                <ScalarProperty Name="FeedbackID" ColumnName="FeedbackID" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="FromID" ColumnName="FromID" />
+                <ScalarProperty Name="ToID" ColumnName="ToID" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grades">
+            <EntityTypeMapping TypeName="GPAModel.Grade">
+              <MappingFragment StoreEntitySet="Grades">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="GradeScore" ColumnName="GradeScore" />
+                <ScalarProperty Name="GradeNumber" ColumnName="GradeNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="GPAModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleTasks">
+            <EntityTypeMapping TypeName="GPAModel.RoleTask">
+              <MappingFragment StoreEntitySet="RoleTasks">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RoleRef_ID" ColumnName="RoleRef_ID" />
+                <ScalarProperty Name="TaskRef_ID" ColumnName="TaskRef_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentGrades">
+            <EntityTypeMapping TypeName="GPAModel.StudentGrade">
+              <MappingFragment StoreEntitySet="StudentGrades">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="GradeId" ColumnName="GradeId" />
+                <ScalarProperty Name="ExtraCredit" ColumnName="ExtraCredit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tasks">
+            <EntityTypeMapping TypeName="GPAModel.Task">
+              <MappingFragment StoreEntitySet="Tasks">
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDetails">
+            <EntityTypeMapping TypeName="GPAModel.UserDetail">
+              <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="RegistrationID" ColumnName="RegistrationID" />
+                <ScalarProperty Name="FName" ColumnName="FName" />
+                <ScalarProperty Name="LName" ColumnName="LName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="LandNumber" ColumnName="LandNumber" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="GPAModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserRefID" ColumnName="UserRefID" />
+                <ScalarProperty Name="RoleRef_ID" ColumnName="RoleRef_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="GPAModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetEcourses" FunctionName="GPAModel.Store.GetEcourses">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GPAModel.GetEcourses_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="FindGPA" FunctionName="GPAModel.Store.FindGPA">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="GPAModel.FindGPA_Result">
+              <ComplexTypeMapping TypeName="GPAModel.FindGPA_Result1">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
                 <ScalarProperty Name="CourseID" ColumnName="CourseID" />
@@ -764,144 +894,13 @@
                 <ScalarProperty Name="GradeScore" ColumnName="GradeScore" />
                 <ScalarProperty Name="GradeNumber" ColumnName="GradeNumber" />
                 <ScalarProperty Name="StudentCourseGrade" ColumnName="StudentCourseGrade" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="CourseEnrolments">
-            <EntityTypeMapping TypeName="GPAModel.CourseEnrolment">
-              <MappingFragment StoreEntitySet="CourseEnrolment">
-                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="CourseRef_ID" ColumnName="CourseRef_ID" />
-                <ScalarProperty Name="UserRef_ID" ColumnName="UserRef_ID" />
-                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Courses">
-            <EntityTypeMapping TypeName="GPAModel.Cours">
-              <MappingFragment StoreEntitySet="Courses">
-                <ScalarProperty Name="Credit" ColumnName="Credit" />
-                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
-                <ScalarProperty Name="Level" ColumnName="Level" />
-                <ScalarProperty Name="SubCode" ColumnName="SubCode" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CourseUsers">
-            <EntityTypeMapping TypeName="GPAModel.CourseUser">
-              <MappingFragment StoreEntitySet="CourseUser">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Users_Id" ColumnName="Users_Id" />
-                <ScalarProperty Name="Courses_Id" ColumnName="Courses_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Feedbacks">
-            <EntityTypeMapping TypeName="GPAModel.Feedback">
-              <MappingFragment StoreEntitySet="Feedbacks">
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Subject" ColumnName="Subject" />
-                <ScalarProperty Name="ToID" ColumnName="ToID" />
-                <ScalarProperty Name="FromID" ColumnName="FromID" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="FeedbackID" ColumnName="FeedbackID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Grades">
-            <EntityTypeMapping TypeName="GPAModel.Grade">
-              <MappingFragment StoreEntitySet="Grades">
-                <ScalarProperty Name="GradeNumber" ColumnName="GradeNumber" />
-                <ScalarProperty Name="GradeScore" ColumnName="GradeScore" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Registrations">
-            <EntityTypeMapping TypeName="GPAModel.Registration">
-              <MappingFragment StoreEntitySet="Registrations">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
-                <ScalarProperty Name="LandNumber" ColumnName="LandNumber" />
-                <ScalarProperty Name="Zip" ColumnName="Zip" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="LName" ColumnName="LName" />
-                <ScalarProperty Name="FName" ColumnName="FName" />
-                <ScalarProperty Name="RegistrationID" ColumnName="RegistrationID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="GPAModel.Role">
-              <MappingFragment StoreEntitySet="Roles">
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RoleTasks">
-            <EntityTypeMapping TypeName="GPAModel.RoleTask">
-              <MappingFragment StoreEntitySet="RoleTask">
-                <ScalarProperty Name="TaskRef_ID" ColumnName="TaskRef_ID" />
-                <ScalarProperty Name="RoleRef_ID" ColumnName="RoleRef_ID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StudentGrades">
-            <EntityTypeMapping TypeName="GPAModel.StudentGrade">
-              <MappingFragment StoreEntitySet="StudentGrade">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="GradeId" ColumnName="GradeId" />
-                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tasks">
-            <EntityTypeMapping TypeName="GPAModel.Task">
-              <MappingFragment StoreEntitySet="Tasks">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserRoles">
-            <EntityTypeMapping TypeName="GPAModel.UserRole">
-              <MappingFragment StoreEntitySet="UserRole">
-                <ScalarProperty Name="RoleRef_ID" ColumnName="RoleRef_ID" />
-                <ScalarProperty Name="UserRefID" ColumnName="UserRefID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="GPAModel.User">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="Role" ColumnName="Role" />
-                <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetEcourses" FunctionName="GPAModel.Store.GetEcourses">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GPAModel.GetEcourses_Result2">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="EC" ColumnName="EC" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
         </EntityContainerMapping>
-</Mapping></edmx:Mappings>
+      </Mapping>
+    </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -915,7 +914,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

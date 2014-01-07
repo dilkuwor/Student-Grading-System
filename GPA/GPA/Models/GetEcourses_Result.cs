@@ -14,12 +14,6 @@ namespace GPA.Models
     public partial class GetEcourses_Result
     {
         public int Id { get; set; }
-        public string SubCode { get; set; }
-        public string Level { get; set; }
         public string CourseName { get; set; }
-        public int Credit { get; set; }
-        public Nullable<int> Courses_Id { get; set; }
-        public Nullable<int> Users_Id { get; set; }
-        public Nullable<int> Id1 { get; set; }
     }
 }
