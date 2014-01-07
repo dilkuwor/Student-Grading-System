@@ -40,13 +40,13 @@ namespace GPA.Models
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<CourseEnrolment> CourseEnrolments { get; set; }
     
-        public virtual int FindGPA(Nullable<int> param1)
+        public virtual ObjectResult<FindGPA_Result1> FindGPA(Nullable<int> userID)
         {
-            var param1Parameter = param1.HasValue ?
-                new ObjectParameter("Param1", param1) :
-                new ObjectParameter("Param1", typeof(int));
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("FindGPA", param1Parameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FindGPA_Result1>("FindGPA", userIDParameter);
         }
     }
 }

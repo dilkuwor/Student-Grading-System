@@ -34,6 +34,21 @@ namespace GPA.Models.Manager
             }
         }
 
+        /// <summary>
+        /// Returns the list of users
+        /// </summary>
+        /// <returns></returns>
+        public List<Registration> GetUserList()
+        {
+            var users = new List<Registration>();
+            using (var db = new GPAEntities())
+            {
+                //can check roles for the user because
+                users  = db.Registrations.ToList();
+                
+            }
+            return users;
+        }
       
         public bool ValidateUser(LoginViewModel model, out User user)
         {

@@ -41,6 +41,12 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dependencies\Microsoft.ReportViewer.WebForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -166,6 +172,7 @@
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportDataController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\StaffsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="DAL\Extended\ECourse.cs" />
@@ -177,6 +184,11 @@
     <Compile Include="DAL\Manager\StudentManager.cs" />
     <Compile Include="DAL\Util\Helper.cs" />
     <Compile Include="DAL\Util\TextValue.cs" />
+    <Compile Include="FindGPADataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FindGPADataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -184,6 +196,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GPADataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="GPADataSet2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GPADataSet2.xsd</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Cours.cs">
@@ -201,6 +218,12 @@
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FeedbackViewModel.cs" />
+    <Compile Include="Models\FindGPA_Result.cs">
+      <DependentUpon>GPADataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FindGPA_Result1.cs">
+      <DependentUpon>GPADataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GPADataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -224,6 +247,7 @@
     <Compile Include="Models\Registration.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReportViewModel.cs" />
     <Compile Include="Models\Role.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
@@ -283,6 +307,17 @@
     <Content Include="GPADataSet.xsc">
       <DependentUpon>GPADataSet.xsd</DependentUpon>
     </Content>
+    <Content Include="FindGPADataSet.xsc">
+      <DependentUpon>FindGPADataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="FindGPADataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>FindGPADataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="FindGPADataSet.xss">
+      <DependentUpon>FindGPADataSet.xsd</DependentUpon>
+    </Content>
     <None Include="GPADataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>GPADataSet.Designer.cs</LastGenOutput>
@@ -290,6 +325,17 @@
     </None>
     <Content Include="GPADataSet.xss">
       <DependentUpon>GPADataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="GPADataSet2.xsc">
+      <DependentUpon>GPADataSet2.xsd</DependentUpon>
+    </Content>
+    <None Include="GPADataSet2.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GPADataSet2.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="GPADataSet2.xss">
+      <DependentUpon>GPADataSet2.xsd</DependentUpon>
     </Content>
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
@@ -351,6 +397,7 @@
     <Content Include="Views\ImportData\ImportFromExternalFile.cshtml" />
     <Content Include="Views\Course\Index.cshtml" />
     <Content Include="Views\Course\Edit.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\Staffs\Create.cshtml" />
     <Content Include="Views\Staffs\Delete.cshtml" />
     <Content Include="Views\Staffs\Details.cshtml" />
@@ -361,6 +408,11 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Dashbord\" />
+    <Content Include="Views\Report\GradeReport.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Dependencies\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -373,7 +425,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\UserReport.rdlc" />
+    <EmbeddedResource Include="Content\StudentGrade.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

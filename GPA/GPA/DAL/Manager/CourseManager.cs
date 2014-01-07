@@ -27,5 +27,15 @@ namespace GPA.DAL.Manager
             }
             return courses;
         }
+
+        public List<Cours> getCoursesByName(string searchString)
+        {
+            List<Cours> courses = new List<Cours>();
+            using (var db = new GPAEntities())
+            {
+                courses = (List<Cours>)db.Courses.Where(c => c.CourseName.ToUpper().Contains(searchString.ToUpper()));
+            }
+            return courses;
+        }
     }
 }

@@ -13,10 +13,16 @@ namespace GPA.Controllers
         CourseManager cm = new CourseManager();
         //
         // GET: /AddCourse/
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
             CourseViewModel cvm = new CourseViewModel();
+
             cvm.Courses = cm.getCourses();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                cvm.Courses = cm.getCoursesByName(searchString);
+                
+            }
             return View(cvm);
 
         }
