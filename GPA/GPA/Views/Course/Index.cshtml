@@ -26,26 +26,27 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.Courses) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.SubCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Level)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourseName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Credit)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.Courses)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Level)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Credit)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id, pagename = "Edit" }) |
+                @Html.ActionLink("Details", "Edit", new { id = item.Id, pagename = "Details" }) |
+                @Html.ActionLink("Delete", "DeleteCourse", new { id = item.Id, pagename = "Delete" })
+            </td>
+        </tr>
+    }
 
 </table>

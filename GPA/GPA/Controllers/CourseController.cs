@@ -6,6 +6,17 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+/*
+ * Project Name: GPA  
+ * Date Started: 01/06/2014
+ * Description: Handles the Course module
+ * Module Name: User Administration Module
+ * Developer Name: Mehrdad Panahandeh
+ * Version: 0.1
+ * Date Modified:
+ * 
+ */
+
 namespace GPA.Controllers
 {
     public class CourseController : Controller
@@ -18,22 +29,49 @@ namespace GPA.Controllers
             CourseViewModel cvm = new CourseViewModel();
             cvm.Courses = cm.getCourses();
             return View(cvm);
-
         }
 
-        public ActionResult Edit(int id)
+        [HttpGet]
+        public ActionResult Edit(int id, string pageName)
         {
             using (var db = new GPAEntities())
             {
                 var query = from d in db.Courses
                             where d.Id == id
                             select d;
-                return View(query.First());
+                return View(pageName, query.First());
             }
 
-
         }
-        
+
+        public ActionResult DeleteCourse(int id)
+        {
+            using (var db = new GPAEntities())
+            {
+                var query = from d in db.Courses
+                            where d.Id == id
+                            select d;
+                return View("Delete", query.First());
+            }
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Delete(Cours course)
+        {
+            try
+            {
+                cm.deleteCourse(course.Id);
+                TempData["MessageDeleted"] = "True";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("CourseError", "This Course cannot be deleted       " + ex.Message);
+                return View();
+            }
+        }
+
         [HttpPost]
         [AllowAnonymous]
         public ActionResult Save(CourseViewModel cvm)
@@ -44,19 +82,9 @@ namespace GPA.Controllers
             course.Level = cvm.Level;
             course.SubCode = cvm.SubCode;
             course.Credit = cvm.Credit;
-           
             cm.saveCourse(course);
             return RedirectToAction("Index");
         }
-        //public ActionResult AddCourse()
-        //{
-        //    return View();
-        //}
 
-        //public ActionResult AddCourse(CourseViewModel acvm)
-        //{
-
-        //    return View();
-        //}
     }
 }
