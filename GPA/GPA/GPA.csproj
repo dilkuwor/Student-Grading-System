@@ -285,6 +285,7 @@
     <Content Include="Content\core.css" />
     <Content Include="Content\migrationScripts\FindGPA_SP.sql" />
     <Content Include="Content\migrationScripts\GetEcourses.sql" />
+    <Content Include="Content\migrationScripts\GPADBScript.sql" />
     <Content Include="Dependencies\Microsoft.ReportViewer.WebForms.dll" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
