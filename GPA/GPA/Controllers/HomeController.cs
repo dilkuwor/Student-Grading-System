@@ -17,17 +17,22 @@ namespace GPA.Controllers
     {
         public ActionResult Index()
         {
-            //DashbordViewModel model = new DashbordViewModel();
+            DashbordViewModel model = new DashbordViewModel();
 
-            ////if the user is registered check his role and display different layout
-            //StudentViewModel studentModel = new StudentViewModel();
+            AccountManager amanager = new AccountManager();
             
-            //StudentManager smanager = new StudentManager();
-            //studentModel.Courses = smanager.GetRegisteredCourse(19);
-            //studentModel.ECourses = smanager.GetCustomCourses(19);
-            //model.StudentViewModel = studentModel;
-            //CreateSession(19);
-            return View();
+            
+            Registration ruser = amanager.FindUserByUserID(19);
+          
+            //if the user is registered check his role and display different layout
+            StudentViewModel studentModel = new StudentViewModel();
+            
+            StudentManager smanager = new StudentManager();
+            studentModel.Courses = smanager.GetAlreadyTakenCoursesByUserID(ruser.RegistrationID);
+            studentModel.ECourses = smanager.GetECourses(ruser.RegistrationID);
+            model.StudentViewModel = studentModel;
+            CreateSession(19);
+            return View(model);
         }
 
 
