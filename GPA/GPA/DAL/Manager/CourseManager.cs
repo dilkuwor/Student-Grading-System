@@ -53,12 +53,22 @@ namespace GPA.DAL.Manager
 
         public List<Cours> getCoursesByName(string searchString)
         {
-            List<Cours> courses = new List<Cours>();
-            using (var db = new GPAEntities())
-            {
-                courses = (List<Cours>)db.Courses.Where(c => c.CourseName.ToUpper().Contains(searchString.ToUpper()));
-            }
-            return courses;
+            IQueryable<Cours> list;
+
+
+            //List<Cours> mycourse = db.Courses.ToList();
+            //List<Cours> res = new List<Cours>();
+            //foreach (var item in mycourse)
+            //{
+            //    if (item.CourseName.ToUpper().Contains(searchString.ToUpper()))
+            //        res.Add( item );
+            //}
+            //return res;
+            var db = new GPAEntities();
+            list = (IQueryable<Cours>)db.Courses.Where(c => c.CourseName.ToUpper().Contains(searchString.ToUpper()));
+
+
+            return list.ToList();
         }
     }
 }
