@@ -237,34 +237,28 @@
     <Compile Include="DAL\Manager\AccountManager.cs" />
     <Compile Include="Models\ReportViewModel.cs" />
     <Compile Include="Models\Role.cs">
-      <SubType>Code</SubType>
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RoleTask.cs">
-      <SubType>Code</SubType>
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StudentCourse_Result.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StudentGrade.cs">
-      <SubType>Code</SubType>
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StudentViewModel.cs" />
     <Compile Include="Models\Task.cs">
-      <SubType>Code</SubType>
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <SubType>Code</SubType>
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserDetail.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserRole.cs">
-      <SubType>Code</SubType>
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -365,7 +359,6 @@
     <Content Include="Views\Account\LoginVerification.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Test\LoadData.cshtml" />
-    <Content Include="Views\Student\Create.cshtml" />
     <Content Include="Views\Account\ApplicationSetting.cshtml" />
     <Content Include="Views\Feedback\Index.cshtml" />
     <Content Include="Views\Home\UserReport.cshtml" />
