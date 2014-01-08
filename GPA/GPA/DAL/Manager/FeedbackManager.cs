@@ -74,6 +74,19 @@ namespace GPA.DAL.Manager
             return ruser.FName + " " + ruser.LName;
         }
 
+        /**
+         * 01.07.14 Add D.Shrestha
+         */
+        public UserDetail FindUserByRegID(int regId)
+        {
+            UserDetail user;
+            using (var db = new GPAEntities())
+            {
+                user = db.UserDetails.Where(r => r.RegistrationID == regId).Single();
+            }
+            return user;
+        }
+
         public UserDetail FindUserByUserID(int userId)
         {
             UserDetail user;

@@ -39,16 +39,5 @@ namespace GPA.DAL.Util
             }
             return true;
         }
-
-        //static void Main(string[] args)
-        //{
-        //    test();
-        //}
-
-        private static void test()
-        {
-            SendEmail email = new SendEmail("smtp.gmail.com", 587, "gpa.application@gmail.com", "gp@application");
-            email.Send("gpa.application@gmail.com", "suunil.basnet@gmail.com,dipshrestha@gmail.com,kengsrengkh@gmail.com,dil.kuwor@gmail.com,mpg.pan@gmail.com,laxman.gm@gmail.com", "test for email", "testbody");
-        }
     }
 }
