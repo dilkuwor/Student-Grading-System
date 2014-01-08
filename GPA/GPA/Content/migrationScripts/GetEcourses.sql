@@ -4,13 +4,11 @@ GO
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'GetEcourses')
 DROP PROCEDURE GetEcourses
  GO
-
-/****** Object:  StoredProcedure [dbo].[GetEcourses]    Script Date: 1/7/2014 11:43:22 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[GetEcourses]
+CREATE PROCEDURE [dbo].[GetEcourses]
 
  @UserID int
 
