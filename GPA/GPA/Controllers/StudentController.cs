@@ -17,10 +17,15 @@ namespace GPA.Controllers
         // GET: /Student/
         public ActionResult Index(string searchString)
         {
-            var students = db.Users.Where(s => s.Role == "Admin").Include(u => u.UserDetails);
+           
+            var students = (from u in db.Users
+                           join ud in db.UserDetails on u.UserID equals ud.UserID
+                           where u.Role== "Admin"
+                           select ud);
             if (!String.IsNullOrEmpty(searchString))
             {
-                students = students.Where(s => s.UserName.ToUpper().Contains(searchString.ToUpper()) && s.Role == "Admin");
+                students = students.Where(s => s.FName.ToUpper().Contains(searchString.ToUpper()) 
+                    || s.LName.ToUpper().Contains(searchString.ToUpper()));
             }
             return View(students.ToList());
         }
@@ -32,11 +37,14 @@ namespace GPA.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            UserDetail user = (from u in db.UserDetails
+                               where u.UserID == id
+                               select u).SingleOrDefault();
             if (user == null)
             {
                 return HttpNotFound();
             }
+
             return View(user);
         }
 
@@ -72,57 +80,33 @@ namespace GPA.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            UserDetail user = (from u in db.UserDetails
+                              where u.UserID == id
+                              select u).SingleOrDefault();
             if (user == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.User_ID = new SelectList(db.UserDetails, "UserRef_ID", "Email", user.UserID);
+           
             return View(user);
         }
 
         // POST: /Student/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="User_ID,UserName,Password,VerificationCode")] User user)
+        [HttpPost]        
+        public ActionResult Edit(UserDetail user)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            }
-            ViewBag.User_ID = new SelectList(db.UserDetails, "UserRef_ID", "Email", user.UserID);
+            }           
             return View(user);
         }
 
-        // GET: /Student/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
-        }
-
-        // POST: /Student/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        
 
         protected override void Dispose(bool disposing)
         {
