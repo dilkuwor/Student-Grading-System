@@ -162,6 +162,29 @@ namespace GPA.Controllers
             return RedirectToAction("Index","Home");
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult GetCourseByCourseID(DashbordViewModel model)
+        {
+            CourseManager cmanager = new CourseManager();
+            GradeEnterFormViewModel grademodel = new GradeEnterFormViewModel();
+            grademodel.CourseList = cmanager.GetCourseForDropdown();
+            //grademodel.Grades = cmanager.GetGradeList();
+            StudentManager smanager = new StudentManager();
+            grademodel.Students = smanager.GetStudentsByCourseID(model.GradeEnterFormViewModel.CourseID);
+            grademodel.Grades = cmanager.GetGradesForDropdown();
+            model.GradeEnterFormViewModel = grademodel;
+            if (!Request.IsAjaxRequest())
+            {
+                return RedirectToAction("Index");
+            }
+
+            DashbordViewModel m = new DashbordViewModel();
+            m.GradeEnterFormViewModel = grademodel;
+            return PartialView("~/Views/Account/_GradeEntryPartial.cshtml", m);
+
+        }
+
     }
 
    

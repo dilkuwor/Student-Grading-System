@@ -1,0 +1,68 @@
+﻿@model GPA.Models.DashbordViewModel
+  
+  
+@using (Html.BeginForm("AddGrade", "Course", FormMethod.Post, new { @class = "form-horizontal", DashbordViewModel = Model, role = "form" }))
+{
+
+    if (true)
+    {
+        int count = 0;
+        <table class="table">
+            <tr>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.FeedbackReadViewModel.FromId)*@
+                    StudentID
+                </th>
+                <th>
+                    Course Name
+                </th>
+
+                <th>
+                    Student Name
+                </th>
+                <th>
+                    GPA
+                </th>
+                <th>
+                    Extra Credit
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model.GradeEnterFormViewModel.Students)
+            {
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RegistrationID)
+                        @Html.HiddenFor(modelItem => item.RegistrationID, new { @item = item.RegistrationID })
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LName)
+                    </td>
+                    <td>
+
+                        @Html.DropDownListFor(model => model.GradeEnterFormViewModel.CourseID, Model.GradeEnterFormViewModel.Grades, string.Empty, new { @class = "form-control" })
+
+                    </td>
+                    <td>
+                        <input type="text" name="count" />
+                    </td>
+                </tr>
+
+                count++;
+            }
+        </table>
+    }
+    
+    <input type="submit" class="form-control"  />
+
+    
+    }
+
+  

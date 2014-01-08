@@ -1,78 +1,64 @@
 ﻿@model GPA.Models.DashbordViewModel
-
+@{
+    var model1 = Model;
+}
 <div class="panel panel-default disabled">
     <div class="panel-heading">Course Signup Request</div>
     <div class="panel-body">
-       
-@using (Html.BeginForm("AddGrade", "Course", FormMethod.Post, new { @class = "form-horizontal", DashbordViewModel = Model, role = "form" }))
-{
-     @Html.LabelFor(model=>model.GradeEnterFormViewModel.CourseID)
-        @Html.DropDownListFor(model => model.GradeEnterFormViewModel.CourseID, Model.GradeEnterFormViewModel.CourseList, new { @class = "form-control" })
-        <div style="margin-top:10px;">
 
+        @using (Html.BeginForm("GetCourseByCourseID", "Course", FormMethod.Post, new { @id = "courseform", @class = "form-horizontal", onchange = "return myfunc();", DashbordViewModel = Model, role = "form" }))
+        {
+
+            @Html.LabelFor(model => model.GradeEnterFormViewModel.CourseID)
+            @Html.DropDownListFor(model => model.GradeEnterFormViewModel.CourseID, Model.GradeEnterFormViewModel.CourseList, new { @id = "cmbcourse", @class = "form-control" })
+            <div style="margin-top:10px;">
+
+            </div>
+        }
+        <div id="studentgradeform">
+            @{Html.RenderPartial("~/Views/Account/_GradeEntryPartial.cshtml", model1);}
         </div>
-    if(true){
-        int count = 0;
-         <table class="table">
-            <tr>
-                <th>
-                    @*@Html.DisplayNameFor(model => model.FeedbackReadViewModel.FromId)*@
-                    StudentID
-                </th>
-                <th>
-                    Course Name
-                </th>
 
-                <th>
-                    Student Name
-                </th>
-                <th>
-                    GPA
-                </th>
-                <th>
-                    Extra Credit
-                </th>
 
-            </tr>
-         
-            @foreach (var item in Model.GradeEnterFormViewModel.Students)
-            {
-                
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RegistrationID)
-                        @Html.HiddenFor(modelItem => item.RegistrationID, new { @item = item.RegistrationID})
-                    </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FName) 
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LName)
-                    </td>
-                    <td>
-
-                        @Html.DropDownListFor(model => model.GradeEnterFormViewModel.CourseID, Model.GradeEnterFormViewModel.Grades, string.Empty, new { @class = "form-control" })
-
-                    </td>
-                    <td>
-                        <input type="text" name="count" />
-                    </td>
-                </tr>
-                
-                count++;
-            }
-        </table>
-    }
-      
-     @Html.ValidationMessageFor(m => m.GradeEnterFormViewModel.Grades)
- <input type="submit" class="form-control"  />
-}
+        @Html.ValidationMessageFor(m => m.GradeEnterFormViewModel.Grades)
     </div>
 </div>
 
 
-@section Scripts {
+<script type="text/javascript">
+   // $("#cmbcourse").bind("change", 
+       //$("#mybtn").click(
+            
+           
+       //);
+
+    var myfunc =function f() {
+        // show spinner
+        $('#studentgradeform').html("<img src='./Content/ajax-loader.gif' style='align-content:center'/>");
+        debugger
+        var form = $('#courseform');
+        $.ajax({
+            type: "POST",
+            url: form.attr('action'),
+            data: form.serialize()
+        })
+        .success(function (data, textStatus, jqXHR ) {
+            //alert('you message has been submitted');
+            // set message
+            $('#studentgradeform').html(data);
+            // clear form
+                  
+        })
+        .error(function (xhr, ajaxOptions, thrownError) {
+            // alert message ?
+            alert(xhr.status);
+        });
+        return false;
+    }
+    //at Scripts.Render("~/bundles/jqueryval")
+    </script>
+
+@*@section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
+}*@

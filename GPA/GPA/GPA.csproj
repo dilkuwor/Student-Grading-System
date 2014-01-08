@@ -209,9 +209,6 @@
     <Compile Include="Models\FindGPA_Result.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\FindGPA_Result1.cs">
-      <DependentUpon>GPADataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\GetEcourses_Result.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
@@ -402,6 +399,7 @@
     <Content Include="Views\Student\Edit.cshtml" />
     <Content Include="Views\Student\Details.cshtml" />
     <Content Include="Views\Course\Details.cshtml" />
+    <Content Include="Views\Account\_GradeEntryPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Report\GradeReport.cshtml" />
