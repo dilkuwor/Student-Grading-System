@@ -80,6 +80,7 @@ namespace GPA.Models
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
+        [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         //[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
@@ -121,10 +122,12 @@ namespace GPA.Models
         public string Zip { get; set; }
 
         [RegularExpression(@"((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}",
-            ErrorMessage = "Invalid phone number.")]
+            ErrorMessage = "Invalid Mobile number.")]
         [Display(Name = "Mobile Number")]
         public string MobileNumber { get; set; }
 
+         [RegularExpression(@"((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}",
+            ErrorMessage = "Invalid phone number.")]
         [Display(Name = "Landline Number")]
         public string LandNumber { get; set; }
 
