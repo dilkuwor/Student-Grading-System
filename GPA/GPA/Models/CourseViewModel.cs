@@ -28,5 +28,9 @@ namespace GPA.Models
 
         public List<Cours> Courses { get; set; }
 
+
+        public IEnumerable<SelectListItem> CoursesList { get; set; }
+
+
     }
 }

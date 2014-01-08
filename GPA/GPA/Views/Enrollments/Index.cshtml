@@ -1,0 +1,12 @@
+﻿@model GPA.Models.CourseViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Enrollment</h2>
+@Html.DropDownListFor(model => model.Id, Model.CoursesList, new { @class = "form-control" })
+<p>
+
+    @Html.ActionLink("Create New", "Create")
+</p>
