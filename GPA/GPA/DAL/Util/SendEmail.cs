@@ -6,8 +6,20 @@ using System.Net.Mail;
 using System.Text;
 using System.Web;
 
+/*
+ * Project Name: GPA  
+ * Date Started: 01/07/2014
+ * Description: Sends email
+ * Module Name: Email Module
+ * Module Number: 008-100-101
+ * Developer Name: Dipesh Shrestha
+ * Version: 0.1
+ * Date Modified:
+ * 
+ */
 namespace GPA.DAL.Util
 {
+
     public class SendEmail
     {
         private SmtpClient _client;
@@ -38,17 +50,6 @@ namespace GPA.DAL.Util
                 return false;
             }
             return true;
-        }
-
-        //static void Main(string[] args)
-        //{
-        //    test();
-        //}
-
-        private static void test()
-        {
-            SendEmail email = new SendEmail("smtp.gmail.com", 587, "gpa.application@gmail.com", "gp@application");
-            email.Send("gpa.application@gmail.com", "suunil.basnet@gmail.com,dipshrestha@gmail.com,kengsrengkh@gmail.com,dil.kuwor@gmail.com,mpg.pan@gmail.com,laxman.gm@gmail.com", "test for email", "testbody");
         }
     }
 }

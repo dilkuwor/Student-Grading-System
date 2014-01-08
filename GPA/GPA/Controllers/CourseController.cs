@@ -94,6 +94,26 @@ namespace GPA.Controllers
             smanager.ApplyForCourse(courseid, amanager.FindUserByUserID(currentUser.UserID).RegistrationID);
             return RedirectToAction("Index","Home");
         }
+
+        // GET: /Course/Details/5
+        public ActionResult Details(int? id)
+        {
+
+            var db = new GPAEntities();
+            CourseViewModel cv = new CourseViewModel();
+            StudentManager sm = new StudentManager();
+            
+            var course = db.Courses.Find(id);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+            cv.CourseName = course.CourseName;
+            cv.Id = course.Id;
+            cv.Credit = course.Credit;
+            cv.students = sm.getAllStudentsTakenCourse((int)id);
+            return View(cv);
+        }
         
         [HttpPost]
         [AllowAnonymous]
