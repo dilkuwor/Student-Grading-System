@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="GPAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="GPADataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CourseEnrolments">
           <Key>
             <PropertyRef Name="RequestID" />
@@ -287,7 +287,7 @@
         <Function Name="StudentCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
         </Function>
-        <EntityContainer Name="GPAModelStoreContainer">
+        <EntityContainer Name="GPADataModelStoreContainer">
           <EntitySet Name="CourseEnrolments" EntityType="Self.CourseEnrolments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CourseUsers" EntityType="Self.CourseUsers" Schema="dbo" store:Type="Tables" />
@@ -353,10 +353,11 @@
             <End Role="UserRoles" EntitySet="UserRoles" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="GPAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="GPADataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="CourseEnrolment">
           <Key>
             <PropertyRef Name="RequestID" />
@@ -380,7 +381,7 @@
           <Property Name="Credit" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CourseEnrolments" Relationship="Self.FK_CourseRequest_CourseRequest" FromRole="Courses" ToRole="CourseEnrolments" />
           <NavigationProperty Name="CourseUsers" Relationship="Self.FK_CourseUser_Courses" FromRole="Courses" ToRole="CourseUsers" />
-          <NavigationProperty Name="StudentGrades" Relationship="GPAModel.FK_Student_GPACourse" FromRole="Cours" ToRole="StudentGrade" />
+          <NavigationProperty Name="StudentGrades" Relationship="Self.FK_Student_GPACourse" FromRole="Courses" ToRole="StudentGrades" />
         </EntityType>
         <EntityType Name="CourseUser">
           <Key>
@@ -412,7 +413,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GradeScore" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="GradeNumber" Type="Double" Nullable="false" />
-          <NavigationProperty Name="StudentGrades" Relationship="GPAModel.FK_GradeStudent_GPA" FromRole="Grade" ToRole="StudentGrade" />
+          <NavigationProperty Name="StudentGrades" Relationship="Self.FK_GradeStudent_GPA" FromRole="Grades" ToRole="StudentGrades" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -432,6 +433,18 @@
           <Property Name="TaskRef_ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Role" Relationship="Self.FK_RoleTask_Roles" FromRole="RoleTasks" ToRole="Roles" />
           <NavigationProperty Name="Task" Relationship="Self.FK_RoleTask_Tasks" FromRole="RoleTasks" ToRole="Tasks" />
+        </EntityType>
+        <EntityType Name="StudentGrade">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="GradeId" Type="Int32" Nullable="false" />
+          <Property Name="ExtraCredit" Type="Int32" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Cours" Relationship="Self.FK_Student_GPACourse" FromRole="StudentGrades" ToRole="Courses" />
+          <NavigationProperty Name="Grade" Relationship="Self.FK_GradeStudent_GPA" FromRole="StudentGrades" ToRole="Grades" />
         </EntityType>
         <EntityType Name="Task">
           <Key>
@@ -521,6 +534,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Student_GPACourse">
+          <End Role="Courses" Type="Self.Cours" Multiplicity="1" />
+          <End Role="StudentGrades" Type="Self.StudentGrade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentGrades">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CourseUser_Registration">
           <End Role="UserDetails" Type="Self.UserDetail" Multiplicity="1" />
           <End Role="CourseUsers" Type="Self.CourseUser" Multiplicity="*" />
@@ -554,6 +579,18 @@
             </Principal>
             <Dependent Role="Feedbacks">
               <PropertyRef Name="ToID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GradeStudent_GPA">
+          <End Role="Grades" Type="Self.Grade" Multiplicity="1" />
+          <End Role="StudentGrades" Type="Self.StudentGrade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grades">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentGrades">
+              <PropertyRef Name="GradeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -625,6 +662,7 @@
           <EntitySet Name="Grades" EntityType="Self.Grade" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="RoleTasks" EntityType="Self.RoleTask" />
+          <EntitySet Name="StudentGrades" EntityType="Self.StudentGrade" />
           <EntitySet Name="Tasks" EntityType="Self.Task" />
           <EntitySet Name="UserDetails" EntityType="Self.UserDetail" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
@@ -641,6 +679,10 @@
             <End Role="Courses" EntitySet="Courses" />
             <End Role="CourseUsers" EntitySet="CourseUsers" />
           </AssociationSet>
+          <AssociationSet Name="FK_Student_GPACourse" Association="Self.FK_Student_GPACourse">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="StudentGrades" EntitySet="StudentGrades" />
+          </AssociationSet>
           <AssociationSet Name="FK_CourseUser_Registration" Association="Self.FK_CourseUser_Registration">
             <End Role="UserDetails" EntitySet="UserDetails" />
             <End Role="CourseUsers" EntitySet="CourseUsers" />
@@ -652,6 +694,10 @@
           <AssociationSet Name="FK_Feedbacks_Registrations" Association="Self.FK_Feedbacks_Registrations">
             <End Role="UserDetails" EntitySet="UserDetails" />
             <End Role="Feedbacks" EntitySet="Feedbacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GradeStudent_GPA" Association="Self.FK_GradeStudent_GPA">
+            <End Role="Grades" EntitySet="Grades" />
+            <End Role="StudentGrades" EntitySet="StudentGrades" />
           </AssociationSet>
           <AssociationSet Name="FK_RoleTask_Roles" Association="Self.FK_RoleTask_Roles">
             <End Role="Roles" EntitySet="Roles" />
@@ -673,45 +719,20 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UserRoles" EntitySet="UserRoles" />
           </AssociationSet>
-          <FunctionImport Name="GetEcourses" ReturnType="Collection(GPAModel.GetEcourses_Result)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="FindGPA" ReturnType="Collection(GPAModel.FindGPA_Result1)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
-
-          </FunctionImport>
-          <FunctionImport Name="GetUserDetails" ReturnType="Collection(GPAModel.GetUserDetails_Result)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="StudentCourse" ReturnType="Collection(GPAModel.StudentCourse_Result2)">
+          <FunctionImport Name="FindGPA" ReturnType="Collection(GPADataModel.FindGPA_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
-
           </FunctionImport>
-          <EntitySet Name="StudentGrades" EntityType="GPAModel.StudentGrade" />
-          <AssociationSet Name="FK_Student_GPACourse" Association="GPAModel.FK_Student_GPACourse">
-            <End Role="Cours" EntitySet="Courses" />
-            <End Role="StudentGrade" EntitySet="StudentGrades" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GradeStudent_GPA" Association="GPAModel.FK_GradeStudent_GPA">
-            <End Role="Grade" EntitySet="Grades" />
-            <End Role="StudentGrade" EntitySet="StudentGrades" />
-          </AssociationSet>
+          <FunctionImport Name="GetEcourses" ReturnType="Collection(GPADataModel.GetEcourses_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetUserDetails" ReturnType="Collection(GPADataModel.GetUserDetails_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="StudentCourse" ReturnType="Collection(GPADataModel.StudentCourse_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="GetEcourses_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="CourseName" Nullable="false" />
-        </ComplexType>
         <ComplexType Name="FindGPA_Result">
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="Int32" Name="StudentID" Nullable="false" />
-          <Property Type="Int32" Name="CourseID" Nullable="false" />
-          <Property Type="String" Name="CourseName" Nullable="false" />
-          <Property Type="Int32" Name="Credit" Nullable="false" />
-          <Property Type="String" Name="GradeScore" Nullable="false" MaxLength="10" />
-          <Property Type="Double" Name="GradeNumber" Nullable="false" />
-          <Property Type="Double" Name="StudentCourseGrade" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="FindGPA_Result1">
           <Property Type="String" Name="Name" Nullable="false" />
           <Property Type="Int32" Name="StudentID" Nullable="false" />
           <Property Type="Int32" Name="CourseID" Nullable="false" />
@@ -722,44 +743,10 @@
           <Property Type="Double" Name="StudentCourseGrade" Nullable="false" />
           <Property Type="Int32" Name="EC" Nullable="true" />
         </ComplexType>
-
-        <EntityType Name="StudentGrade">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="CourseId" Type="Int32" Nullable="false" />
-          <Property Name="GradeId" Type="Int32" Nullable="false" />
-          <Property Name="ExtraCredit" Type="Int32" />
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Cours" Relationship="GPAModel.FK_Student_GPACourse" FromRole="StudentGrade" ToRole="Cours" />
-          <NavigationProperty Name="Grade" Relationship="GPAModel.FK_GradeStudent_GPA" FromRole="StudentGrade" ToRole="Grade" />
-        </EntityType>
-        <Association Name="FK_Student_GPACourse">
-          <End Type="GPAModel.Cours" Role="Cours" Multiplicity="1" />
-          <End Type="GPAModel.StudentGrade" Role="StudentGrade" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cours">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StudentGrade">
-              <PropertyRef Name="CourseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_GradeStudent_GPA">
-          <End Type="GPAModel.Grade" Role="Grade" Multiplicity="1" />
-          <End Type="GPAModel.StudentGrade" Role="StudentGrade" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Grade">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StudentGrade">
-              <PropertyRef Name="GradeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-
+        <ComplexType Name="GetEcourses_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="CourseName" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="GetUserDetails_Result">
           <Property Type="Int32" Name="RegistrationID" Nullable="false" />
           <Property Type="String" Name="FName" Nullable="false" />
@@ -780,29 +767,14 @@
           <Property Type="String" Name="Lname" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Email" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="StudentCourse_Result1">
-          <Property Type="String" Name="CourseName" Nullable="false" />
-          <Property Type="Int32" Name="RegistrationID" Nullable="false" />
-          <Property Type="String" Name="Fname" Nullable="false" />
-          <Property Type="String" Name="Lname" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Email" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="StudentCourse_Result2">
-          <Property Type="String" Name="CourseName" Nullable="false" />
-          <Property Type="Int32" Name="RegistrationID" Nullable="false" />
-          <Property Type="String" Name="Fname" Nullable="false" />
-          <Property Type="String" Name="Lname" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Email" Nullable="false" />
-        </ComplexType>
-
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="GPAModelStoreContainer" CdmEntityContainer="GPAEntities">
+        <EntityContainerMapping StorageEntityContainer="GPADataModelStoreContainer" CdmEntityContainer="GPAEntities">
           <EntitySetMapping Name="CourseEnrolments">
-            <EntityTypeMapping TypeName="GPAModel.CourseEnrolment">
+            <EntityTypeMapping TypeName="GPADataModel.CourseEnrolment">
               <MappingFragment StoreEntitySet="CourseEnrolments">
                 <ScalarProperty Name="RequestID" ColumnName="RequestID" />
                 <ScalarProperty Name="UserRef_ID" ColumnName="UserRef_ID" />
@@ -813,7 +785,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Courses">
-            <EntityTypeMapping TypeName="GPAModel.Cours">
+            <EntityTypeMapping TypeName="GPADataModel.Cours">
               <MappingFragment StoreEntitySet="Courses">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="SubCode" ColumnName="SubCode" />
@@ -824,7 +796,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CourseUsers">
-            <EntityTypeMapping TypeName="GPAModel.CourseUser">
+            <EntityTypeMapping TypeName="GPADataModel.CourseUser">
               <MappingFragment StoreEntitySet="CourseUsers">
                 <ScalarProperty Name="Courses_Id" ColumnName="Courses_Id" />
                 <ScalarProperty Name="Users_Id" ColumnName="Users_Id" />
@@ -833,7 +805,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Feedbacks">
-            <EntityTypeMapping TypeName="GPAModel.Feedback">
+            <EntityTypeMapping TypeName="GPADataModel.Feedback">
               <MappingFragment StoreEntitySet="Feedbacks">
                 <ScalarProperty Name="FeedbackID" ColumnName="FeedbackID" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
@@ -845,7 +817,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Grades">
-            <EntityTypeMapping TypeName="GPAModel.Grade">
+            <EntityTypeMapping TypeName="GPADataModel.Grade">
               <MappingFragment StoreEntitySet="Grades">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="GradeScore" ColumnName="GradeScore" />
@@ -854,7 +826,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="GPAModel.Role">
+            <EntityTypeMapping TypeName="GPADataModel.Role">
               <MappingFragment StoreEntitySet="Roles">
                 <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
@@ -862,7 +834,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RoleTasks">
-            <EntityTypeMapping TypeName="GPAModel.RoleTask">
+            <EntityTypeMapping TypeName="GPADataModel.RoleTask">
               <MappingFragment StoreEntitySet="RoleTasks">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="RoleRef_ID" ColumnName="RoleRef_ID" />
@@ -870,8 +842,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="StudentGrades">
+            <EntityTypeMapping TypeName="GPADataModel.StudentGrade">
+              <MappingFragment StoreEntitySet="StudentGrades">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="GradeId" ColumnName="GradeId" />
+                <ScalarProperty Name="ExtraCredit" ColumnName="ExtraCredit" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tasks">
-            <EntityTypeMapping TypeName="GPAModel.Task">
+            <EntityTypeMapping TypeName="GPADataModel.Task">
               <MappingFragment StoreEntitySet="Tasks">
                 <ScalarProperty Name="TaskId" ColumnName="TaskId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -880,7 +863,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserDetails">
-            <EntityTypeMapping TypeName="GPAModel.UserDetail">
+            <EntityTypeMapping TypeName="GPADataModel.UserDetail">
               <MappingFragment StoreEntitySet="UserDetails">
                 <ScalarProperty Name="RegistrationID" ColumnName="RegistrationID" />
                 <ScalarProperty Name="FName" ColumnName="FName" />
@@ -897,7 +880,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserRoles">
-            <EntityTypeMapping TypeName="GPAModel.UserRole">
+            <EntityTypeMapping TypeName="GPADataModel.UserRole">
               <MappingFragment StoreEntitySet="UserRoles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserRefID" ColumnName="UserRefID" />
@@ -906,7 +889,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="GPAModel.User">
+            <EntityTypeMapping TypeName="GPADataModel.User">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -916,17 +899,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetEcourses" FunctionName="GPAModel.Store.GetEcourses">
+          <FunctionImportMapping FunctionImportName="FindGPA" FunctionName="GPADataModel.Store.FindGPA">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="GPAModel.GetEcourses_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="FindGPA" FunctionName="GPAModel.Store.FindGPA">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GPAModel.FindGPA_Result1">
+              <ComplexTypeMapping TypeName="GPADataModel.FindGPA_Result">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
                 <ScalarProperty Name="CourseID" ColumnName="CourseID" />
@@ -939,22 +914,17 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-
-          <EntitySetMapping Name="StudentGrades">
-            <EntityTypeMapping TypeName="GPAModel.StudentGrade">
-              <MappingFragment StoreEntitySet="StudentGrades">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ExtraCredit" ColumnName="ExtraCredit" />
-                <ScalarProperty Name="GradeId" ColumnName="GradeId" />
-                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-
-          <FunctionImportMapping FunctionImportName="GetUserDetails" FunctionName="GPAModel.Store.GetUserDetails">
+          <FunctionImportMapping FunctionImportName="GetEcourses" FunctionName="GPADataModel.Store.GetEcourses">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="GPAModel.GetUserDetails_Result">
+              <ComplexTypeMapping TypeName="GPADataModel.GetEcourses_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetUserDetails" FunctionName="GPADataModel.Store.GetUserDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GPADataModel.GetUserDetails_Result">
                 <ScalarProperty Name="RegistrationID" ColumnName="RegistrationID" />
                 <ScalarProperty Name="FName" ColumnName="FName" />
                 <ScalarProperty Name="LName" ColumnName="LName" />
@@ -969,9 +939,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="StudentCourse" FunctionName="GPAModel.Store.StudentCourse">
+          <FunctionImportMapping FunctionImportName="StudentCourse" FunctionName="GPADataModel.Store.StudentCourse">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="GPAModel.StudentCourse_Result2">
+              <ComplexTypeMapping TypeName="GPADataModel.StudentCourse_Result">
                 <ScalarProperty Name="CourseName" ColumnName="CourseName" />
                 <ScalarProperty Name="RegistrationID" ColumnName="RegistrationID" />
                 <ScalarProperty Name="Fname" ColumnName="Fname" />
@@ -980,7 +950,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

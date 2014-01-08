@@ -21,5 +21,6 @@ namespace GPA.Models
         public string GradeScore { get; set; }
         public double GradeNumber { get; set; }
         public double StudentCourseGrade { get; set; }
+        public Nullable<int> EC { get; set; }
     }
 }
