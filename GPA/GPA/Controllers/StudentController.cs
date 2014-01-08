@@ -17,7 +17,7 @@ namespace GPA.Controllers
         // GET: /Student/
         public ActionResult Index(string searchString)
         {
-            var students = db.Users.Where(s => s.Role == "Admin").Include(u => u.Registrations);
+            var students = db.Users.Where(s => s.Role == "Admin").Include(u => u.UserDetails);
             if (!String.IsNullOrEmpty(searchString))
             {
                 students = students.Where(s => s.UserName.ToUpper().Contains(searchString.ToUpper()) && s.Role == "Admin");
@@ -43,7 +43,7 @@ namespace GPA.Controllers
         // GET: /Student/Create
         public ActionResult Create()
         {
-            ViewBag.User_ID = new SelectList(db.Registrations, "UserRef_ID", "Email");
+            ViewBag.User_ID = new SelectList(db.UserDetails, "UserRef_ID", "Email");
             return View();
         }
 
@@ -61,7 +61,7 @@ namespace GPA.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.User_ID = new SelectList(db.Registrations, "UserRef_ID", "Email", user.UserID);
+            ViewBag.User_ID = new SelectList(db.UserDetails, "UserRef_ID", "Email", user.UserID);
             return View(user);
         }
 
@@ -77,7 +77,7 @@ namespace GPA.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.User_ID = new SelectList(db.Registrations, "UserRef_ID", "Email", user.UserID);
+            ViewBag.User_ID = new SelectList(db.UserDetails, "UserRef_ID", "Email", user.UserID);
             return View(user);
         }
 
@@ -94,7 +94,7 @@ namespace GPA.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.User_ID = new SelectList(db.Registrations, "UserRef_ID", "Email", user.UserID);
+            ViewBag.User_ID = new SelectList(db.UserDetails, "UserRef_ID", "Email", user.UserID);
             return View(user);
         }
 

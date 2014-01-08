@@ -18,13 +18,13 @@ namespace GPA.DAL.Manager
 {
     public class FeedbackManager
     {
-        public List<Registration> GetRegisterUser(User user)
+        public List<UserDetail> GetRegisterUser(User user)
         {
-            List<Registration> users = null;
+            List<UserDetail> users = null;
             using (var db = new GPAEntities())
             {
 
-                users = db.Registrations.Where(r => r.UserID != user.UserID).ToList();
+                users = db.UserDetails.Where(r => r.UserID != user.UserID).ToList();
             }
             return users;
         }
@@ -37,14 +37,14 @@ namespace GPA.DAL.Manager
         /// <returns></returns>
         public List<UserFeedback> GetFeedbacks(User user)
         {
-            Registration ruser = FindUserByUserID(user.UserID);
+            UserDetail ruser = FindUserByUserID(user.UserID);
             List<UserFeedback> users = new List<UserFeedback>();
             using (var db = new GPAEntities())
             {
 
                 //Registration id is the use id for this system
                 users = (from f in db.Feedbacks
-                         join r in db.Registrations on f.FromID equals r.RegistrationID
+                         join r in db.UserDetails on f.FromID equals r.RegistrationID
                          where f.ToID == ruser.RegistrationID
                          select new UserFeedback
                          {
@@ -67,19 +67,19 @@ namespace GPA.DAL.Manager
 
         public string GetUserNameByID(int userId)
         {
-            Registration ruser = FindUserByUserID(userId);
+            UserDetail ruser = FindUserByUserID(userId);
             if (ruser == null)
                 return "";
 
             return ruser.FName + " " + ruser.LName;
         }
 
-        public Registration FindUserByUserID(int userId)
+        public UserDetail FindUserByUserID(int userId)
         {
-            Registration user;
+            UserDetail user;
             using (var db = new GPAEntities())
             {
-                user = db.Registrations.Where(r => r.UserID == userId).Single();
+                user = db.UserDetails.Where(r => r.UserID == userId).Single();
             }
             return user;
 

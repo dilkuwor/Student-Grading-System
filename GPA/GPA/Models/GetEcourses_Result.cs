@@ -10,15 +10,10 @@
 namespace GPA.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class CourseUser
+    public partial class GetEcourses_Result
     {
-        public int Courses_Id { get; set; }
-        public int Users_Id { get; set; }
         public int Id { get; set; }
-    
-        public virtual Cours Cours { get; set; }
-        public virtual UserDetail UserDetail { get; set; }
+        public string CourseName { get; set; }
     }
 }

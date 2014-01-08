@@ -32,21 +32,23 @@ namespace GPA.Models
         public virtual DbSet<CourseUser> CourseUsers { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<Grade> Grades { get; set; }
-        public virtual DbSet<Registration> Registrations { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<RoleTask> RoleTasks { get; set; }
         public virtual DbSet<StudentGrade> StudentGrades { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
+        public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<User> Users { get; set; }
     
-        public virtual ObjectResult<FindGPA_Result> FindGPA(Nullable<int> userID)
+        public virtual ObjectResult<GetEcourses_Result> GetEcourses(Nullable<int> userID)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("UserID", userID) :
                 new ObjectParameter("UserID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FindGPA_Result>("FindGPA", userIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEcourses_Result>("GetEcourses", userIDParameter);
         }
+    
+       
     }
 }

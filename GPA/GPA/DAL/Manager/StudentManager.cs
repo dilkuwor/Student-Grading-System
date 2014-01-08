@@ -25,16 +25,18 @@ namespace GPA.DAL.Manager
         /// </summary>
         /// <param name="userid">Student id</param>
         /// <returns></returns>
-        public List<Cours> GetRegisteredCourse(int userid)
+        public List<Cours> GetAlreadyTakenCoursesByUserID(int userid)
         {
             List<Cours> courses = new List<Cours>();
-            using (var db = new  GPAEntities())
+            using (var db = new GPAEntities())
             {
-                
+
+
                 courses = (from c in db.Courses
-                              join cu in db.CourseUsers on c.Id equals cu.Courses_Id
-                              where cu.Users_Id == userid
-                              select c).ToList();
+                           join cu in db.CourseUsers on c.Id equals cu.Courses_Id
+                           where cu.Users_Id == userid
+                           select c
+                              ).ToList();
             }
             return courses;
         }
@@ -49,15 +51,17 @@ namespace GPA.DAL.Manager
             List<Cours> courses = new List<Cours>();
             using (var db = new GPAEntities())
             {
-                Registration ruser  = db.Registrations.Where(r => r.UserID == userid).Single();
+
 
                 courses = (from c in db.Courses
                            join cu in db.CourseUsers on c.Id equals cu.Courses_Id
-                           where cu.Users_Id != ruser.RegistrationID
+                           where cu.Users_Id != userid
                            select c).ToList();
             }
             return courses;
         }
+
+
 
 
         /// <summary>
@@ -65,19 +69,15 @@ namespace GPA.DAL.Manager
         /// </summary>
         /// <param name="courseid"></param>
         /// <param name="studentid"></param>
-        public void ApplyForCourse(int courseid,int studentid)
+        public void ApplyForCourse(int courseid, int studentid)
         {
-            Registration ruser;
-            using (var db = new GPAEntities())
-            {
-                ruser = db.Registrations.Where(r => r.UserID == studentid).Single();
-            }
+
             CourseEnrolment request = new CourseEnrolment();
             request.CourseRef_ID = courseid;
-            request.UserRef_ID = ruser.RegistrationID;
+            request.UserRef_ID = studentid;
             request.Date = DateTime.Now.ToString("yyyy-MM-dd");
             request.IsApproved = false;
-            using (var db =new  GPAEntities())
+            using (var db = new GPAEntities())
             {
                 db.CourseEnrolments.Add(request);
                 db.SaveChanges();
@@ -92,40 +92,53 @@ namespace GPA.DAL.Manager
         /// </summary>
         /// <param name="studentid"></param>
         /// <returns></returns>
-        public List<ECourse> GetCustomCourses(int studentid)
+        public List<ECourse> GetECourses(int studentid)
         {
-            Registration ruser;
+
             List<ECourse> courses = new List<ECourse>();
 
-            List<Cours> _courses = GetCourseList(studentid);
+            //List<Cours> _courses = GetCourseList(studentid);
+
             using (var db = new GPAEntities())
             {
-                ruser = db.Registrations.Where(r => r.UserID == studentid).Single();
+                List<Cours> _courses = GetCourseList(studentid);
 
-                 courses = (from c in _courses
-                             select new ECourse
-                             {
-                                 CourseName = c.CourseName,
-                                 Id = c.Id,
-                                 Credit = c.Credit,
-                                 Level = c.Level,
-                                 SubCode = c.SubCode,
-                                 IsRequested = IsCourseRequested(ruser.RegistrationID,c.Id),
 
-                             }).ToList();
-                             
+                //courses = (from c in _courses
+                //           where !(from c1 in db.Courses join ce in db.CourseEnrolments on c1.Id equals
+                //                   ce.CourseRef_ID 
+                //                   where (c1.Id == studentid && ce.IsApproved == true) select c1.Id).ToList().Contains(c.Id)
+                //           select new ECourse 
+                //           {
+                //               Id = c.Id,
+                //               CourseName = c.CourseName,
+                //               IsRequested = IsCourseRequested(studentid,c.Id)
+
+                //           }
+                //             ).ToList();
+
+                 courses = (from c in db.GetEcourses(studentid)
+
+                               select new ECourse
+                              {
+                                  Id = c.Id,
+                                  CourseName = c.CourseName,
+                                  IsRequested = IsCourseRequested(studentid, c.Id)
+
+                              }).ToList();
+                
             }
 
             return courses;
         }
 
-        public bool IsCourseRequested( int userid,int courseid)
+        public bool IsCourseRequested(int userid, int courseid)
         {
-            CourseEnrolment cr ;
+            CourseEnrolment cr;
             using (var db = new GPAEntities())
             {
-                
-                cr = db.CourseEnrolments.Where(r => (r.UserRef_ID == userid && r.CourseRef_ID == courseid)).SingleOrDefault();
+
+                cr = db.CourseEnrolments.Where(r => (r.UserRef_ID == userid && r.CourseRef_ID == courseid && r.IsApproved == false)).SingleOrDefault();
             }
 
             if (cr != null)

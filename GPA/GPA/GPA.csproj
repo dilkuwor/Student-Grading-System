@@ -171,6 +171,7 @@
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportDataController.cs" />
+    <Compile Include="Controllers\RegistrarCourseController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\StaffsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="DAL\Manager\CourseManager.cs" />
     <Compile Include="DAL\Manager\StudentManager.cs" />
     <Compile Include="DAL\Util\Helper.cs" />
+    <Compile Include="DAL\Util\SendEmail.cs" />
     <Compile Include="DAL\Util\TextValue.cs" />
     <Compile Include="FindGPADataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -220,6 +222,9 @@
     <Compile Include="Models\FindGPA_Result.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetEcourses_Result.cs">
+      <DependentUpon>GPADataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GPADataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -240,27 +245,33 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="DAL\Manager\AccountManager.cs" />
-    <Compile Include="Models\Registration.cs">
-      <DependentUpon>GPADataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ReportViewModel.cs" />
     <Compile Include="Models\Role.cs">
+      <SubType>Code</SubType>
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RoleTask.cs">
+      <SubType>Code</SubType>
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StudentGrade.cs">
+      <SubType>Code</SubType>
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StudentViewModel.cs" />
     <Compile Include="Models\Task.cs">
+      <SubType>Code</SubType>
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>GPADataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserDetail.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserRole.cs">
+      <SubType>Code</SubType>
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -275,6 +286,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\core.css" />
+    <Content Include="Content\migrationScripts\FindGPA_SP.sql" />
+    <Content Include="Content\migrationScripts\GetEcourses.sql" />
+    <Content Include="Content\migrationScripts\GPADBScript.sql" />
     <Content Include="Dependencies\Microsoft.ReportViewer.WebForms.dll" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -284,29 +298,13 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ClassDiagram1.cd" />
-    <EntityDeploy Include="Models\GPADataModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>GPADataModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\GPADataModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GPADataModel.edmx</DependentUpon>
-      <LastGenOutput>GPADataModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\GPADataModel.edmx.diagram">
-      <DependentUpon>GPADataModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\GPADataModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GPADataModel.edmx</DependentUpon>
-      <LastGenOutput>GPADataModel.cs</LastGenOutput>
-    </Content>
     <Content Include="GPADataSet.xsc">
       <DependentUpon>GPADataSet.xsd</DependentUpon>
     </Content>
     <Content Include="FindGPADataSet.xsc">
       <DependentUpon>FindGPADataSet.xsd</DependentUpon>
     </Content>
+    <Content Include="Controllers\RegistrarCourseController.cs.orig" />
     <None Include="FindGPADataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>FindGPADataSet.Designer.cs</LastGenOutput>
@@ -334,6 +332,23 @@
     <Content Include="GPADataSet2.xss">
       <DependentUpon>GPADataSet2.xsd</DependentUpon>
     </Content>
+    <EntityDeploy Include="Models\GPADataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GPADataModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\GPADataModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GPADataModel.edmx</DependentUpon>
+      <LastGenOutput>GPADataModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\GPADataModel.edmx.diagram">
+      <DependentUpon>GPADataModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\GPADataModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GPADataModel.edmx</DependentUpon>
+      <LastGenOutput>GPADataModel.cs</LastGenOutput>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -351,6 +366,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Content\ajax-loader.gif" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -402,9 +418,11 @@
     <Content Include="Views\Staffs\Index.cshtml" />
     <Content Include="Views\Student\StudentDashbord.cshtml" />
     <Content Include="Views\Enrollments\Index.cshtml" />
+    <Content Include="Views\Course\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Report\GradeReport.cshtml" />
+    <Content Include="Views\Feedback\_FeedbackResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

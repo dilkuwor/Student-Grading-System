@@ -4,7 +4,7 @@
 }
 
 <h2>Import</h2>
-@using (Html.BeginForm("Importexcel", "ImportData", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Importexcel","ImportData", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <table>
         <tr><td>Excel file</td><td><input type="file" id="FileUpload1" name="FileUpload1" /></td></tr>
