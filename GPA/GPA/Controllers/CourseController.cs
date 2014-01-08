@@ -150,14 +150,14 @@ namespace GPA.Controllers
             string[] studentids = formCollection[1].Split(',');
             
             string[] gradeids = formCollection[0].Split(',');
-            string[] _gradeids = new string[gradeids.Count()-1];
-            for (int count = 1; count < gradeids.Count(); count++)
-            {
-                _gradeids[count-1] = gradeids[count];
-            }
+            //string[] _gradeids = new string[gradeids.Count()-1];
+            //for (int count = 1; count < gradeids.Count(); count++)
+            //{
+            //    _gradeids[count-1] = gradeids[count];
+            //}
             string[] extracredits = formCollection[2].Split(',');
             CourseManager cmanager = new CourseManager();
-            cmanager.AddStudentGrades(studentids, _gradeids, extracredits, model.GradeEnterFormViewModel.CourseID);
+            cmanager.AddStudentGrades(studentids, gradeids, extracredits, model.GradeEnterFormViewModel.CourseID);
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
             return RedirectToAction("Index","Home");
         }

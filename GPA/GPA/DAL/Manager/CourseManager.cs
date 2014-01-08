@@ -159,28 +159,44 @@ namespace GPA.DAL.Manager
         /// <param name="grades"></param>
         /// <param name="courseid"></param>
         /// <returns></returns>
-        public bool AddStudentGrades(string[] students, string[] grades,string[] extracredits, int courseid)
+        public bool AddStudentGrades(string[] grades, string[] students, string[] extracredits, int courseid)
         {
             List<StudentGrade> studentgrades = new List<StudentGrade>();
+            List<CourseEnrolment> enrolledstudentlist = new List<CourseEnrolment>();
+            List<CourseUser> courseusers = new List<CourseUser>();
+
             using (var db = new GPAEntities())
             {
+
+                CourseEnrolment c;
                 StudentGrade studentgrade;
+                CourseUser cuser;
+                int studentid;
                 for (int count = 0; count < students.Count(); count++)
                 {
+                    cuser = new CourseUser();
+                    studentid = int.Parse(students[count]);
                     studentgrade = new StudentGrade();
                     studentgrade.CourseId = courseid;
+                    cuser.Courses_Id = courseid;
+                    cuser.Users_Id = studentid;
                     
                     studentgrade.GradeId = int.Parse(grades[count]);
-                    studentgrade.UserId = int.Parse(students[count]);
-                   
+                    studentgrade.UserId = studentid;
+                    c = db.CourseEnrolments.Where(r => r.CourseRef_ID == courseid && r.UserRef_ID == studentid).Single();
+                    enrolledstudentlist.Add(c);
                     studentgrade.ExtraCredit = int.Parse(extracredits[count]);
 
                     studentgrades.Add(studentgrade);
+
+                    courseusers.Add(cuser);
 
                     
                 }
 
                 db.StudentGrades.AddRange(studentgrades);
+                db.CourseEnrolments.RemoveRange(enrolledstudentlist);
+                db.CourseUsers.AddRange(courseusers);
                 db.SaveChanges();
                 
             }
