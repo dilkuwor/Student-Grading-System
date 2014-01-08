@@ -152,8 +152,8 @@
 
         <div>
 <!--         <input id="mybtn" type="submit" value="send" class="itis btn btn-default" style="margin-top:10px;" /> -->
-            <input id="btnSubmit" type="submit" value="send" class="btn btn-default" style="margin-top:10px;" />
-            <input id="btnReset" type="reset" class="btn btn-danger" style="margin-top:10px;margin-left:10px;" />
+            <input id="mybtn" type="submit" value="send" class="btn btn-default" style="margin-top:10px;"/>
+            <input id="btnReset" type="reset" class="btn btn-danger" style="margin-top:10px;margin-left:10px;"/>
 
         </div>
     </div>
@@ -173,12 +173,18 @@
     
 <div id="feedbackResult">
 </div>
+
+@Scripts.Render("~/bundles/jqueryval")
+
 @section Scripts{
     <script type="text/javascript">
-        $("#btnSubmit").click(
-            function f() {
+        $("#mybtn").bind("click", 
+        //$("#mybtn").click(
+            
+            function f(event) {
                 // show spinner
                 $('#feedbackResult').html("<img src='./Content/ajax-loader.gif' style='align-content:center'/>");
+                debugger
                 var form = $('#myform');
                 $.ajax({
                     type: "POST",
@@ -199,11 +205,10 @@
                     alert(xhr.status);
                 });
                 return false;
-            });
-</script>
-    
-   
+            }
+        );
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        //at Scripts.Render("~/bundles/jqueryval")
+</script>
+ } 
+

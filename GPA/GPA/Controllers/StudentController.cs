@@ -8,6 +8,16 @@ using System.Web;
 using System.Web.Mvc;
 using GPA.Models;
 
+/*
+ * Project Name: GPA  
+ * Date Started: 01/03/2014
+ * Description: Handles Student business logic
+ * Module Name: Search Module
+ * Developer Name: Kengsreng Tang
+ * Version: 0.1
+ * Date Modified:
+ */
+
 namespace GPA.Controllers
 {
     public class StudentController : Controller

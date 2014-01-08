@@ -12,7 +12,6 @@ using System.Web;
  * Developer Name: Mehrdad Panahandeh
  * Version: 0.1
  * Date Modified:
- * 
  */
 namespace GPA.DAL.Manager
 {
