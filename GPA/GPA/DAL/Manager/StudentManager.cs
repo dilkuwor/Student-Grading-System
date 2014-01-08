@@ -61,7 +61,19 @@ namespace GPA.DAL.Manager
             return courses;
         }
 
-
+        public List<User> getAllStudentsTakenCourse(int courseId) 
+        {
+            List<User> users = new List<User>();
+            using (var db = new GPAEntities())
+            {
+                users = (from u in db.Users
+                           join ce in db.CourseEnrolments on u.UserID equals ce.UserDetail.UserID
+                         where ce.CourseRef_ID == courseId && ce.IsApproved == true
+                           select u
+                ).ToList();
+            }
+            return users;
+        }
 
 
         /// <summary>

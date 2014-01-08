@@ -1,31 +1,20 @@
-﻿@model GPA.Models.Cours
+﻿@*
+    Modified by: Kengsreng Tang
+    Date Modified: 1/6/2014
+    Ensure proper use of details fields
+*@
+
+@model GPA.Models.CourseViewModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Students Enrollment";
 }
 
-<h2>Details</h2>
+<h2>Students Enrollment</h2>
 
 <div>
-    <h4>Cours</h4>
 	<hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.SubCode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SubCode)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Level)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Level)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.CourseName)
         </dt>
@@ -33,7 +22,13 @@
         <dd>
             @Html.DisplayFor(model => model.CourseName)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Level)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.Level)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Credit)
         </dt>
@@ -42,7 +37,27 @@
             @Html.DisplayFor(model => model.Credit)
         </dd>
 
+
     </dl>
+    <h4>Students</h4>
+    <table class="table">
+        <tr>
+            <th>Student ID</th>
+            <th>Student Name</th>
+        </tr>
+        @foreach (var item in Model.students)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+            </tr>
+        }
+    </table>
+
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
