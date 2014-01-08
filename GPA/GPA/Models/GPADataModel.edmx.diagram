@@ -12,7 +12,6 @@
         <EntityTypeShape EntityType="GPAModel.Grade" Width="1.5" PointX="6" PointY="16.875" IsExpanded="true" />
         <EntityTypeShape EntityType="GPAModel.Role" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="GPAModel.RoleTask" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="GPAModel.StudentGrade" Width="1.5" PointX="8.25" PointY="12.625" IsExpanded="true" />
         <EntityTypeShape EntityType="GPAModel.Task" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="GPAModel.UserDetail" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="GPAModel.UserRole" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
@@ -20,16 +19,17 @@
         <AssociationConnector Association="GPAModel.FK_CourseRequest_CourseRequest" ManuallyRouted="false" />
         <AssociationConnector Association="GPAModel.FK_CourseRequest_Registrations" ManuallyRouted="false" />
         <AssociationConnector Association="GPAModel.FK_CourseUser_Courses" ManuallyRouted="false" />
-        <AssociationConnector Association="GPAModel.FK_Student_GPACourse" ManuallyRouted="false" />
         <AssociationConnector Association="GPAModel.FK_CourseUser_Registration" ManuallyRouted="false" />
         <AssociationConnector Association="GPAModel.FK_Feedbacks_RegistrationDetails" ManuallyRouted="false" />
         <AssociationConnector Association="GPAModel.FK_Feedbacks_Registrations" ManuallyRouted="false" />
-        <AssociationConnector Association="GPAModel.FK_GradeStudent_GPA" ManuallyRouted="false" />
         <AssociationConnector Association="GPAModel.FK_RoleTask_Roles" ManuallyRouted="false" />
         <AssociationConnector Association="GPAModel.FK_UserRole_Roles" ManuallyRouted="false" />
         <AssociationConnector Association="GPAModel.FK_RoleTask_Tasks" ManuallyRouted="false" />
         <AssociationConnector Association="GPAModel.FK_Registrations_Users" ManuallyRouted="false" />
         <AssociationConnector Association="GPAModel.FK_UserRole_Users" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="GPAModel.StudentGrade" Width="1.5" PointX="8.25" PointY="14.375" />
+        <AssociationConnector Association="GPAModel.FK_Student_GPACourse" />
+        <AssociationConnector Association="GPAModel.FK_GradeStudent_GPA" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

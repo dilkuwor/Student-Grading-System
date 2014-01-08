@@ -1,0 +1,64 @@
+﻿@model GPA.Models.DashbordViewModel
+
+<h1>Admin Dashbord</h1>
+
+
+<div class="panel panel-default disabled">
+    <div class="panel-heading">Course Signup Request</div>
+    <div class="panel-body">
+        <table class="table">
+            <tr>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.FeedbackReadViewModel.FromId)*@
+                    Course ID
+                </th>
+                <th>
+                    Course Name
+                </th>
+
+                <th>
+                    Student Name
+                </th>
+
+
+            </tr>
+
+            @foreach (var item in Model.AdminViewModel.RequestedCourses)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentName)
+                    </td>
+                    <td>
+
+                        @Html.ActionLink("Approve Request", "CourseSignupRequestApprove", "Course", new { courseid = item.RequestID }, null)
+
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+
+
+<div class="panel panel-default disabled">
+    <div class="panel-heading">Enter Student Grade</div>
+    <div class="panel-body">
+        <table class="table">
+            </table>
+        </div>
+    </div>
+
+
+
+

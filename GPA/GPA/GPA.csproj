@@ -173,7 +173,9 @@
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\StaffsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="DAL\Extended\CourseUserRequest.cs" />
     <Compile Include="DAL\Extended\ECourse.cs" />
+    <Compile Include="DAL\Extended\EStudent.cs" />
     <Compile Include="DAL\Extended\UserFeedback.cs" />
     <Compile Include="DAL\Manager\FeedbackManager.cs" />
     <Compile Include="DAL\Manager\SessionManager.cs" />
@@ -217,6 +219,9 @@
     </Compile>
     <Compile Include="Models\FeedbackViewModel.cs" />
     <Compile Include="Models\FindGPA_Result.cs">
+      <DependentUpon>GPADataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FindGPA_Result1.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetEcourses_Result.cs">
@@ -413,6 +418,8 @@
     <Content Include="Views\Staffs\Index.cshtml" />
     <Content Include="Views\Student\StudentDashbord.cshtml" />
     <Content Include="Views\Course\Create.cshtml" />
+    <Content Include="Views\Account\_AdminDashbordPartial.cshtml" />
+    <Content Include="Views\Account\_GradeEnterFormPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Report\GradeReport.cshtml" />

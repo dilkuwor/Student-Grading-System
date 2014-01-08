@@ -1,0 +1,78 @@
+﻿@model GPA.Models.DashbordViewModel
+
+<div class="panel panel-default disabled">
+    <div class="panel-heading">Course Signup Request</div>
+    <div class="panel-body">
+       
+@using (Html.BeginForm("AddGrade", "Course", FormMethod.Post, new { @class = "form-horizontal", DashbordViewModel = Model, role = "form" }))
+{
+     @Html.LabelFor(model=>model.GradeEnterFormViewModel.CourseID)
+        @Html.DropDownListFor(model => model.GradeEnterFormViewModel.CourseID, Model.GradeEnterFormViewModel.CourseList, new { @class = "form-control" })
+        <div style="margin-top:10px;">
+
+        </div>
+    if(true){
+        int count = 0;
+         <table class="table">
+            <tr>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.FeedbackReadViewModel.FromId)*@
+                    StudentID
+                </th>
+                <th>
+                    Course Name
+                </th>
+
+                <th>
+                    Student Name
+                </th>
+                <th>
+                    GPA
+                </th>
+                <th>
+                    Extra Credit
+                </th>
+
+            </tr>
+         
+            @foreach (var item in Model.GradeEnterFormViewModel.Students)
+            {
+                
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RegistrationID)
+                        @Html.HiddenFor(modelItem => item.RegistrationID, new { @item = item.RegistrationID})
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FName) 
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LName)
+                    </td>
+                    <td>
+
+                        @Html.DropDownListFor(model => model.GradeEnterFormViewModel.CourseID, Model.GradeEnterFormViewModel.Grades, string.Empty, new { @class = "form-control" })
+
+                    </td>
+                    <td>
+                        <input type="text" name="count" />
+                    </td>
+                </tr>
+                
+                count++;
+            }
+        </table>
+    }
+      
+     @Html.ValidationMessageFor(m => m.GradeEnterFormViewModel.Grades)
+ <input type="submit" class="form-control"  />
+}
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

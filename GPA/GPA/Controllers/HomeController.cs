@@ -17,22 +17,48 @@ namespace GPA.Controllers
     {
         public ActionResult Index()
         {
+            
+            CreateSession(19);
+            return View(PrepareDashboardDataViewModel());
+        }
+
+
+        /// <summary>
+        /// For Testing purpose only
+        /// </summary>
+        /// <returns></returns>
+        public DashbordViewModel PrepareDashboardDataViewModel()
+        {
             DashbordViewModel model = new DashbordViewModel();
 
             AccountManager amanager = new AccountManager();
 
             //Test
-            UserDetail ruser = amanager.FindUserByUserID(1);
-          
+            UserDetail ruser = amanager.FindUserByUserID(19);
+
             //if the user is registered check his role and display different layout
             StudentViewModel studentModel = new StudentViewModel();
-            
+
+            AdminViewModel adminModel = new AdminViewModel();
+            CourseManager cmanager = new CourseManager();
+            adminModel.RequestedCourses = cmanager.GetRequestedCourses();
+
             StudentManager smanager = new StudentManager();
             studentModel.Courses = smanager.GetAlreadyTakenCoursesByUserID(ruser.RegistrationID);
             studentModel.ECourses = smanager.GetECourses(ruser.RegistrationID);
             model.StudentViewModel = studentModel;
-            CreateSession(1);
-            return View(model);
+            model.AdminViewModel = adminModel;
+
+            GradeEnterFormViewModel grademodel = new GradeEnterFormViewModel();
+            grademodel.CourseList = cmanager.GetCourseForDropdown();
+            //grademodel.Grades = cmanager.GetGradeList();
+            grademodel.Students = smanager.GetStudentsByCourseID(2);
+            grademodel.Grades = cmanager.GetGradesForDropdown();
+            model.GradeEnterFormViewModel = grademodel;
+
+
+            return model;
+
         }
 
 

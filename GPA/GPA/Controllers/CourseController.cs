@@ -94,6 +94,19 @@ namespace GPA.Controllers
             smanager.ApplyForCourse(courseid, amanager.FindUserByUserID(currentUser.UserID).RegistrationID);
             return RedirectToAction("Index","Home");
         }
+
+        /// <summary>
+        /// course request approval
+        /// validation fro prerequsite is done here
+        /// </summary>
+        /// <param name="courseid"></param>
+        /// <returns></returns>
+        public ActionResult CourseSignupRequestApprove(int courseid)
+        {
+            CourseManager cmanager = new CourseManager();
+            cmanager.ApproveCourseSignupRequest(courseid);
+            return RedirectToAction("Index", "Home");
+        }
         
         [HttpPost]
         [AllowAnonymous]
@@ -109,5 +122,30 @@ namespace GPA.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult AddGrade(DashbordViewModel model,FormCollection formCollection)
+        {
+            string[] studentids = formCollection[1].Split(',');
+            
+            string[] gradeids = formCollection[0].Split(',');
+            string[] _gradeids = new string[gradeids.Count()-1];
+            for (int count = 1; count < gradeids.Count(); count++)
+            {
+                _gradeids[count-1] = gradeids[count];
+            }
+            string[] extracredits = formCollection[2].Split(',');
+            CourseManager cmanager = new CourseManager();
+            cmanager.AddStudentGrades(studentids, _gradeids, extracredits, model.GradeEnterFormViewModel.CourseID);
+            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            return RedirectToAction("Index","Home");
+        }
+
     }
+
+   
+
+    #region AdminView Request Region
+    
+    #endregion
 }
