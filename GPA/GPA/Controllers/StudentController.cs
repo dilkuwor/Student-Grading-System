@@ -58,31 +58,9 @@ namespace GPA.Controllers
             return View(user);
         }
 
-        // GET: /Student/Create
-        public ActionResult Create()
-        {
-            ViewBag.User_ID = new SelectList(db.UserDetails, "UserRef_ID", "Email");
-            return View();
-        }
+      
 
-        // POST: /Student/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="User_ID,UserName,Password,VerificationCode")] User user)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.User_ID = new SelectList(db.UserDetails, "UserRef_ID", "Email", user.UserID);
-            return View(user);
-        }
-
+        
         // GET: /Student/Edit/5
         public ActionResult Edit(int? id)
         {

@@ -34,6 +34,8 @@ namespace GPA.Models
     {
         [Required]
         [Display(Name = "User name")]
+        [RegularExpression(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$",
+            ErrorMessage = "Invalid email address.")]
         public string UserName { get; set; }
 
         [Required]
@@ -67,6 +69,8 @@ namespace GPA.Models
     {
         [Required]
         [Display(Name = "User name")]
+        [RegularExpression(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$",
+            ErrorMessage = "Invalid email address.")]
         public string UserName { get; set; }
 
        
@@ -102,6 +106,8 @@ namespace GPA.Models
         public string LName { get; set; }
         [Required]
         [Display(Name = "Email")]
+        [RegularExpression(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$",
+            ErrorMessage = "Invalid email address.")]
         public string Email { get; set; }
          
         [Display(Name = "Address")]
@@ -114,7 +120,8 @@ namespace GPA.Models
         [Display(Name = "Zip")]
         public string Zip { get; set; }
 
-
+        [RegularExpression(@"((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}",
+            ErrorMessage = "Invalid phone number.")]
         [Display(Name = "Mobile Number")]
         public string MobileNumber { get; set; }
 
