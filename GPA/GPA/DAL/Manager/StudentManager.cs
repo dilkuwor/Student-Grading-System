@@ -12,8 +12,9 @@ using System.Web;
  * Module Name: User Administration Module
  * Developer Name: Dil Kuwor
  * Version: 0.1
- * Date Modified:
- * 
+ * Date Modified:  01/07/2014
+ * Modified By: Kengsreng Tang
+ * Description: added method getAllStudentsTakenCourse()
  */
 namespace GPA.DAL.Manager
 {
