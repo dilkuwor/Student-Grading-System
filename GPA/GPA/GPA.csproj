@@ -184,23 +184,8 @@
     <Compile Include="DAL\Util\Helper.cs" />
     <Compile Include="DAL\Util\SendEmail.cs" />
     <Compile Include="DAL\Util\TextValue.cs" />
-    <Compile Include="FindGPADataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FindGPADataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="GPADataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GPADataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="GPADataSet2.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GPADataSet2.xsd</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Cours.cs">
@@ -222,6 +207,9 @@
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetEcourses_Result.cs">
+      <DependentUpon>GPADataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetUserDetails_Result.cs">
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GPADataModel.Context.cs">
@@ -253,6 +241,9 @@
       <SubType>Code</SubType>
       <DependentUpon>GPADataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StudentCourse_Result.cs">
+      <DependentUpon>GPADataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\StudentGrade.cs">
       <SubType>Code</SubType>
       <DependentUpon>GPADataModel.tt</DependentUpon>
@@ -280,6 +271,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="GPADataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GPADataSet.xsd</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -297,40 +293,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ClassDiagram1.cd" />
-    <Content Include="GPADataSet.xsc">
-      <DependentUpon>GPADataSet.xsd</DependentUpon>
-    </Content>
-    <Content Include="FindGPADataSet.xsc">
-      <DependentUpon>FindGPADataSet.xsd</DependentUpon>
-    </Content>
     <Content Include="Controllers\RegistrarCourseController.cs.orig" />
-    <None Include="FindGPADataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>FindGPADataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="FindGPADataSet.xss">
-      <DependentUpon>FindGPADataSet.xsd</DependentUpon>
-    </Content>
-    <None Include="GPADataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>GPADataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="GPADataSet.xss">
-      <DependentUpon>GPADataSet.xsd</DependentUpon>
-    </Content>
-    <Content Include="GPADataSet2.xsc">
-      <DependentUpon>GPADataSet2.xsd</DependentUpon>
-    </Content>
-    <None Include="GPADataSet2.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>GPADataSet2.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="GPADataSet2.xss">
-      <DependentUpon>GPADataSet2.xsd</DependentUpon>
-    </Content>
     <EntityDeploy Include="Models\GPADataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>GPADataModel.Designer.cs</LastGenOutput>
@@ -417,6 +380,17 @@
     <Content Include="Views\Staffs\Index.cshtml" />
     <Content Include="Views\Student\StudentDashbord.cshtml" />
     <Content Include="Views\Course\Create.cshtml" />
+    <Content Include="GPADataSet.xsc">
+      <DependentUpon>GPADataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="GPADataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GPADataSet.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="GPADataSet.xss">
+      <DependentUpon>GPADataSet.xsd</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Report\GradeReport.cshtml" />
@@ -437,7 +411,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\StudentGrade.rdlc" />
+    <EmbeddedResource Include="Content\Reports\StudentCourse.rdlc" />
+    <EmbeddedResource Include="Content\Reports\StudentDetails.rdlc" />
+    <EmbeddedResource Include="Content\Reports\StudentGrade.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

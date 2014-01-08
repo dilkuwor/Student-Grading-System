@@ -34,29 +34,66 @@ namespace GPA.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult GradeReport(ReportViewModel model)
+        public ActionResult GradeReport(ReportViewModel model, string command)
         {
             ReportViewModel model1 = new ReportViewModel();
 
-            using (var ctx = new GPAEntities())
+            if (command == "Student Grade")
             {
-                var idParam = new SqlParameter
+                using (var ctx = new GPAEntities())
                 {
-                    ParameterName = "StudentID",
-                    Value = int.Parse(model.UserID.ToString())
-                };
-                var gradeList = ctx.Database.SqlQuery<FindGPA_Result>("exec FindGPA @StudentId ", idParam).ToList<FindGPA_Result>();
-                model.GPAesult = gradeList;
-                ViewBag.UserID = model.UserID;
-                return View(model);
-
+                    var idParam = new SqlParameter
+                    {
+                        ParameterName = "StudentID",
+                        Value = int.Parse(model.UserID.ToString())
+                    };
+                    model.GPAesult = ctx.Database.SqlQuery<FindGPA_Result>("exec FindGPA @StudentId ", idParam).ToList<FindGPA_Result>();
+                    ViewBag.UserID = model.UserID;
+                    ViewBag.Reporttype = "Student Grade";
+                    ViewBag.ReportName = "StudentGrade.rdlc";
+                    return View(model);
+                }
             }
+            else if (command == "Student Details")
+            {
+                using (var ctx = new GPAEntities())
+                {
+                    var idParam = new SqlParameter
+                    {
+                        ParameterName = "StudentID",
+                        Value = int.Parse(model.UserID.ToString())
+                    };
+                    model.GPAUserDetails = ctx.Database.SqlQuery<GetUserDetails_Result>("exec GetUserDetails @StudentId ", idParam).ToList<GetUserDetails_Result>();
+                    ViewBag.UserID = model.UserID;
+                    ViewBag.Reporttype = "Student Details";
+                    ViewBag.ReportName = "StudentDetails.rdlc";
+                    return View(model);
+                }
+            }
+             else if (command == "Student Course Enrollment")
+            {
+                using (var ctx = new GPAEntities())
+                {
+                    var idParam = new SqlParameter
+                    {
+                        ParameterName = "StudentID",
+                        Value = int.Parse(model.UserID.ToString())
+                    };
+                    model.GPAStudentCourse = ctx.Database.SqlQuery<StudentCourse_Result>("exec StudentCourse @StudentId ", idParam).ToList<StudentCourse_Result>();
+                    ViewBag.UserID = model.UserID;
+                    ViewBag.Reporttype = "Student Course Enrollment";
+                    ViewBag.ReportName = "StudentCourse.rdlc";
+                    return View(model);
+                }
+            }
+            
+            return RedirectToAction("Index");
         }
 
-        public ActionResult Report(string id, string userId)
+        public ActionResult Report(string id, int userId, string reportName)
         {
             LocalReport lr = new LocalReport();
-            string path = Path.Combine(Server.MapPath("~/Content"), "StudentGrade.rdlc");
+            string path = Path.Combine(Server.MapPath("~/Content/Reports/"), reportName);
             if (System.IO.File.Exists(path))
             {
                 lr.ReportPath = path;
@@ -66,25 +103,8 @@ namespace GPA.Controllers
                 return View("Index");
             }
 
-            List<FindGPA_Result> gradeList = new List<FindGPA_Result>();
-            using (var ctx = new GPAEntities())
-            {
-                var idParam = new SqlParameter
-                {
-                    ParameterName = "StudentID",
-                    Value = int.Parse(userId)
-                };
-                gradeList = ctx.Database.SqlQuery<FindGPA_Result>("exec FindGPA @StudentId ", idParam).ToList<FindGPA_Result>();
-            }
-
-            ReportDataSource reportDataSource = new ReportDataSource("StudentGrade", gradeList);
-            lr.DataSources.Add(reportDataSource);      
-            string reportType = id;
-            string mimeType;
-            string encoding;
-            string fileNameExtension;
-            string deviceInfo =
-            "<DeviceInfo>" +
+            ReportDataSource reportDataSource;
+            string deviceInfo = "<DeviceInfo>" +
             "  <OutputFormat>" + id + "</OutputFormat>" +
             "  <PageWidth>8.5in</PageWidth>" +
             "  <PageHeight>11in</PageHeight>" +
@@ -93,6 +113,71 @@ namespace GPA.Controllers
             "  <MarginRight>1in</MarginRight>" +
             "  <MarginBottom>0.5in</MarginBottom>" +
             "</DeviceInfo>";
+
+            if (reportName == "StudentGrade.rdlc")
+            {
+                List<FindGPA_Result> gradeList = new List<FindGPA_Result>();
+
+                using (var ctx = new GPAEntities())
+                {
+                    var idParam = new SqlParameter
+                    {
+                        ParameterName = "StudentID",
+                        Value = userId
+                    };
+                    gradeList = ctx.Database.SqlQuery<FindGPA_Result>("exec FindGPA @StudentId ", idParam).ToList<FindGPA_Result>();
+                }
+
+                reportDataSource = new ReportDataSource("StudentGrade", gradeList);
+                lr.DataSources.Add(reportDataSource);
+
+            }
+            else if (reportName == "StudentDetails.rdlc")
+            {
+                List<GetUserDetails_Result> userDetails = new List<GetUserDetails_Result>();
+                using (var ctx = new GPAEntities())
+                {
+                    var idParam = new SqlParameter
+                    {
+                        ParameterName = "StudentID",
+                        Value = userId
+                    };
+                    userDetails = ctx.Database.SqlQuery<GetUserDetails_Result>("exec GetUserDetails @StudentId ", idParam).ToList<GetUserDetails_Result>();
+                }
+                reportDataSource = new ReportDataSource("StudentDetails", userDetails);
+                lr.DataSources.Add(reportDataSource);
+                deviceInfo = "<DeviceInfo>" +
+           "  <OutputFormat>" + id + "</OutputFormat>" +
+           "  <PageWidth>11in</PageWidth>" +
+           "  <PageHeight>11in</PageHeight>" +
+           "  <MarginTop>0.5in</MarginTop>" +
+           "  <MarginLeft>1in</MarginLeft>" +
+           "  <MarginRight>1in</MarginRight>" +
+           "  <MarginBottom>0.5in</MarginBottom>" +
+           "</DeviceInfo>";
+            }
+            else if (reportName == "StudentCourse.rdlc")
+                {
+                    List<StudentCourse_Result> studentcourse = new List<StudentCourse_Result>();
+
+                    using (var ctx = new GPAEntities())
+                    {
+                        var idParam = new SqlParameter
+                        {
+                            ParameterName = "StudentID",
+                            Value = userId
+                        };
+                        studentcourse = ctx.Database.SqlQuery<StudentCourse_Result>("exec StudentCourse @StudentId ", idParam).ToList<StudentCourse_Result>();
+                    }
+
+                    reportDataSource = new ReportDataSource("StudentCourse", studentcourse);
+                    lr.DataSources.Add(reportDataSource);
+
+                }
+            string reportType = id;
+            string mimeType;
+            string encoding;
+            string fileNameExtension;
             Warning[] warnings;
             string[] streams;
             byte[] renderedBytes;
@@ -107,7 +192,5 @@ namespace GPA.Controllers
             return File(renderedBytes, mimeType);
         }
 
-       
-
-	}
+    }
 }

@@ -19,5 +19,7 @@ namespace GPA.Models
         }
 
         public List<FindGPA_Result> GPAesult { get; set; }
+        public List<GetUserDetails_Result> GPAUserDetails { get; set; }
+        public List<StudentCourse_Result> GPAStudentCourse { get; set; }
     }
 }

@@ -942,7 +942,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox11</rd:DefaultName>
         <Top>0.27375in</Top>
-        <Left>4.46125in</Left>
+        <Left>3.64875in</Left>
         <Height>0.25in</Height>
         <Width>0.41667in</Width>
         <ZIndex>7</ZIndex>
@@ -972,9 +972,9 @@
         </Paragraphs>
         <rd:DefaultName>ExecutionTime</rd:DefaultName>
         <Top>0.27375in</Top>
-        <Left>4.94736in</Left>
+        <Left>4.13486in</Left>
         <Height>0.25in</Height>
-        <Width>1.1875in</Width>
+        <Width>2.1125in</Width>
         <ZIndex>8</ZIndex>
         <Style>
           <Border>
@@ -1225,8 +1225,8 @@
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>FindGPADataSet</rd:DataSetName>
-        <rd:SchemaPath>C:\Users\laxmanadhikari\Documents\GitHub\Student-Grading-System\GPA\GPA\FindGPADataSet.xsd</rd:SchemaPath>
+        <rd:DataSetName>StudentCourse</rd:DataSetName>
+        <rd:SchemaPath>C:\Users\laxmanadhikari\Documents\GitHub\Student-Grading-System\GPA\GPA\StudentCourse.xsd</rd:SchemaPath>
         <rd:TableName>FindGPA</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
