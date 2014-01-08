@@ -170,6 +170,7 @@
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportDataController.cs" />
+    <Compile Include="Controllers\RegistrarCourseController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\StaffsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
@@ -301,6 +302,7 @@
     <Content Include="FindGPADataSet.xsc">
       <DependentUpon>FindGPADataSet.xsd</DependentUpon>
     </Content>
+    <Content Include="Controllers\RegistrarCourseController.cs.orig" />
     <None Include="FindGPADataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>FindGPADataSet.Designer.cs</LastGenOutput>
