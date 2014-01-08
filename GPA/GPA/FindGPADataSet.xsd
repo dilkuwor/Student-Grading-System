@@ -2,14 +2,15 @@
 <xs:schema id="FindGPADataSet" targetNamespace="http://tempuri.org/FindGPADataSet.xsd" xmlns:mstns="http://tempuri.org/FindGPADataSet.xsd" xmlns="http://tempuri.org/FindGPADataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
-      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="1" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
-          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="GPAConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="GPAConnectionString (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.GPAConnectionString.ConnectionString" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="GPAConnectionString" IsAppSettingsProperty="true" Modifier="Assembly" Name="GPAConnectionString (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.GPAConnectionString.ConnectionString" Provider="System.Data.SqlClient" />
+          <Connection ConnectionStringObject="Data Source=laxman;Initial Catalog=GPA;Integrated Security=True" IsAppSettingsProperty="false" Modifier="Assembly" Name="GPAEntities (GPA)" ParameterPrefix="@" Provider="System.Data.SqlClient" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="FindGPATableAdapter" GeneratorDataComponentClassName="FindGPATableAdapter" Name="FindGPA" UserDataComponentName="FindGPATableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="GPAConnectionString (Web.config)" DbObjectName="GPA.dbo.FindGPA" DbObjectType="StoredProcedure" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="GPAEntities (GPA)" DbObjectName="GPA.dbo.FindGPA" DbObjectType="StoredProcedure" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.FindGPA</CommandText>
@@ -30,6 +31,7 @@
               <Mapping SourceColumn="GradeScore" DataSetColumn="GradeScore" />
               <Mapping SourceColumn="GradeNumber" DataSetColumn="GradeNumber" />
               <Mapping SourceColumn="StudentCourseGrade" DataSetColumn="StudentCourseGrade" />
+              <Mapping SourceColumn="EC" DataSetColumn="EC" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -51,8 +53,8 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="StudentID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnStudentID" msprop:Generator_ColumnPropNameInRow="StudentID" msprop:Generator_ColumnPropNameInTable="StudentIDColumn" msprop:Generator_UserColumnName="StudentID" type="xs:int" />
-              <xs:element name="CourseID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnCourseID" msprop:Generator_ColumnPropNameInRow="CourseID" msprop:Generator_ColumnPropNameInTable="CourseIDColumn" msprop:Generator_UserColumnName="CourseID" type="xs:int" />
+              <xs:element name="StudentID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnStudentID" msprop:Generator_ColumnPropNameInRow="StudentID" msprop:Generator_ColumnPropNameInTable="StudentIDColumn" msprop:Generator_UserColumnName="StudentID" type="xs:int" />
+              <xs:element name="CourseID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnCourseID" msprop:Generator_ColumnPropNameInRow="CourseID" msprop:Generator_ColumnPropNameInTable="CourseIDColumn" msprop:Generator_UserColumnName="CourseID" type="xs:int" />
               <xs:element name="CourseName" msprop:Generator_ColumnVarNameInTable="columnCourseName" msprop:Generator_ColumnPropNameInRow="CourseName" msprop:Generator_ColumnPropNameInTable="CourseNameColumn" msprop:Generator_UserColumnName="CourseName">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
@@ -64,12 +66,13 @@
               <xs:element name="GradeScore" msprop:Generator_ColumnVarNameInTable="columnGradeScore" msprop:Generator_ColumnPropNameInRow="GradeScore" msprop:Generator_ColumnPropNameInTable="GradeScoreColumn" msprop:Generator_UserColumnName="GradeScore">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
-                    <xs:maxLength value="2147483647" />
+                    <xs:maxLength value="10" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
               <xs:element name="GradeNumber" msprop:Generator_ColumnVarNameInTable="columnGradeNumber" msprop:Generator_ColumnPropNameInRow="GradeNumber" msprop:Generator_ColumnPropNameInTable="GradeNumberColumn" msprop:Generator_UserColumnName="GradeNumber" type="xs:double" />
               <xs:element name="StudentCourseGrade" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnStudentCourseGrade" msprop:Generator_ColumnPropNameInRow="StudentCourseGrade" msprop:Generator_ColumnPropNameInTable="StudentCourseGradeColumn" msprop:Generator_UserColumnName="StudentCourseGrade" type="xs:double" minOccurs="0" />
+              <xs:element name="EC" msprop:Generator_ColumnVarNameInTable="columnEC" msprop:Generator_ColumnPropNameInRow="EC" msprop:Generator_ColumnPropNameInTable="ECColumn" msprop:Generator_UserColumnName="EC" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

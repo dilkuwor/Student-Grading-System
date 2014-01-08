@@ -295,6 +295,8 @@ namespace GPA {
             
             private global::System.Data.DataColumn columnStudentCourseGrade;
             
+            private global::System.Data.DataColumn columnEC;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public FindGPADataTable() {
@@ -394,6 +396,14 @@ namespace GPA {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ECColumn {
+                get {
+                    return this.columnEC;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -429,7 +439,7 @@ namespace GPA {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public FindGPARow AddFindGPARow(string Name, string CourseName, int Credit, string GradeScore, double GradeNumber, double StudentCourseGrade) {
+            public FindGPARow AddFindGPARow(string Name, string CourseName, int Credit, string GradeScore, double GradeNumber, double StudentCourseGrade, int EC) {
                 FindGPARow rowFindGPARow = ((FindGPARow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Name,
@@ -439,7 +449,8 @@ namespace GPA {
                         Credit,
                         GradeScore,
                         GradeNumber,
-                        StudentCourseGrade};
+                        StudentCourseGrade,
+                        EC};
                 rowFindGPARow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowFindGPARow);
                 return rowFindGPARow;
@@ -470,6 +481,7 @@ namespace GPA {
                 this.columnGradeScore = base.Columns["GradeScore"];
                 this.columnGradeNumber = base.Columns["GradeNumber"];
                 this.columnStudentCourseGrade = base.Columns["StudentCourseGrade"];
+                this.columnEC = base.Columns["EC"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -491,19 +503,25 @@ namespace GPA {
                 base.Columns.Add(this.columnGradeNumber);
                 this.columnStudentCourseGrade = new global::System.Data.DataColumn("StudentCourseGrade", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnStudentCourseGrade);
+                this.columnEC = new global::System.Data.DataColumn("EC", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEC);
                 this.columnName.ReadOnly = true;
                 this.columnName.MaxLength = 2147483647;
                 this.columnStudentID.AutoIncrement = true;
+                this.columnStudentID.AutoIncrementSeed = -1;
+                this.columnStudentID.AutoIncrementStep = -1;
                 this.columnStudentID.AllowDBNull = false;
                 this.columnStudentID.ReadOnly = true;
                 this.columnCourseID.AutoIncrement = true;
+                this.columnCourseID.AutoIncrementSeed = -1;
+                this.columnCourseID.AutoIncrementStep = -1;
                 this.columnCourseID.AllowDBNull = false;
                 this.columnCourseID.ReadOnly = true;
                 this.columnCourseName.AllowDBNull = false;
                 this.columnCourseName.MaxLength = 2147483647;
                 this.columnCredit.AllowDBNull = false;
                 this.columnGradeScore.AllowDBNull = false;
-                this.columnGradeScore.MaxLength = 2147483647;
+                this.columnGradeScore.MaxLength = 10;
                 this.columnGradeNumber.AllowDBNull = false;
                 this.columnStudentCourseGrade.ReadOnly = true;
             }
@@ -746,6 +764,22 @@ namespace GPA {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int EC {
+                get {
+                    try {
+                        return ((int)(this[this.tableFindGPA.ECColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'EC\' in table \'FindGPA\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableFindGPA.ECColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsNameNull() {
                 return this.IsNull(this.tableFindGPA.NameColumn);
             }
@@ -766,6 +800,18 @@ namespace GPA {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetStudentCourseGradeNull() {
                 this[this.tableFindGPA.StudentCourseGradeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsECNull() {
+                return this.IsNull(this.tableFindGPA.ECColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetECNull() {
+                this[this.tableFindGPA.ECColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -936,6 +982,7 @@ namespace GPA.FindGPADataSetTableAdapters {
             tableMapping.ColumnMappings.Add("GradeScore", "GradeScore");
             tableMapping.ColumnMappings.Add("GradeNumber", "GradeNumber");
             tableMapping.ColumnMappings.Add("StudentCourseGrade", "StudentCourseGrade");
+            tableMapping.ColumnMappings.Add("EC", "EC");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -943,7 +990,7 @@ namespace GPA.FindGPADataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GPAConnectionString"].ConnectionString;
+            this._connection.ConnectionString = "Data Source=laxman;Initial Catalog=GPA;Integrated Security=True";
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

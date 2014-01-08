@@ -22,7 +22,7 @@ namespace GPA.Controllers
             AccountManager amanager = new AccountManager();
 
             //Test
-            UserDetail ruser = amanager.FindUserByUserID(1);
+            UserDetail ruser = amanager.FindUserByUserID(19);
           
             //if the user is registered check his role and display different layout
             StudentViewModel studentModel = new StudentViewModel();
@@ -31,7 +31,7 @@ namespace GPA.Controllers
             studentModel.Courses = smanager.GetAlreadyTakenCoursesByUserID(ruser.RegistrationID);
             studentModel.ECourses = smanager.GetECourses(ruser.RegistrationID);
             model.StudentViewModel = studentModel;
-            CreateSession(1);
+            CreateSession(19);
             return View(model);
         }
 
