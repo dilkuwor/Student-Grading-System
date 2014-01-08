@@ -4,7 +4,7 @@
     ViewBag.Title = "UserReport";
 }
 
-<h2>Student Grade Report</h2>
+<h2>Student Report</h2>
 @using (Html.BeginForm("GradeReport", "Report", FormMethod.Post, new { role = "form" }))
         {
      @Html.AntiForgeryToken()
@@ -14,6 +14,8 @@
 @Html.DropDownListFor(model => model.UserID, Model.UserList, new { @class = "form-control" })
 
 <div>
-    <input type="submit"  value="Generate Grade Report" class="btn btn-default"  />
+    <input type="submit"  value="Student Grade" name="command" class="btn btn-default"  />
+    <input type="submit" value="Student Details" name="command" class="btn btn-default" />
+    <input type="submit" value="Student Course Enrollment" name="command" class="btn btn-default" />
 </div>
 }

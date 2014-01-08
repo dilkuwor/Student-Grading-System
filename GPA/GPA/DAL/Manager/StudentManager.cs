@@ -150,14 +150,42 @@ namespace GPA.DAL.Manager
             CourseEnrolment cr;
             using (var db = new GPAEntities())
             {
+                try
+                {
+                    cr = db.CourseEnrolments.Where(r => (r.UserRef_ID == userid && r.CourseRef_ID == courseid && r.IsApproved == false)).SingleOrDefault();
+                }
+                catch (Exception)
+                {
 
-                cr = db.CourseEnrolments.Where(r => (r.UserRef_ID == userid && r.CourseRef_ID == courseid && r.IsApproved == false)).SingleOrDefault();
+                    return false;
+                }
+                
             }
 
             if (cr != null)
                 return true;
             else
                 return false;
+        }
+
+
+        /// <summary>
+        /// Returns the list of students enrolled in a particular course(courseid)
+        /// </summary>
+        /// <param name="courseid"></param>
+        /// <returns>List of User(Student)</returns>
+        public List<UserDetail> GetStudentsByCourseID(int courseid)
+        {
+            List<UserDetail> students = new List<UserDetail>();
+            using (var db = new GPAEntities())
+            {
+                students = (from s in db.UserDetails
+                              join ce in db.CourseEnrolments on s.RegistrationID equals ce.UserRef_ID
+                              where (ce.IsApproved == true && ce.CourseRef_ID == courseid)
+                              select s).ToList();
+            }
+
+            return students;
         }
 
 

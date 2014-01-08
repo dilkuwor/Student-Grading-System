@@ -6,8 +6,20 @@ using System.Net.Mail;
 using System.Text;
 using System.Web;
 
+/*
+ * Project Name: GPA  
+ * Date Started: 01/07/2014
+ * Description: Sends email
+ * Module Name: Email Module
+ * Module Number: 008-100-101
+ * Developer Name: Dipesh Shrestha
+ * Version: 0.1
+ * Date Modified:
+ * 
+ */
 namespace GPA.DAL.Util
 {
+
     public class SendEmail
     {
         private SmtpClient _client;
