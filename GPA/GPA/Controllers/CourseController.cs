@@ -95,6 +95,7 @@ namespace GPA.Controllers
             return RedirectToAction("Index","Home");
         }
 
+
         /// <summary>
         /// course request approval
         /// validation fro prerequsite is done here
@@ -106,6 +107,26 @@ namespace GPA.Controllers
             CourseManager cmanager = new CourseManager();
             cmanager.ApproveCourseSignupRequest(courseid);
             return RedirectToAction("Index", "Home");
+        }
+        // GET: /Course/Details/5
+        public ActionResult Details(int? id)
+        {
+
+            var db = new GPAEntities();
+            CourseViewModel cv = new CourseViewModel();
+            StudentManager sm = new StudentManager();
+            
+            var course = db.Courses.Find(id);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+            cv.CourseName = course.CourseName;
+            cv.Id = course.Id;
+            cv.Credit = course.Credit;
+            cv.students = sm.getAllStudentsTakenCourse((int)id);
+            return View(cv);
+
         }
         
         [HttpPost]

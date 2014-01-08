@@ -47,6 +47,7 @@ namespace GPA.Controllers
             studentModel.Courses = smanager.GetAlreadyTakenCoursesByUserID(ruser.RegistrationID);
             studentModel.ECourses = smanager.GetECourses(ruser.RegistrationID);
             model.StudentViewModel = studentModel;
+
             model.AdminViewModel = adminModel;
 
             GradeEnterFormViewModel grademodel = new GradeEnterFormViewModel();
@@ -58,6 +59,8 @@ namespace GPA.Controllers
 
 
             return model;
+
+
 
         }
 

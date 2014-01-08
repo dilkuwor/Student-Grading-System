@@ -13,11 +13,14 @@ namespace GPA.Models
         [Display(Name="UserID")]
         public int UserID { get; set; }
         public IEnumerable<SelectListItem> UserList { get; set; }
+       
         public ReportViewModel()
         {
             UserList = new List<SelectListItem>();
         }
 
         public List<FindGPA_Result> GPAesult { get; set; }
+        public List<GetUserDetails_Result> GPAUserDetails { get; set; }
+        public List<StudentCourse_Result> GPAStudentCourse { get; set; }
     }
 }

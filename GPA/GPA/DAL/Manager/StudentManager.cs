@@ -12,8 +12,9 @@ using System.Web;
  * Module Name: User Administration Module
  * Developer Name: Dil Kuwor
  * Version: 0.1
- * Date Modified:
- * 
+ * Date Modified:  01/07/2014
+ * Modified By: Kengsreng Tang
+ * Description: added method getAllStudentsTakenCourse()
  */
 namespace GPA.DAL.Manager
 {
@@ -61,7 +62,19 @@ namespace GPA.DAL.Manager
             return courses;
         }
 
-
+        public List<User> getAllStudentsTakenCourse(int courseId) 
+        {
+            List<User> users = new List<User>();
+            using (var db = new GPAEntities())
+            {
+                users = (from u in db.Users
+                           join ce in db.CourseEnrolments on u.UserID equals ce.UserDetail.UserID
+                         where ce.CourseRef_ID == courseId && ce.IsApproved == true
+                           select u
+                ).ToList();
+            }
+            return users;
+        }
 
 
         /// <summary>

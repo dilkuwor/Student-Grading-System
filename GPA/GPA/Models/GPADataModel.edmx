@@ -281,6 +281,12 @@
         <Function Name="GetEcourses" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetUserDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="StudentCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="GPAModelStoreContainer">
           <EntitySet Name="CourseEnrolments" EntityType="Self.CourseEnrolments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
@@ -672,6 +678,14 @@
           </FunctionImport>
           <FunctionImport Name="FindGPA" ReturnType="Collection(GPAModel.FindGPA_Result1)">
           <Parameter Name="UserID" Mode="In" Type="Int32" />
+
+          </FunctionImport>
+          <FunctionImport Name="GetUserDetails" ReturnType="Collection(GPAModel.GetUserDetails_Result)">
+          <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="StudentCourse" ReturnType="Collection(GPAModel.StudentCourse_Result2)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+
           </FunctionImport>
           <EntitySet Name="StudentGrades" EntityType="GPAModel.StudentGrade" />
           <AssociationSet Name="FK_Student_GPACourse" Association="GPAModel.FK_Student_GPACourse">
@@ -708,6 +722,7 @@
           <Property Type="Double" Name="StudentCourseGrade" Nullable="false" />
           <Property Type="Int32" Name="EC" Nullable="true" />
         </ComplexType>
+
         <EntityType Name="StudentGrade">
           <Key>
             <PropertyRef Name="Id" />
@@ -744,6 +759,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+
+        <ComplexType Name="GetUserDetails_Result">
+          <Property Type="Int32" Name="RegistrationID" Nullable="false" />
+          <Property Type="String" Name="FName" Nullable="false" />
+          <Property Type="String" Name="LName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" />
+          <Property Type="String" Name="State" Nullable="true" />
+          <Property Type="String" Name="Zip" Nullable="true" />
+          <Property Type="String" Name="LandNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MobileNumber" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="StudentCourse_Result">
+          <Property Type="String" Name="CourseName" Nullable="false" />
+          <Property Type="Int32" Name="RegistrationID" Nullable="false" />
+          <Property Type="String" Name="Fname" Nullable="false" />
+          <Property Type="String" Name="Lname" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="StudentCourse_Result1">
+          <Property Type="String" Name="CourseName" Nullable="false" />
+          <Property Type="Int32" Name="RegistrationID" Nullable="false" />
+          <Property Type="String" Name="Fname" Nullable="false" />
+          <Property Type="String" Name="Lname" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="StudentCourse_Result2">
+          <Property Type="String" Name="CourseName" Nullable="false" />
+          <Property Type="Int32" Name="RegistrationID" Nullable="false" />
+          <Property Type="String" Name="Fname" Nullable="false" />
+          <Property Type="String" Name="Lname" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="false" />
+        </ComplexType>
+
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -888,6 +939,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+
           <EntitySetMapping Name="StudentGrades">
             <EntityTypeMapping TypeName="GPAModel.StudentGrade">
               <MappingFragment StoreEntitySet="StudentGrades">
@@ -899,6 +951,36 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+
+          <FunctionImportMapping FunctionImportName="GetUserDetails" FunctionName="GPAModel.Store.GetUserDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GPAModel.GetUserDetails_Result">
+                <ScalarProperty Name="RegistrationID" ColumnName="RegistrationID" />
+                <ScalarProperty Name="FName" ColumnName="FName" />
+                <ScalarProperty Name="LName" ColumnName="LName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="LandNumber" ColumnName="LandNumber" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="StudentCourse" FunctionName="GPAModel.Store.StudentCourse">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GPAModel.StudentCourse_Result2">
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="RegistrationID" ColumnName="RegistrationID" />
+                <ScalarProperty Name="Fname" ColumnName="Fname" />
+                <ScalarProperty Name="Lname" ColumnName="Lname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
