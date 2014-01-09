@@ -705,6 +705,23 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
+                  <Value>Student Details</Value>
+                  <Style>
+                    <FontStyle>Normal</FontStyle>
+                    <FontFamily>Times New Roman</FontFamily>
+                    <FontSize>14pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                    <TextDecoration>None</TextDecoration>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+            </Paragraph>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
                   <Value xml:space="preserve">            </Value>
                   <Style>
                     <FontStyle>Normal</FontStyle>
@@ -713,16 +730,6 @@
                     <FontWeight>Normal</FontWeight>
                     <TextDecoration>None</TextDecoration>
                     <Color>#000000</Color>
-                  </Style>
-                </TextRun>
-                <TextRun>
-                  <Value>Official Grade Report</Value>
-                  <Style>
-                    <FontStyle>Normal</FontStyle>
-                    <FontFamily>Times New Roman</FontFamily>
-                    <FontSize>12pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
-                    <TextDecoration>None</TextDecoration>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -764,9 +771,9 @@
           </Paragraphs>
           <rd:DefaultName>ExecutionTime</rd:DefaultName>
           <Top>1.03347in</Top>
-          <Left>6.42577in</Left>
+          <Left>6.74868in</Left>
           <Height>0.25in</Height>
-          <Width>1.15625in</Width>
+          <Width>2.14583in</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -794,7 +801,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox41</rd:DefaultName>
           <Top>1.03347in</Top>
-          <Left>5.72792in</Left>
+          <Left>6.14451in</Left>
           <Height>0.25in</Height>
           <Width>0.60417in</Width>
           <ZIndex>2</ZIndex>
@@ -824,7 +831,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox42</rd:DefaultName>
           <Top>1.03347in</Top>
-          <Left>0.48833in</Left>
+          <Left>0.20708in</Left>
           <Height>0.25in</Height>
           <Width>1in</Width>
           <ZIndex>3</ZIndex>
@@ -856,9 +863,9 @@
           </Paragraphs>
           <rd:DefaultName>Textbox43</rd:DefaultName>
           <Top>1.03347in</Top>
-          <Left>1.55778in</Left>
+          <Left>1.27652in</Left>
           <Height>0.25in</Height>
-          <Width>1.51042in</Width>
+          <Width>1.93056in</Width>
           <ZIndex>4</ZIndex>
           <Style>
             <Border>

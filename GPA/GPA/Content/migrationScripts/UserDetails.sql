@@ -12,10 +12,9 @@ USE [GPA]
 GO
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'GetUserDetails')
 DROP PROCEDURE GetUserDetails
- 
+USE [GPA]
 GO
-SET ANSI_NULLS ON
-GO
+
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[GetUserDetails]
@@ -24,6 +23,9 @@ CREATE PROCEDURE [dbo].[GetUserDetails]
 
  AS
 BEGIN
-select * from dbo.UserDetails where RegistrationID= @UserID;
+if(@UserID != 0)
+select * from dbo.UserDetails where RegistrationID= @UserID
+else 
+select * from dbo.UserDetails
 END
-GO
+
