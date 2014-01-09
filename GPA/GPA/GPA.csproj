@@ -167,7 +167,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
-    <Compile Include="Controllers\FacultiesController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportDataController.cs" />
@@ -291,7 +290,6 @@
     <Content Include="Models\GPADataModel.edmx.sql" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="ClassDiagram1.cd" />
     <Content Include="Controllers\RegistrarCourseController.cs.orig" />
     <EntityDeploy Include="Models\GPADataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -310,7 +308,6 @@
       <DependentUpon>GPADataModel.edmx</DependentUpon>
       <LastGenOutput>GPADataModel.cs</LastGenOutput>
     </Content>
-    <Content Include="ClassDiagram2.cd" />
     <None Include="Properties\PublishProfiles\GPASystem.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
@@ -375,6 +372,7 @@
     <Content Include="Views\Staffs\Edit.cshtml" />
     <Content Include="Views\Staffs\Index.cshtml" />
     <Content Include="Views\Student\StudentDashbord.cshtml" />
+    <Content Include="Views\Enrollments\Index.cshtml" />
     <Content Include="Views\Course\Create.cshtml" />
     <Content Include="Views\Account\_AdminDashbordPartial.cshtml" />
     <Content Include="Views\Account\_GradeEnterFormPartial.cshtml" />
@@ -394,11 +392,6 @@
     <Content Include="Views\Student\Details.cshtml" />
     <Content Include="Views\Course\Details.cshtml" />
     <Content Include="Views\Account\_GradeEntryPartial.cshtml" />
-    <Content Include="Views\Faculties\Create.cshtml" />
-    <Content Include="Views\Faculties\Delete.cshtml" />
-    <Content Include="Views\Faculties\Details.cshtml" />
-    <Content Include="Views\Faculties\Edit.cshtml" />
-    <Content Include="Views\Faculties\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Report\GradeReport.cshtml" />
