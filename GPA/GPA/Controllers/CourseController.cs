@@ -12,7 +12,7 @@ using System.Web.Mvc;
  * Date Started: 01/06/2014
  * Description: Handles the Course module
  * Module Name: User Administration Module
- * Developer Name: Mehrdad Panahandeh
+ * Developer Name: Dil Kuwor/Mehrdad Panahandeh
  * Version: 0.1
  * Date Modified:
  * 
@@ -84,17 +84,31 @@ namespace GPA.Controllers
                 return View();
             }
         }
-
-        public ActionResult CourseSignup(int courseid)
+        /// <summary>
+        /// Sends the request for course signup/cancel the signup request
+        /// </summary>
+        /// <param name="courseid"></param>
+        /// <returns></returns>
+        public ActionResult CourseSignup(int courseid,string name)
         {
             User currentUser = (User)Session["currentUser"];
             AccountManager amanager = new AccountManager();
-            
+
             StudentManager smanager = new StudentManager();
-            smanager.ApplyForCourse(courseid, amanager.FindUserByUserID(currentUser.UserID).RegistrationID);
+            if (name.Equals("cancel"))
+            {
+                smanager.CancelCourseRequest(courseid, amanager.FindUserByUserID(currentUser.UserID).RegistrationID);
+            }
+            else
+            {
+                
+                smanager.ApplyForCourse(courseid, amanager.FindUserByUserID(currentUser.UserID).RegistrationID);
+            }
+           
             return RedirectToAction("Index","Home");
         }
 
+        
 
         /// <summary>
         /// course request approval
@@ -147,8 +161,7 @@ namespace GPA.Controllers
         [AllowAnonymous]
         public ActionResult AddGrade(DashbordViewModel model,FormCollection formCollection)
         {
-            string[] studentids = formCollection[1].Split(',');
-            
+            string[] studentids = formCollection[1].Split(',');            
             string[] gradeids = formCollection[0].Split(',');
             //string[] _gradeids = new string[gradeids.Count()-1];
             //for (int count = 1; count < gradeids.Count(); count++)

@@ -97,11 +97,24 @@ namespace GPA.DAL.Manager
             }
 
         }
+        /// <summary>
+        /// Student can cancel the course signup request so that he can apply for another course
+        /// </summary>
+        /// <param name="courseid"></param>
+        public void CancelCourseRequest(int courseid,int userid)
+        {
+            using (var db = new GPAEntities())
+            {
+                CourseEnrolment enrollmentrequest = db.CourseEnrolments.Where(r => r.CourseRef_ID == courseid && r.UserRef_ID==userid).Single();
+                db.CourseEnrolments.Remove(enrollmentrequest);
+                db.SaveChanges();
+            }
+        }
 
 
         /// <summary>
         /// Returns the custom course list which contains extra boolean filed IsCourseRequested
-        /// extra boolean filed is used to disable to row
+        /// extra boolean field is used to disable to row
         /// </summary>
         /// <param name="studentid"></param>
         /// <returns></returns>
