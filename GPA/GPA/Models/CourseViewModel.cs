@@ -10,7 +10,7 @@ using System.Web.Mvc;
  * Date Started: 01/03/2014
  * Description: Handles Course business logic
  * Module Name: Course Module (Search Module)
- * Developer Name: Kengsreng Tang
+ * Developer Name: Mehrdad Panahandeh
  * Version: 0.1
  * Date Modified:
  */
@@ -34,7 +34,7 @@ namespace GPA.Models
         [Display(Name = "Credit")]
         public int Credit { get; set; }
 
-        public List<Cours> Courses { get; set; }
+        public List<Course> Courses { get; set; }
 
 
         public IEnumerable<SelectListItem> CoursesList { get; set; }

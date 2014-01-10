@@ -11,7 +11,7 @@ using System.Web.Mvc;
  * Date Started: 01/01/2014
  * Description: Handles the feedback module in DAL
  * Module Name: User Administration Module
- * Developer Name: Dil Kuwor/Mehrdad Panahandeh
+ * Developer Name: Mehrdad Panahandeh
  * Version: 0.1
  * Date Modified:
  */
@@ -19,7 +19,7 @@ namespace GPA.DAL.Manager
 {
     public class CourseManager
     {
-        public void saveCourse(Cours course)
+        public void saveCourse(Course course)
         {
             using (var db = new GPAEntities())
             {
@@ -35,26 +35,26 @@ namespace GPA.DAL.Manager
         {
             using (var db = new GPAEntities())
             {
-                Cours course = new Cours();
+                Course course = new Course();
                 course = db.Courses.Find(courseId);
                 db.Courses.Remove(course);
                 db.SaveChanges();
             }
         }
 
-        public List<Cours> getCourses()
+        public List<Course> getCourses()
         {
-            List<Cours> courses = new List<Cours>();
+            List<Course> courses = new List<Course>();
             using (var db = new GPAEntities())
             {
-                courses = (List<Cours>)db.Courses.ToList();
+                courses = (List<Course>)db.Courses.ToList();
             }
             return courses;
         }
 
-        public List<Cours> getCoursesByName(string searchString)
+        public List<Course> getCoursesByName(string searchString)
         {
-            IQueryable<Cours> list;
+            IQueryable<Course> list;
             var db = new GPAEntities();
             list = db.Courses.Where(c => c.CourseName.ToUpper().Contains(searchString.ToUpper()));
             return list.ToList();
