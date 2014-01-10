@@ -170,7 +170,7 @@ namespace GPA.Controllers
                         studentcourse = ctx.Database.SqlQuery<StudentCourse_Result>("exec StudentCourse @StudentId ", idParam).ToList<StudentCourse_Result>();
                     }
 
-                    reportDataSource = new ReportDataSource("StudentCourse", studentcourse);
+                    reportDataSource = new ReportDataSource("DataSetStudentcourse", studentcourse);
                     lr.DataSources.Add(reportDataSource);
 
                 }

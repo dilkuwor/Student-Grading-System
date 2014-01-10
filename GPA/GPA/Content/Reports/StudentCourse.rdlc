@@ -31,7 +31,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Course Name</Value>
+                              <Value>First Name</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -61,7 +61,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>First Name</Value>
+                              <Value>Last Name</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -91,7 +91,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Last Name</Value>
+                              <Value>Registration ID</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -149,37 +149,7 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="CourseName">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!CourseName.Value</Value>
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>CourseName</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Fname">
+                    <Textbox Name="Fname1">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -193,7 +163,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Fname</rd:DefaultName>
+                      <rd:DefaultName>Fname1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -209,7 +179,7 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Lname">
+                    <Textbox Name="Lname1">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -223,7 +193,37 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Lname</rd:DefaultName>
+                      <rd:DefaultName>Lname1</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="RegistrationID">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!RegistrationID.Value</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>RegistrationID</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -393,8 +393,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox42</rd:DefaultName>
-        <Top>0.0875in</Top>
-        <Left>0.37961in</Left>
+        <Top>0.06944in</Top>
+        <Left>0.33208in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
         <ZIndex>1</ZIndex>
@@ -587,7 +587,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value xml:space="preserve">            </Value>
+                  <Value xml:space="preserve">           </Value>
                   <Style>
                     <FontStyle>Normal</FontStyle>
                     <FontFamily>MS Sans Serif</FontFamily>
@@ -598,13 +598,14 @@
                   </Style>
                 </TextRun>
                 <TextRun>
-                  <Value>Official Grade Report</Value>
+                  <Value> Course vs Student</Value>
                   <Style>
                     <FontStyle>Normal</FontStyle>
-                    <FontFamily>Times New Roman</FontFamily>
+                    <FontFamily>MS Sans Serif</FontFamily>
                     <FontSize>12pt</FontSize>
                     <FontWeight>Bold</FontWeight>
                     <TextDecoration>None</TextDecoration>
+                    <Color>#000000</Color>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -615,9 +616,9 @@
           </Paragraphs>
           <rd:DefaultName>Textbox25</rd:DefaultName>
           <Top>0.13542in</Top>
-          <Left>0.94798in</Left>
+          <Left>1.33208in</Left>
           <Height>0.72917in</Height>
-          <Width>5.45695in</Width>
+          <Width>5.39122in</Width>
           <Style>
             <Border>
               <Style>None</Style>

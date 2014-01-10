@@ -11,7 +11,7 @@
 
 <h4> Select Student </h4>
 
-@Html.DropDownListFor(model => model.UserID, Model.UserList, new { @class = "form-control" })
+@Html.DropDownListFor(model => model.UserID, Model.UserList,"All", new { @class = "form-control" })
 
 <div>
     <input type="submit"  value="Student Grade" name="command" class="btn btn-default"  />
