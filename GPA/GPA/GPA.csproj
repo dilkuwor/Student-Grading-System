@@ -178,6 +178,8 @@
     <Compile Include="DAL\Extended\CourseUserRequest.cs" />
     <Compile Include="DAL\Extended\ECourse.cs" />
     <Compile Include="DAL\Extended\EStudent.cs" />
+    <Compile Include="DAL\Extended\StudentSearch.cs" />
+    <Compile Include="DAL\Interface\ISearch.cs" />
     <Compile Include="DAL\Extended\UserFeedback.cs" />
     <Compile Include="DAL\Manager\FeedbackManager.cs" />
     <Compile Include="DAL\Manager\SessionManager.cs" />
