@@ -1,0 +1,63 @@
+﻿@model GPA.Models.DashbordViewModel
+
+<div class="panel panel-default disabled">
+    <div class="panel-heading">Course Registration</div>
+    <div class="panel-body">
+        <table class="table col-lg-6 table-striped">
+            <tr>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.FeedbackReadViewModel.FromId)*@
+                    Course ID
+                </th>
+                <th>
+                    Course Name
+                </th>
+                <th>
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model.StudentViewModel.ECourses)
+            {
+                if (item.IsRequested)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CourseName)
+                        </td>
+
+                        <td>
+
+                            @Html.ActionLink("Cancel", "CourseSignup", "Course", new { courseid = item.Id, name = "cancel" }, new { @class = "btn btn-danger btn-sm", @style = "margin:0px;" })
+
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CourseName)
+                        </td>
+
+                        <td>
+
+                            @Html.ActionLink("Signup", "CourseSignup", "Course", new { courseid = item.Id, name = "signup" }, new { @class = "btn btn-success btn-sm" })
+
+                        </td>
+                    </tr>
+                }
+            }
+
+        </table>
+
+    </div>
+</div>

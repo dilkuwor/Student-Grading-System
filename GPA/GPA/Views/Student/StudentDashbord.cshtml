@@ -3,104 +3,37 @@
 <h1>Student Dashbord</h1>
 
 
-<div class="panel panel-default disabled">
-    <div class="panel-heading">Course Taken</div>
-    <div class="panel-body">
-        <table class="table">
-            <tr>
-                <th>
-                    @*@Html.DisplayNameFor(model => model.FeedbackReadViewModel.FromId)*@
-                    Course ID
-                </th>
-                <th>
-                    Course Name
-                </th>
-               
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#">Course Taken</a></li>
+    <li><a href="#">Course Signup</a></li>
+    <li><a href="#">Feedback</a></li>
+    <li><a href="#">Report</a></li>
+</ul>
+<div>
 
-            </tr>
-
-            @foreach (var item in Model.StudentViewModel.Courses)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CourseName)
-                    </td>
-
-                   
-                </tr>
-            }
-
-        </table>
-    </div>
+    
 </div>
 
 
+<script type="text/javascript">
+    
 
-
-
-<div class="panel panel-default disabled">
-    <div class="panel-heading">Course Registration</div>
-    <div class="panel-body">
-        <table class="table col-lg-6 table-striped">
-            <tr>
-                <th>
-                    @*@Html.DisplayNameFor(model => model.FeedbackReadViewModel.FromId)*@
-                    Course ID
-                </th>
-                <th>
-                    Course Name
-                </th>
-                <th>
-                </th>
-
-            </tr>
-
-            @foreach (var item in Model.StudentViewModel.ECourses)
-            {
-                if (item.IsRequested )
-                {
-                    <tr >
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CourseName)
-                    </td>
-
-                    <td>
-
-                        @Html.ActionLink("Cancel", "CourseSignup", "Course", new { courseid = item.Id, name = "cancel"}, new {  @class = "btn btn-danger btn-sm", @style="margin:0px;" }) 
-
-                    </td>
-                </tr>
-                }
-                else
-                {
-                    <tr >
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Id)
-                        </td>
-
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CourseName)
-                        </td>
-
-                        <td>
-
-                            @Html.ActionLink("Signup", "CourseSignup", "Course", new { courseid = item.Id, name = "signup" }, new {@class = "btn btn-success btn-sm" })
-
-                        </td>
-                    </tr>
-                }
+    $(document).ready(function () {
+        alert("hi");
+        $("ul.art-hmenu>li").on("click", "a", function (e) {
+            alert('hi');
+            debugger;
+            $('.nav-tabs li.active').removeClass('active');
+            var $this = $(this);
+            if (!$this.hasClass('active')) {
+                $this.addClass('active');
             }
+            e.preventDefault();
+        });
+    });
+</script>
 
-        </table>
-        
-    </div>
-</div>
+
+
+
    

@@ -1,0 +1,36 @@
+﻿@model GPA.Models.DashbordViewModel
+<div class="panel panel-default disabled" style="border-top:none!important">
+    <div class="panel-heading">Course Taken</div>
+    <div class="panel-body">
+        <table class="table">
+            <tr>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.FeedbackReadViewModel.FromId)*@
+                    Course ID
+                </th>
+                <th>
+                    Course Name
+                </th>
+
+
+            </tr>
+
+            @foreach (var item in Model.StudentViewModel.Courses)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseName)
+                    </td>
+
+
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+

@@ -391,6 +391,8 @@
     <Content Include="Views\Student\Details.cshtml" />
     <Content Include="Views\Course\Details.cshtml" />
     <Content Include="Views\Account\_GradeEntryPartial.cshtml" />
+    <Content Include="Views\Student\_CourseTakenPartial.cshtml" />
+    <Content Include="Views\Student\_CourseSignUpPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Report\GradeReport.cshtml" />

@@ -38,6 +38,7 @@ namespace GPA.DAL.Util
         {
             var message = new MailMessage(from, to, subject, body);
             message.BodyEncoding = Encoding.UTF8;
+            message.IsBodyHtml = true;
             try
             {
                 _client.Send(message);
@@ -51,5 +52,7 @@ namespace GPA.DAL.Util
             }
             return true;
         }
+
+
     }
 }

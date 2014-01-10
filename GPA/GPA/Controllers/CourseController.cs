@@ -1,4 +1,5 @@
 ﻿using GPA.DAL.Manager;
+using GPA.DAL.Util;
 using GPA.Models;
 using GPA.Models.Manager;
 using System;
@@ -161,17 +162,20 @@ namespace GPA.Controllers
         [AllowAnonymous]
         public ActionResult AddGrade(DashbordViewModel model,FormCollection formCollection)
         {
-            string[] studentids = formCollection[1].Split(',');            
-            string[] gradeids = formCollection[0].Split(',');
+            string[] studentids = formCollection["item.RegistrationID"].Split(',');
+            string[] gradeids = formCollection["GradeEnterFormViewModel.CourseID"].Split(',');
             //string[] _gradeids = new string[gradeids.Count()-1];
             //for (int count = 1; count < gradeids.Count(); count++)
             //{
             //    _gradeids[count-1] = gradeids[count];
             //}
-            string[] extracredits = formCollection[2].Split(',');
+            string[] extracredits = formCollection["count"].Split(',');
             CourseManager cmanager = new CourseManager();
-            cmanager.AddStudentGrades(studentids, gradeids, extracredits, model.GradeEnterFormViewModel.CourseID);
+            cmanager.AddStudentGrades( gradeids,studentids, extracredits, model.GradeEnterFormViewModel.CourseID);
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
+
+            Helper helper = new Helper();
+            helper.SendGradeNotification(studentids, model.GradeEnterFormViewModel.CourseID, gradeids);
             return RedirectToAction("Index","Home");
         }
 

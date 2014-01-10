@@ -185,7 +185,16 @@ namespace GPA.DAL.Manager
                     studentgrade.UserId = studentid;
                     c = db.CourseEnrolments.Where(r => r.CourseRef_ID == courseid && r.UserRef_ID == studentid).Single();
                     enrolledstudentlist.Add(c);
-                    studentgrade.ExtraCredit = int.Parse(extracredits[count]);
+                    int extracredit;
+                    bool isTrue = int.TryParse(extracredits[count],out extracredit);
+                    if (isTrue)
+                    {
+                        studentgrade.ExtraCredit = extracredit;
+                    }
+                    else
+                    {
+                        studentgrade.ExtraCredit = 0;
+                    }
                     studentgrades.Add(studentgrade);
                     courseusers.Add(cuser);
 
