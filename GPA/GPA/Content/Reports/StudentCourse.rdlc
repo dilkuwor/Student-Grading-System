@@ -125,21 +125,21 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Fname">
+                    <Textbox Name="FName">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Fname.Value</Value>
+                              <Value>=Fields!FName.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Fname</rd:DefaultName>
+                      <rd:DefaultName>FName</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -155,21 +155,21 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Lname">
+                    <Textbox Name="LName">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Lname.Value</Value>
+                              <Value>=Fields!LName.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Lname</rd:DefaultName>
+                      <rd:DefaultName>LName</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -181,6 +181,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -315,7 +316,7 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>DataSetStudentcourse</DataSetName>
+        <DataSetName>CourseStudentDataSet</DataSetName>
         <Top>0.64458in</Top>
         <Left>0.33208in</Left>
         <Height>0.5in</Height>
@@ -547,18 +548,18 @@
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="StudentCourse">
+    <DataSource Name="GPADataSet">
       <ConnectionProperties>
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>08546fff-b5ce-4f37-9e28-e51db71f4374</rd:DataSourceID>
+      <rd:DataSourceID>cf234eeb-7e90-4850-8316-b27f56c5a1bc</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="DataSetStudentcourse">
+    <DataSet Name="CourseStudentDataSet">
       <Query>
-        <DataSourceName>StudentCourse</DataSourceName>
+        <DataSourceName>GPADataSet</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
@@ -566,30 +567,34 @@
           <DataField>CourseName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Email">
-          <DataField>Email</DataField>
+        <Field Name="CDate">
+          <DataField>CDate</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FName">
+          <DataField>FName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="LName">
+          <DataField>LName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="RegistrationID">
           <DataField>RegistrationID</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="Fname">
-          <DataField>Fname</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Lname">
-          <DataField>Lname</DataField>
+        <Field Name="Email">
+          <DataField>Email</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>StudentCourse</rd:DataSetName>
-        <rd:SchemaPath>C:\Users\laxmanadhikari\Documents\GitHub\Student-Grading-System\GPA\GPA\GPADataSet.xsd</rd:SchemaPath>
-        <rd:TableName>GetStudentCourse</rd:TableName>
+        <rd:DataSetName>GPADataSet</rd:DataSetName>
+        <rd:SchemaPath>C:\Users\Mehrdad\Documents\GitHub\Student-Grading-System\GPA\GPA\GPADataSet.xsd</rd:SchemaPath>
+        <rd:TableName>StudentCourse</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
-        <rd:TableAdapterName>GetStudentCourseTableAdapter</rd:TableAdapterName>
+        <rd:TableAdapterName>StudentCourseTableAdapter</rd:TableAdapterName>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
