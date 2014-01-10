@@ -20,7 +20,7 @@ namespace GPA.Models
         public string Date { get; set; }
         public bool IsApproved { get; set; }
     
-        public virtual Cours Cours { get; set; }
+        public virtual Course Cours { get; set; }
         public virtual UserDetail UserDetail { get; set; }
     }
 }

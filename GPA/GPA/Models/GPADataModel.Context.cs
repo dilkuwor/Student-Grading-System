@@ -28,7 +28,7 @@ namespace GPA.Models
         }
     
         public virtual DbSet<CourseEnrolment> CourseEnrolments { get; set; }
-        public virtual DbSet<Cours> Courses { get; set; }
+        public virtual DbSet<Course> Courses { get; set; }
         public virtual DbSet<CourseUser> CourseUsers { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<Grade> Grades { get; set; }

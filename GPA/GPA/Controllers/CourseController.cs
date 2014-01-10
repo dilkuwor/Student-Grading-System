@@ -13,7 +13,7 @@ using System.Web.Mvc;
  * Date Started: 01/06/2014
  * Description: Handles the Course module
  * Module Name: User Administration Module
- * Developer Name: Dil Kuwor/Mehrdad Panahandeh
+ * Developer Name: Mehrdad Panahandeh
  * Version: 0.1
  * Date Modified:
  * 
@@ -71,7 +71,7 @@ namespace GPA.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Delete(Cours course)
+        public ActionResult Delete(Course course)
         {
             try
             {
@@ -148,7 +148,7 @@ namespace GPA.Controllers
         [AllowAnonymous]
         public ActionResult Save(CourseViewModel cvm)
         {
-            Cours course = new Cours();
+            Course course = new Course();
             course.Id = cvm.Id;
             course.CourseName = cvm.CourseName;
             course.Level = cvm.Level;

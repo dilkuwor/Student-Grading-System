@@ -6,7 +6,7 @@ using System.Web;
 
 namespace GPA.DAL.Extended
 {
-    public class ECourse: Cours
+    public class ECourse: Course
     {
         public bool IsRequested { get; set; }
     }

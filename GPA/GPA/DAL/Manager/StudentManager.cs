@@ -26,9 +26,9 @@ namespace GPA.DAL.Manager
         /// </summary>
         /// <param name="userid">Student id</param>
         /// <returns></returns>
-        public List<Cours> GetAlreadyTakenCoursesByUserID(int userid)
+        public List<Course> GetAlreadyTakenCoursesByUserID(int userid)
         {
-            List<Cours> courses = new List<Cours>();
+            List<Course> courses = new List<Course>();
             using (var db = new GPAEntities())
             {
 
@@ -47,9 +47,9 @@ namespace GPA.DAL.Manager
         /// </summary>
         /// <param name="userid">Student id</param>
         /// <returns></returns>
-        public List<Cours> GetCourseList(int userid)
+        public List<Course> GetCourseList(int userid)
         {
-            List<Cours> courses = new List<Cours>();
+            List<Course> courses = new List<Course>();
             using (var db = new GPAEntities())
             {
 
@@ -127,7 +127,7 @@ namespace GPA.DAL.Manager
 
             using (var db = new GPAEntities())
             {
-                List<Cours> _courses = GetCourseList(studentid);
+                List<Course> _courses = GetCourseList(studentid);
 
 
                 //courses = (from c in _courses

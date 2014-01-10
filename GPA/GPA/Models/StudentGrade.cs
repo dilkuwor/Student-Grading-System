@@ -20,7 +20,7 @@ namespace GPA.Models
         public Nullable<int> ExtraCredit { get; set; }
         public int Id { get; set; }
     
-        public virtual Cours Cours { get; set; }
+        public virtual Course Cours { get; set; }
         public virtual Grade Grade { get; set; }
     }
 }
