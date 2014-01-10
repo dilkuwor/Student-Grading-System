@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GPA.DAL.Extended;
 
 /*
  * Project Name: GPA  
@@ -15,7 +16,9 @@ using System.Web.Mvc;
  * Module Name: User Administration Module
  * Developer Name: Dil Kuwor/Mehrdad Panahandeh
  * Version: 0.1
- * Date Modified:
+ * Date Modified: 01/10/2014
+ * Modified By: Kengsreng Tang
+ * Modified Description: Intergrated Search Module
  * 
  */
 
@@ -29,12 +32,8 @@ namespace GPA.Controllers
         public ActionResult Index(string searchString)
         {
             CourseViewModel cvm = new CourseViewModel();
-
-            cvm.Courses = cm.getCourses();
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                cvm.Courses = cm.getCoursesByName(searchString);                
-            }
+            ISearch<string, List<Cours>> courseSearch = new CourseSearch();
+            cvm.Courses = courseSearch.FindByName(searchString);
             return View(cvm);
         }
 
