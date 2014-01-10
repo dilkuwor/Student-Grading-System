@@ -175,6 +175,7 @@
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\StaffsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="DAL\Extended\CourseSearch.cs" />
     <Compile Include="DAL\Extended\CourseUserRequest.cs" />
     <Compile Include="DAL\Extended\ECourse.cs" />
     <Compile Include="DAL\Extended\EStudent.cs" />
