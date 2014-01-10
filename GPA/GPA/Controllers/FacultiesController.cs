@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using GPA.Models;
+using GPA.DAL.Extended;
 /*
  * Project Name: GPA  
  * Date Started: 01/04/2014
@@ -21,16 +22,11 @@ namespace GPA.Controllers
     public class FacultiesController : Controller
     {
         private GPAEntities db = new GPAEntities();
-
+        private ISearch<string, IQueryable<User>> facultySearch = new StuffSearh();
         // GET: /Faculties/
         public ActionResult Index(string searchString)
         {
-            var faculties = db.Users.Where(s => s.Role == "Faculty").Include(u => u.UserDetails);
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                faculties = faculties.Where(s => s.UserName.ToUpper().Contains(searchString.ToUpper()) && s.Role == "Faculty");
-            }
-            return View(faculties.ToList());
+            return View(facultySearch.FindByName(searchString).Include(u => u.UserDetails).ToList());
         }
 
         // GET: /Faculties/Details/5
