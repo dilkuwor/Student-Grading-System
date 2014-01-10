@@ -74,12 +74,12 @@ namespace GPA.Controllers
             {
                 using (var ctx = new GPAEntities())
                 {
-                    var idParam = new SqlParameter
-                    {
-                        ParameterName = "StudentID",
-                        Value = int.Parse(model.UserID.ToString())
-                    };
-                    model.GPAStudentCourse = ctx.Database.SqlQuery<StudentCourse_Result>("exec StudentCourse @StudentId ", idParam).ToList<StudentCourse_Result>();
+                    //var idParam = new SqlParameter
+                    //{
+                    //    ParameterName = "StudentID",
+                    //    Value = int.Parse(model.UserID.ToString())
+                    //};
+                    model.GPAStudentCourse = ctx.Database.SqlQuery<StudentCourse_Result>("exec StudentCourse").ToList<StudentCourse_Result>();
                     ViewBag.UserID = model.UserID;
                     ViewBag.Reporttype = "Student Course Enrollment";
                     ViewBag.ReportName = "StudentCourse.rdlc";
@@ -162,12 +162,12 @@ namespace GPA.Controllers
 
                     using (var ctx = new GPAEntities())
                     {
-                        var idParam = new SqlParameter
-                        {
-                            ParameterName = "StudentID",
-                            Value = userId
-                        };
-                        studentcourse = ctx.Database.SqlQuery<StudentCourse_Result>("exec StudentCourse @StudentId ", idParam).ToList<StudentCourse_Result>();
+                        //var idParam = new SqlParameter
+                        //{
+                        //    ParameterName = "StudentID",
+                        //    Value = userId
+                        //};
+                        studentcourse = ctx.Database.SqlQuery<StudentCourse_Result>("exec StudentCourse").ToList<StudentCourse_Result>();
                     }
 
                     reportDataSource = new ReportDataSource("DataSetStudentcourse", studentcourse);
