@@ -34,7 +34,7 @@ namespace GPA.Models
         [Display(Name = "Credit")]
         public int Credit { get; set; }
 
-        public List<Course> Courses { get; set; }
+        public List<Cours> Courses { get; set; }
 
 
         public IEnumerable<SelectListItem> CoursesList { get; set; }

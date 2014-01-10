@@ -8,7 +8,7 @@ namespace GPA.Models
 {
     public class StudentViewModel
     {
-        public List<Course> Courses { get; set; }
+        public List<Cours> Courses { get; set; }
         public List<ECourse> ECourses { get; set; }
     }
 

@@ -71,7 +71,7 @@ namespace GPA.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Delete(Course course)
+        public ActionResult Delete(Cours course)
         {
             try
             {
@@ -148,7 +148,7 @@ namespace GPA.Controllers
         [AllowAnonymous]
         public ActionResult Save(CourseViewModel cvm)
         {
-            Course course = new Course();
+            Cours course = new Cours();
             course.Id = cvm.Id;
             course.CourseName = cvm.CourseName;
             course.Level = cvm.Level;

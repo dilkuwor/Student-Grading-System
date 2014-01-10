@@ -18,7 +18,7 @@ namespace GPA.Models
         public int Users_Id { get; set; }
         public int Id { get; set; }
     
-        public virtual Course Cours { get; set; }
+        public virtual Cours Cours { get; set; }
         public virtual UserDetail UserDetail { get; set; }
     }
 }

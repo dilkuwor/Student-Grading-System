@@ -6,7 +6,7 @@ using System.Web;
 
 namespace GPA.DAL.Extended
 {
-    public class CourseUserRequest : Course
+    public class CourseUserRequest : Cours
     {
         public int RequestID { get; set; }
         public string StudentName { get; set; }
