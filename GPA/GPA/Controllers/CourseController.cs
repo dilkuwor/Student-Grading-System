@@ -14,7 +14,7 @@ using GPA.DAL.Extended;
  * Date Started: 01/06/2014
  * Description: Handles the Course module
  * Module Name: User Administration Module
- * Developer Name: Dil Kuwor/Mehrdad Panahandeh
+ * Developer Name: Mehrdad Panahandeh
  * Version: 0.1
  * Date Modified: 01/10/2014
  * Modified By: Kengsreng Tang

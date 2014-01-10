@@ -10,7 +10,7 @@ using System.Web.Mvc;
  * Date Started: 01/03/2014
  * Description: Handles Course business logic
  * Module Name: Course Module (Search Module)
- * Developer Name: Kengsreng Tang
+ * Developer Name: Mehrdad Panahandeh
  * Version: 0.1
  * Date Modified:
  */
