@@ -6,7 +6,7 @@ using GPA.Models;
 
 namespace GPA.DAL.Extended
 {
-    public class StuffSearh : ISearch<string, IQueryable<User>>
+    public class StaffSearh : ISearch<string, IQueryable<User>>
     {
         private GPAEntities db = new GPAEntities();
         public IQueryable<User> FindByName(string search)

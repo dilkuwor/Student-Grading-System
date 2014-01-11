@@ -23,7 +23,7 @@ namespace GPA.Controllers
     public class StaffsController : Controller
     {
         private GPAEntities db = new GPAEntities();
-        private ISearch<string, IQueryable<User>> stuffSearch = new StuffSearh();
+        private ISearch<string, IQueryable<User>> stuffSearch = new StaffSearh();
         // GET: /Staffs/
         public ActionResult Index(String searchString)
         {

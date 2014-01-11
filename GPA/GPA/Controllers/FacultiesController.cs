@@ -22,7 +22,7 @@ namespace GPA.Controllers
     public class FacultiesController : Controller
     {
         private GPAEntities db = new GPAEntities();
-        private ISearch<string, IQueryable<User>> facultySearch = new StuffSearh();
+        private ISearch<string, IQueryable<User>> facultySearch = new StaffSearh();
         // GET: /Faculties/
         public ActionResult Index(string searchString)
         {
