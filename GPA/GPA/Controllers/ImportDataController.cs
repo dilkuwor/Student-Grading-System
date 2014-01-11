@@ -1,6 +1,7 @@
 ﻿using GPA.DAL.Util;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Linq;
@@ -45,21 +46,22 @@ namespace GPA.Controllers
 
                 excelConnection.Open();
                 OleDbDataReader dReader;
-
                 dReader = cmd.ExecuteReader();
                 SqlBulkCopy sqlBulk = new SqlBulkCopy(sqlConnectionString);
+                DataTable dt = new DataTable();
+                dt.Load(dReader);
+                Helper helper = new Helper();
+                foreach(DataRow dataRow in dt.Rows)
+                {
+                    dataRow["Password"] = helper.EncryptPassword(dataRow["Password"].ToString());
+                }
                 //Give your Destination table name
                 sqlBulk.DestinationTableName = "Users";
-                Helper helper = new Helper();
-
-               
-
-               
-                sqlBulk.WriteToServer(dReader);
-
+                sqlBulk.WriteToServer(dt);
+                
                 excelConnection.Close();
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("UserReport", "Home");
         }
 
         public FileResult Download(string id)
