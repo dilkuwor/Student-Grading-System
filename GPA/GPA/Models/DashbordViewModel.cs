@@ -15,6 +15,7 @@ namespace GPA.Models
         public AdminViewModel AdminViewModel { get; set; }
         public GradeEnterFormViewModel GradeEnterFormViewModel { get; set; }
         public FeedbackViewModel FeedbackViewModel { get; set; }
+        public FacultyViewModel FacultyViewModel { get; set; }
     }
 
 
@@ -23,6 +24,11 @@ namespace GPA.Models
         public List<CourseUserRequest> RequestedCourses { get; set; }
 
         public ApplicationSettingViewModel ApplicationSettingViewModel { get; set; }
+    }
+
+    public class FacultyViewModel
+    {
+
     }
 
     public class GradeEnterFormViewModel

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GPA.DAL.Util;
+using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Data.SqlClient;
@@ -44,14 +45,21 @@ namespace GPA.Controllers
 
                 excelConnection.Open();
                 OleDbDataReader dReader;
+
                 dReader = cmd.ExecuteReader();
                 SqlBulkCopy sqlBulk = new SqlBulkCopy(sqlConnectionString);
                 //Give your Destination table name
                 sqlBulk.DestinationTableName = "Users";
+                Helper helper = new Helper();
+
+               
+
+               
                 sqlBulk.WriteToServer(dReader);
+
                 excelConnection.Close();
             }
-            return RedirectToAction("UserReport", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         public FileResult Download(string id)

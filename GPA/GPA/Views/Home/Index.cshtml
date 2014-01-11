@@ -33,8 +33,17 @@
                 break;
                 }
             case "Staff":
-                break;
-                    
+                {
+                    Html.RenderPartial("~/Views/Account/_StaffDashboardPartial.cshtml", model);
+                    break;
+                }
+
+            case "Faculty":
+                {
+                    Html.RenderPartial("~/Views/Account/_FacultyDashboardPartial.cshtml", model);
+                    break;
+                }
+                
             default:
                 break;
                 
