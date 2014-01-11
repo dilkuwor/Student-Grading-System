@@ -298,6 +298,17 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Controllers\RegistrarCourseController.cs.orig" />
+    <Content Include="GPADataSet.xsc">
+      <DependentUpon>GPADataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="GPADataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GPADataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="GPADataSet.xss">
+      <DependentUpon>GPADataSet.xsd</DependentUpon>
+    </Content>
     <EntityDeploy Include="Models\GPADataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>GPADataModel.Designer.cs</LastGenOutput>
@@ -314,17 +325,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>GPADataModel.edmx</DependentUpon>
       <LastGenOutput>GPADataModel.cs</LastGenOutput>
-    </Content>
-    <Content Include="GPADataSet.xsc">
-      <DependentUpon>GPADataSet.xsd</DependentUpon>
-    </Content>
-    <None Include="GPADataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>GPADataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="GPADataSet.xss">
-      <DependentUpon>GPADataSet.xsd</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\GPASystem.pubxml" />
     <None Include="Properties\Settings.settings">

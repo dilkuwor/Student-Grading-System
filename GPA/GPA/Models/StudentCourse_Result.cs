@@ -14,10 +14,9 @@ namespace GPA.Models
     public partial class StudentCourse_Result
     {
         public string CourseName { get; set; }
-        public string CDate { get; set; }
-        public string FName { get; set; }
-        public string LName { get; set; }
         public int RegistrationID { get; set; }
+        public string Fname { get; set; }
+        public string Lname { get; set; }
         public string Email { get; set; }
     }
 }

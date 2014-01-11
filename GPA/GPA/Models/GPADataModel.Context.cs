@@ -37,8 +37,8 @@ namespace GPA.Models
         public virtual DbSet<StudentGrade> StudentGrades { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     
         public virtual ObjectResult<FindGPA_Result> FindGPA(Nullable<int> userID)
         {
@@ -67,9 +67,13 @@ namespace GPA.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserDetails_Result>("GetUserDetails", userIDParameter);
         }
     
-        public virtual ObjectResult<StudentCourse_Result> StudentCourse()
+        public virtual ObjectResult<StudentCourse_Result> StudentCourse(Nullable<int> userID)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StudentCourse_Result>("StudentCourse");
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StudentCourse_Result>("StudentCourse", userIDParameter);
         }
     }
 }
