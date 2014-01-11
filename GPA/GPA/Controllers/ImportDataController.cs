@@ -61,7 +61,7 @@ namespace GPA.Controllers
                 
                 excelConnection.Close();
             }
-            return RedirectToAction("UserReport", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         public FileResult Download(string id)

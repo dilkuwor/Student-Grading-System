@@ -24,5 +24,10 @@ namespace GPA.Models
         public string LandNumber { get; set; }
         public string MobileNumber { get; set; }
         public int UserID { get; set; }
+        public int Id { get; set; }
+        public int UserRefID { get; set; }
+        public int RoleRef_ID { get; set; }
+        public int Role_ID { get; set; }
+        public string RoleName { get; set; }
     }
 }

@@ -187,7 +187,7 @@ else
     
 
 
-@Scripts.Render("~/bundles/jqueryval")
+@*Scripts.Render("~/bundles/jqueryval")*@
 
 @section Scripts{
     <script type="text/javascript">
@@ -213,7 +213,7 @@ else
             
             function f(event) {
                 // show spinner
-                $('#feedbackResult').html("<img src='./Content/ajax-loader.gif' style='align-content:center'/>");
+                $('#feedbackResult').html("<img src='/Content/ajax-loader.gif' style='align-content:center'/>");
                 debugger
                 var form = $('#myform') || $('#Feedback');
                 $.ajax({

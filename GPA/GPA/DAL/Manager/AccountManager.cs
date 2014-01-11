@@ -96,7 +96,11 @@ namespace GPA.Models.Manager
             var users = new List<UserDetail>();
             using (var db = new GPAEntities())
             {
-                users = db.UserDetails.Where(r => r.User.Role == role).ToList();
+                users = (from u in db.UserDetails
+                        join ur in db.UserRoles on u.RegistrationID equals ur.UserRefID
+                        join r in db.Roles on ur.RoleRef_ID equals r.Role_ID
+                        where r.RoleName == role
+                        select u).ToList();
             }
             return users;
         }
