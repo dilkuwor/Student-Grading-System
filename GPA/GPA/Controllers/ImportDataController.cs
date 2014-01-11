@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -52,5 +53,18 @@ namespace GPA.Controllers
             }
             return RedirectToAction("UserReport", "Home");
         }
+
+        public FileResult Download(string id)
+        {
+
+            string fileName = "~/Content/Users.xls";
+            string contentType = "application/xls";
+            FileResult fr = new FilePathResult(fileName, contentType);
+            fr.FileDownloadName = "User.xls";
+            return fr;
+
+        }
+
+
     }
 }
