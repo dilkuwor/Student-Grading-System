@@ -4,6 +4,16 @@ using System.Linq;
 using System.Web;
 using GPA.Models;
 
+/*
+ * Project Name: GPA  
+ * Date Started: 01/03/2014
+ * Description: Handles Staff business logic
+ * Module Name: Search Module
+ * Developer Name: Kengsreng Tang
+ * Version: 0.1
+ * Date Modified:
+ */
+
 namespace GPA.DAL.Extended
 {
     public class StaffSearh : ISearch<string, IQueryable<UserDetail>>

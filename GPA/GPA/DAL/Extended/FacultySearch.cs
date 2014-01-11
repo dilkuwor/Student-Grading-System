@@ -5,6 +5,16 @@ using System.Web;
 using GPA.DAL;
 using GPA.Models;
 
+/*
+ * Project Name: GPA  
+ * Date Started: 01/03/2014
+ * Description: Handles Faculty business logic
+ * Module Name: Search Module
+ * Developer Name: Kengsreng Tang
+ * Version: 0.1
+ * Date Modified:
+ */
+
 namespace GPA.DAL.Extended
 {
     public class FacultySearch : ISearch<string, IQueryable<UserDetail>>
