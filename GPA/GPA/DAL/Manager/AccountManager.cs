@@ -16,7 +16,10 @@ namespace GPA.Models.Manager
 
             using (var db = new GPAEntities())
             {
+
                 UserDetail user = new UserDetail();
+                User _user = db.Users.Where(r => r.UserID == userId).SingleOrDefault();
+                string[] roles = _user.Role.Split(',');
                 user.FName = model.RegisterUserViewModel.FName;
                 user.LName = model.RegisterUserViewModel.LName;
                 user.Email = model.RegisterUserViewModel.Email;
@@ -28,9 +31,59 @@ namespace GPA.Models.Manager
                 user.UserID = userId;
                 db.UserDetails.Add(user);
                 db.SaveChanges();
+                InsertNewRole(roles, db.UserDetails.Where(r => r.UserID == user.UserID).Single().RegistrationID);
 
+            }
+        }
+        /// <summary>
+        /// inserts new role if its not already exist
+        /// </summary>
+        /// <param name="roles"></param>
+        public void InsertNewRole(String[] roles,int userid)
+        {
+            List<Role> _roles = new List<Role>();
+            using (var db = new GPAEntities())
+            {
+                foreach (String s in roles)
+                {
+                    var _role = db.Roles.Where(r => r.RoleName == s).SingleOrDefault();
+                    if (_role == null)
+                    {
+                        Role newrole = new Role();
+                        newrole.RoleName = s;
+                        db.Roles.Add(newrole);
+                        _roles.Add(newrole);
+                     
+                    }
+                    else
+                    {
+                        _roles.Add(_role);
+                    }
+                }
+                db.SaveChanges();
+                //send registration id
+                InsertUserRoleMapping(_roles, userid);
+                
+            }
+            
+        }
 
+        public void InsertUserRoleMapping(List<Role> roles, int userid)
+        {
+            List<UserRole> rolesmapping = new List<UserRole>();
+            using (var db = new GPAEntities())
+            {
+                UserRole urole;
+                foreach (Role r in roles)
+                {
+                    urole = new UserRole();
+                    urole.UserRefID = userid;
+                    urole.RoleRef_ID = r.Role_ID;
+                    rolesmapping.Add(urole);
+                }
 
+                db.UserRoles.AddRange(rolesmapping);
+                db.SaveChanges();
             }
         }
 
@@ -93,27 +146,36 @@ namespace GPA.Models.Manager
             return flag;
         }
 
+        #region TestData
         public void InsertTestData()
         {
-           
+
             Helper helper = new Helper();
             User dil = new User();
-            dil.UserName = "Dil";
-            dil.Password = helper.EncryptPassword(dil.UserName+"123");
+            dil.UserName = "dil.kuwor@gmail.com";
+            dil.Password = helper.EncryptPassword("dil123");
             dil.Role = "Admin";
             String v1 = helper.GenerageVerificationCode(4);
             dil.VerificationCode = v1;
 
             User laxman = new User();
-            laxman.UserName = "Laxman";
-            laxman.Password = helper.EncryptPassword(laxman.UserName+"123");
-            laxman.Role = "Staff";
+            laxman.UserName = "laxman.gm@gmail.com";
+            laxman.Password = helper.EncryptPassword("laxman123");
+            laxman.Role = "Staff,Student";
             String v2 = helper.GenerageVerificationCode(4);
             laxman.VerificationCode = v2;
+
+            User dipesh = new User();
+            dipesh.UserName = "dipshrestha@gmail.com";
+            dipesh.Password = helper.EncryptPassword("dip123");
+            dipesh.Role = "Faculty";
+            String v3 = helper.GenerageVerificationCode(4);
+            dipesh.VerificationCode = v3;
 
             List<User> users = new List<User>();
             users.Add(dil);
             users.Add(laxman);
+            users.Add(dipesh);
             using (var db = new GPAEntities())
             {
                 db.Users.AddRange(users);
@@ -121,6 +183,8 @@ namespace GPA.Models.Manager
             }
 
         }
+        #endregion
+      
 
 
         public String GetUserVerificationCode(int userId)
@@ -134,6 +198,23 @@ namespace GPA.Models.Manager
 
             return verification;
 
+        }
+
+        /// <summary>
+        /// return role of user by roleid
+        /// </summary>
+        /// <param name="roleid"></param>
+        /// <returns></returns>
+        public Role GetRoleByRoleID(int roleid)
+        {
+            Role role;
+            using (var db = new GPAEntities())
+            {
+
+                role = db.Roles.Where(r => r.Role_ID == roleid).SingleOrDefault();
+            }
+
+            return role;
         }
 
         //public Role GetCurrentRole(User user)
@@ -168,7 +249,42 @@ namespace GPA.Models.Manager
 
         }
 
+        /// <summary>
+        /// returns the user given by the client by their user id
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        public User GetDefaultUserByID(int userid)
+        {
+            User user = new User();
+            using (var db = new GPAEntities())
+            {
+                user = db.Users.Where(r => r.UserID == userid).SingleOrDefault();
+            }
+            return user;
 
+        }
+
+      
+
+        /// <summary>
+        /// Returns the available roles of the user by buserid
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        public List<Role> GetUsrRoles(int userid)
+        {
+            List<Role> roles;
+            using (var db = new GPAEntities())
+            {
+                roles = (from r in db.Roles
+                         join ur in db.UserRoles on r.Role_ID equals ur.RoleRef_ID
+                         where ur.UserRefID == userid
+                         select r).ToList();
+            }
+
+            return roles;
+        }
 
     }
 

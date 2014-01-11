@@ -84,6 +84,7 @@ namespace GPA.Controllers
                 ModelState.AddModelError("CourseError", "This Course cannot be deleted       " + ex.Message);
                 return View();
             }
+
         }
         /// <summary>
         /// Sends the request for course signup/cancel the signup request
@@ -92,23 +93,40 @@ namespace GPA.Controllers
         /// <returns></returns>
         public ActionResult CourseSignup(int courseid,string name)
         {
-            User currentUser = (User)Session["currentUser"];
+            UserDetail currentUser = (UserDetail)Session["CurrentUser"];
             AccountManager amanager = new AccountManager();
 
             StudentManager smanager = new StudentManager();
             if (name.Equals("cancel"))
             {
-                smanager.CancelCourseRequest(courseid, amanager.FindUserByUserID(currentUser.UserID).RegistrationID);
+                smanager.CancelCourseRequest(courseid, currentUser.RegistrationID);
             }
             else
             {
                 
-                smanager.ApplyForCourse(courseid, amanager.FindUserByUserID(currentUser.UserID).RegistrationID);
+                smanager.ApplyForCourse(courseid, currentUser.RegistrationID);
             }
+
+            SetCurrentTab("coursesignup");
            
             return RedirectToAction("Index","Home");
         }
 
+        public void SetCurrentTab(string current)
+        {
+            TempData["current"] = current;
+            ViewBag.Current = current;
+            if (Session["currentnav"] == null)
+            {
+                DynamicNavigation dyn = new DynamicNavigation();
+                dyn.Current = current;
+                Session["currentnav"] = dyn;
+            }
+
+            ((DynamicNavigation)Session["currentnav"]).Current = current;
+
+
+        }
         
 
         /// <summary>

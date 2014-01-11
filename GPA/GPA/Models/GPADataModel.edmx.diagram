@@ -15,7 +15,6 @@
         <EntityTypeShape EntityType="GPADataModel.StudentGrade" Width="1.5" PointX="5.25" PointY="15.25" />
         <EntityTypeShape EntityType="GPADataModel.Task" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="GPADataModel.UserDetail" Width="1.5" PointX="3" PointY="8.375" />
-        <EntityTypeShape EntityType="GPADataModel.UserRole" Width="1.5" PointX="3" PointY="4.625" />
         <EntityTypeShape EntityType="GPADataModel.User" Width="1.5" PointX="0.75" PointY="6.5" />
         <AssociationConnector Association="GPADataModel.FK_CourseRequest_CourseRequest" />
         <AssociationConnector Association="GPADataModel.FK_CourseRequest_Registrations" />
@@ -26,11 +25,12 @@
         <AssociationConnector Association="GPADataModel.FK_Feedbacks_Registrations" />
         <AssociationConnector Association="GPADataModel.FK_GradeStudent_GPA" />
         <AssociationConnector Association="GPADataModel.FK_RoleTask_Roles" />
-        <AssociationConnector Association="GPADataModel.FK_UserRole_Roles" />
         <AssociationConnector Association="GPADataModel.FK_RoleTask_Tasks" />
         <AssociationConnector Association="GPADataModel.FK_Registrations_Users" />
+        <EntityTypeShape EntityType="GPADataModel.UserRole" Width="1.5" PointX="5.25" PointY="5.25" />
+        <AssociationConnector Association="GPADataModel.FK_UserRole_Roles" />
         <AssociationConnector Association="GPADataModel.FK_UserRole_Users" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

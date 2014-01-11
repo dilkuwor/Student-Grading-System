@@ -22,9 +22,9 @@ namespace GPA.Controllers
             FeedbackViewModel model = new FeedbackViewModel();
             FeedbackManager feedManager = new FeedbackManager();
             model.FeedbackReadViewModel = new FeedbackReadViewModel();
-            model.FeedbackReadViewModel.Feedbacks = feedManager.GetFeedbacks((User)Session["CurrentUser"]);
+            model.FeedbackReadViewModel.Feedbacks = feedManager.GetFeedbacks((UserDetail)Session["CurrentUser"]);
             FeedbackSendViewModel sendmodel = new FeedbackSendViewModel();
-            User currentUser = (User)Session["currentUser"];
+            UserDetail currentUser = (UserDetail)Session["currentUser"];
             sendmodel.UserList = GetUserList(currentUser);
             
             //hides and show the detail message panel
@@ -43,7 +43,6 @@ namespace GPA.Controllers
                 sendmodel.ToID = feed.FromID;               
                 model.FeedBackMood = "Reply";
             }
-
             model.FeedbackSendViewModel = sendmodel;
             return View(model);
         }
@@ -59,9 +58,9 @@ namespace GPA.Controllers
             feedback.Date = DateTime.Now.ToString("yyyy-MM-dd");
             feedback.Comment = model.FeedbackSendViewModel.Message;
             feedback.Subject = model.FeedbackSendViewModel.Subject;
-            User currentUser = (User)Session["currentUser"];
+            UserDetail current = (UserDetail)Session["CurrentUser"];
             FeedbackManager fmanager = new FeedbackManager();
-            UserDetail current = fmanager.FindUserByUserID(currentUser.UserID);
+           
             feedback.FromID = current.RegistrationID;
             feedback.ToID = model.FeedbackSendViewModel.ToID;
             fmanager.SendFeedback(feedback);
@@ -134,7 +133,7 @@ namespace GPA.Controllers
             TempData["MessageDeleted"] = "False";
             TempData["Detail"] = "True";
             FeedbackManager fmanager = new FeedbackManager();
-            User currentUser = (User)Session["currentUser"];
+            UserDetail currentUser = (UserDetail)Session["CurrentUser"];
             UserFeedback ufeedback = fmanager.GetFeedbacks(currentUser).Where(r => r.FeedbackID == id).Single();
             TempData["DetailFeedback"] = ufeedback;
             return RedirectToAction("Index");
@@ -147,22 +146,22 @@ namespace GPA.Controllers
         {
             FeedbackManager fmanager = new FeedbackManager();
             TempData["Reply"] = "True";
-            User currentUser = (User)Session["currentUser"];
+            UserDetail currentUser = (UserDetail)Session["CurrentUser"];
             UserFeedback ufeedback = fmanager.GetFeedbacks(currentUser).Where(r => r.FeedbackID == id).Single();
             TempData["DetailFeedback"] = fmanager.PrepareReplyMessage(ufeedback);
             return RedirectToAction("Index");
         }
 
 
-        public IEnumerable<SelectListItem> GetUserList(User currentUser)
+        public IEnumerable<SelectListItem> GetUserList(UserDetail currentUser)
         {
             FeedbackManager feedManager = new FeedbackManager();
             return from ruser in feedManager.GetRegisterUser(currentUser)
-                                       select new SelectListItem
-                                       {
-                                           Text = ruser.FName + " " + ruser.LName,
-                                           Value = ((int)ruser.RegistrationID).ToString()
-                                       };
+                   select new SelectListItem
+                   {
+                       Text = ruser.FName + " " + ruser.LName,
+                       Value = ((int)ruser.RegistrationID).ToString()
+                   };
 
         }
 

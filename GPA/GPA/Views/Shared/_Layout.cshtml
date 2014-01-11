@@ -10,7 +10,7 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -39,8 +39,34 @@
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
+    </div>*@
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div id="main-header">
+            <div class="container">
+                <div style="float:left">
+                    <h1 id="logo">
+                        <a href="/">
+                            
+                            <img src="~/Content/footer_logo.png" alt="Student GPA System" style="width:80%">
+                        </a>
+                    </h1>
+                </div>
+
+                               <div>
+            <div style="float: right; text-align: right; margin-top: 34px; font-size: 17px; font-family: arial; margin-right: 20px;">
+                
+                     @Html.Partial("_LoginPartial")
+            </div>
+        </div> 
+
+                @*<div style="float: right; text-align: right; margin-top: 34px; font-size: 17px; font-family: arial; color: white; margin-right: 60px;">
+                    <span style="font-style:italic"> Welcome Dil kunwor !</span>
+                </div>*@
+           
+            </div>
+        </div>
     </div>
-    <div class="container body-content">
+    <div class="container body-content" style="margin-top:80px;" >
         @RenderBody()
         <hr />
         <footer>

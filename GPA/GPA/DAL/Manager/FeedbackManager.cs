@@ -18,13 +18,13 @@ namespace GPA.DAL.Manager
 {
     public class FeedbackManager
     {
-        public List<UserDetail> GetRegisterUser(User user)
+        public List<UserDetail> GetRegisterUser(UserDetail user)
         {
             List<UserDetail> users = null;
             using (var db = new GPAEntities())
             {
 
-                users = db.UserDetails.Where(r => r.UserID != user.UserID).ToList();
+                users = db.UserDetails.Where(r => r.RegistrationID != user.RegistrationID).ToList();
             }
             return users;
         }
@@ -35,9 +35,9 @@ namespace GPA.DAL.Manager
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public List<UserFeedback> GetFeedbacks(User user)
+        public List<UserFeedback> GetFeedbacks(UserDetail ruser)
         {
-            UserDetail ruser = FindUserByUserID(user.UserID);
+          
             List<UserFeedback> users = new List<UserFeedback>();
             using (var db = new GPAEntities())
             {

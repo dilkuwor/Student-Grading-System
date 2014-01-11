@@ -105,7 +105,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserRefID" Type="int" Nullable="false" />
           <Property Name="RoleRef_ID" Type="int" Nullable="false" />
         </EntityType>
@@ -264,11 +264,11 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserRole_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
           <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserID" />
+            <Principal Role="UserDetails">
+              <PropertyRef Name="RegistrationID" />
             </Principal>
             <Dependent Role="UserRoles">
               <PropertyRef Name="UserRefID" />
@@ -349,7 +349,7 @@
             <End Role="UserRoles" EntitySet="UserRoles" />
           </AssociationSet>
           <AssociationSet Name="FK_UserRole_Users" Association="Self.FK_UserRole_Users">
-            <End Role="Users" EntitySet="Users" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
             <End Role="UserRoles" EntitySet="UserRoles" />
           </AssociationSet>
         </EntityContainer>
@@ -380,7 +380,6 @@
           <EntitySet Name="StudentGrades" EntityType="GPADataModel.StudentGrade" />
           <EntitySet Name="Tasks" EntityType="GPADataModel.Task" />
           <EntitySet Name="UserDetails" EntityType="GPADataModel.UserDetail" />
-          <EntitySet Name="UserRoles" EntityType="GPADataModel.UserRole" />
           <EntitySet Name="Users" EntityType="GPADataModel.User" />
           <AssociationSet Name="FK_CourseRequest_CourseRequest" Association="GPADataModel.FK_CourseRequest_CourseRequest">
             <End Role="Cours" EntitySet="Courses" />
@@ -418,10 +417,6 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="RoleTask" EntitySet="RoleTasks" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserRole_Roles" Association="GPADataModel.FK_UserRole_Roles">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="UserRole" EntitySet="UserRoles" />
-          </AssociationSet>
           <AssociationSet Name="FK_RoleTask_Tasks" Association="GPADataModel.FK_RoleTask_Tasks">
             <End Role="Task" EntitySet="Tasks" />
             <End Role="RoleTask" EntitySet="RoleTasks" />
@@ -430,11 +425,16 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserDetail" EntitySet="UserDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserRole_Users" Association="GPADataModel.FK_UserRole_Users">
-            <End Role="User" EntitySet="Users" />
+          <EntitySet Name="UserRoles" EntityType="GPADataModel.UserRole" />
+          <AssociationSet Name="FK_UserRole_Roles" Association="GPADataModel.FK_UserRole_Roles">
+            <End Role="Role" EntitySet="Roles" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
-        </EntityContainer>
+          <AssociationSet Name="FK_UserRole_Users" Association="GPADataModel.FK_UserRole_Users">
+            <End Role="UserDetail" EntitySet="UserDetails" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+          </EntityContainer>
         <ComplexType Name="FindGPA_Result">
           <Property Type="String" Name="Name" Nullable="false" />
           <Property Type="Int32" Name="StudentID" Nullable="false" />
@@ -587,16 +587,7 @@
           <NavigationProperty Name="Feedbacks" Relationship="GPADataModel.FK_Feedbacks_RegistrationDetails" FromRole="UserDetail" ToRole="Feedback" />
           <NavigationProperty Name="Feedbacks1" Relationship="GPADataModel.FK_Feedbacks_Registrations" FromRole="UserDetail" ToRole="Feedback" />
           <NavigationProperty Name="User" Relationship="GPADataModel.FK_Registrations_Users" FromRole="UserDetail" ToRole="User" />
-        </EntityType>
-        <EntityType Name="UserRole">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="UserRefID" Type="Int32" Nullable="false" />
-          <Property Name="RoleRef_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Role" Relationship="GPADataModel.FK_UserRole_Roles" FromRole="UserRole" ToRole="Role" />
-          <NavigationProperty Name="User" Relationship="GPADataModel.FK_UserRole_Users" FromRole="UserRole" ToRole="User" />
+          <NavigationProperty Name="UserRoles" Relationship="GPADataModel.FK_UserRole_Users" FromRole="UserDetail" ToRole="UserRole" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -608,7 +599,6 @@
           <Property Name="VerificationCode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Role" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="UserDetails" Relationship="GPADataModel.FK_Registrations_Users" FromRole="User" ToRole="UserDetail" />
-          <NavigationProperty Name="UserRoles" Relationship="GPADataModel.FK_UserRole_Users" FromRole="User" ToRole="UserRole" />
         </EntityType>
         <Association Name="FK_CourseRequest_CourseRequest">
           <End Type="GPADataModel.Cours" Role="Cours" Multiplicity="1" />
@@ -718,18 +708,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserRole_Roles">
-          <End Type="GPADataModel.Role" Role="Role" Multiplicity="1" />
-          <End Type="GPADataModel.UserRole" Role="UserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="Role_ID" />
-            </Principal>
-            <Dependent Role="UserRole">
-              <PropertyRef Name="RoleRef_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_RoleTask_Tasks">
           <End Type="GPADataModel.Task" Role="Task" Multiplicity="1" />
           <End Type="GPADataModel.RoleTask" Role="RoleTask" Multiplicity="*" />
@@ -754,19 +732,41 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserRole_Users">
-          <End Type="GPADataModel.User" Role="User" Multiplicity="1" />
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserRefID" Type="Int32" Nullable="false" />
+          <Property Name="RoleRef_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="GPADataModel.FK_UserRole_Roles" FromRole="UserRole" ToRole="Role" />
+          <NavigationProperty Name="UserDetail" Relationship="GPADataModel.FK_UserRole_Users" FromRole="UserRole" ToRole="UserDetail" />
+        </EntityType>
+        <Association Name="FK_UserRole_Roles">
+          <End Type="GPADataModel.Role" Role="Role" Multiplicity="1" />
           <End Type="GPADataModel.UserRole" Role="UserRole" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
+            <Principal Role="Role">
+              <PropertyRef Name="Role_ID" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleRef_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_Users">
+          <End Type="GPADataModel.UserDetail" Role="UserDetail" Multiplicity="1" />
+          <End Type="GPADataModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetail">
+              <PropertyRef Name="RegistrationID" />
             </Principal>
             <Dependent Role="UserRole">
               <PropertyRef Name="UserRefID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -929,15 +929,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserRoles">
-            <EntityTypeMapping TypeName="GPADataModel.UserRole">
-              <MappingFragment StoreEntitySet="UserRoles">
-                <ScalarProperty Name="RoleRef_ID" ColumnName="RoleRef_ID" />
-                <ScalarProperty Name="UserRefID" ColumnName="UserRefID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="GPADataModel.User">
               <MappingFragment StoreEntitySet="Users">
@@ -946,6 +937,15 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="GPADataModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="RoleRef_ID" ColumnName="RoleRef_ID" />
+                <ScalarProperty Name="UserRefID" ColumnName="UserRefID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

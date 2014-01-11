@@ -19,6 +19,6 @@ namespace GPA.Models
         public int RoleRef_ID { get; set; }
     
         public virtual Role Role { get; set; }
-        public virtual User User { get; set; }
+        public virtual UserDetail UserDetail { get; set; }
     }
 }

@@ -1,6 +1,7 @@
-﻿@using Microsoft.AspNet.Identity
+﻿
+@using Microsoft.AspNet.Identity
 
-@if ((string)Session["UserExist"] == "True")
+@if ((GPA.Models.UserDetail)Session["CurrentUser"]!=null)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
@@ -8,7 +9,8 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            @Html.ActionLink("Hello " + @Session["User"] + "!", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
+            
+            @Html.ActionLink("Hello " + ((GPA.Models.UserDetail)Session["CurrentUser"]).FName + "!", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
      
        
@@ -22,7 +24,7 @@ else
 {
     <ul class="nav navbar-nav navbar-right">
         
-       
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+       @*<li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
+        
     </ul>
 }

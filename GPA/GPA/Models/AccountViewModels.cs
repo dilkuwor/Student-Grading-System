@@ -91,6 +91,8 @@ namespace GPA.Models
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
         [Display(Name = "Enter Verification Code")]
         public string VerificationCode { get; set; }
+
+        public RoleViewModel RoleViewModel { get; set; }
     }
 
     public class RegisterUserViewModel
@@ -145,6 +147,9 @@ namespace GPA.Models
         public string Role { get; set; }
 
     }
+
+   
+
     public class ApplicationSettingViewModel
     {
         [Display(Name = "SMTPServerName")]

@@ -1,0 +1,30 @@
+﻿@model GPA.Models.RoleViewModel
+
+
+<div class="form-group">
+
+
+
+
+    @using (Html.BeginForm("LoginWithRole", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Select one role</h4>
+        <hr />
+        <div class="form-group">
+            @Html.ValidationSummary()
+            @Html.DisplayFor(model =>model.Role)
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.RoleID, Model.RoleList, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Login" />
+            </div>
+        </div>
+    }
+
+</div>
+

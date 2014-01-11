@@ -17,7 +17,6 @@ namespace GPA.Models
         public User()
         {
             this.UserDetails = new HashSet<UserDetail>();
-            this.UserRoles = new HashSet<UserRole>();
         }
     
         public int UserID { get; set; }
@@ -27,6 +26,5 @@ namespace GPA.Models
         public string Role { get; set; }
     
         public virtual ICollection<UserDetail> UserDetails { get; set; }
-        public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

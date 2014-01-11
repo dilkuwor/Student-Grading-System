@@ -37,8 +37,8 @@ namespace GPA.Models
         public virtual DbSet<StudentGrade> StudentGrades { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }
-        public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }
     
         public virtual ObjectResult<FindGPA_Result> FindGPA(Nullable<int> userID)
         {
