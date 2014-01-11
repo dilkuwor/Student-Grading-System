@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Mehrdad\Documents\GitHub\Student-Grading-System\GPA\GPA\Models\GPADataModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Dil Kuwor\Documents\GitHub\Student-Grading-System\GPA\GPA\Models\GPADataModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
