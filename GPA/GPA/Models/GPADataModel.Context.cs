@@ -67,13 +67,9 @@ namespace GPA.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserDetails_Result>("GetUserDetails", userIDParameter);
         }
     
-        public virtual ObjectResult<StudentCourse_Result> StudentCourse(Nullable<int> userID)
+        public virtual ObjectResult<StudentCourse_Result> StudentCourse()
         {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StudentCourse_Result>("StudentCourse", userIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StudentCourse_Result>("StudentCourse");
         }
     }
 }

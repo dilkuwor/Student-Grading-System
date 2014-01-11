@@ -167,6 +167,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\FacultiesController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportDataController.cs" />
@@ -174,9 +175,14 @@
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\StaffsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="DAL\Extended\CourseSearch.cs" />
     <Compile Include="DAL\Extended\CourseUserRequest.cs" />
     <Compile Include="DAL\Extended\ECourse.cs" />
     <Compile Include="DAL\Extended\EStudent.cs" />
+    <Compile Include="DAL\Extended\FacultySearch.cs" />
+    <Compile Include="DAL\Extended\StudentSearch.cs" />
+    <Compile Include="DAL\Extended\StaffSearh.cs" />
+    <Compile Include="DAL\Interface\ISearch.cs" />
     <Compile Include="DAL\Extended\UserFeedback.cs" />
     <Compile Include="DAL\Manager\FeedbackManager.cs" />
     <Compile Include="DAL\Manager\SessionManager.cs" />
@@ -189,6 +195,11 @@
     <Compile Include="DAL\Util\TextValue.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="GPADataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GPADataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Cours.cs">
@@ -268,11 +279,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="GPADataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GPADataSet.xsd</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -289,7 +295,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\GPADataModel.edmx.sql" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Controllers\RegistrarCourseController.cs.orig" />
@@ -309,6 +314,17 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>GPADataModel.edmx</DependentUpon>
       <LastGenOutput>GPADataModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="GPADataSet.xsc">
+      <DependentUpon>GPADataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="GPADataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GPADataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="GPADataSet.xss">
+      <DependentUpon>GPADataSet.xsd</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\GPASystem.pubxml" />
     <None Include="Properties\Settings.settings">
@@ -377,17 +393,6 @@
     <Content Include="Views\Course\Create.cshtml" />
     <Content Include="Views\Account\_AdminDashbordPartial.cshtml" />
     <Content Include="Views\Account\_GradeEnterFormPartial.cshtml" />
-    <Content Include="GPADataSet.xsc">
-      <DependentUpon>GPADataSet.xsd</DependentUpon>
-    </Content>
-    <None Include="GPADataSet.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>GPADataSet.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="GPADataSet.xss">
-      <DependentUpon>GPADataSet.xsd</DependentUpon>
-    </Content>
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Student\Edit.cshtml" />
     <Content Include="Views\Student\Details.cshtml" />
@@ -396,6 +401,11 @@
     <Content Include="Views\Student\_CourseTakenPartial.cshtml" />
     <Content Include="Views\Student\_CourseSignUpPartial.cshtml" />
     <Content Include="Views\Account\RoleSelectionPartial.cshtml" />
+    <Content Include="Views\Faculties\Create.cshtml" />
+    <Content Include="Views\Faculties\Delete.cshtml" />
+    <Content Include="Views\Faculties\Details.cshtml" />
+    <Content Include="Views\Faculties\Edit.cshtml" />
+    <Content Include="Views\Faculties\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Report\GradeReport.cshtml" />

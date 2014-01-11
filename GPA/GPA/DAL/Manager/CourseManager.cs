@@ -11,7 +11,7 @@ using System.Web.Mvc;
  * Date Started: 01/01/2014
  * Description: Handles the feedback module in DAL
  * Module Name: User Administration Module
- * Developer Name: Dil Kuwor/Mehrdad Panahandeh
+ * Developer Name: Mehrdad Panahandeh
  * Version: 0.1
  * Date Modified:
  */

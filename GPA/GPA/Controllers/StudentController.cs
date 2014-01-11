@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using GPA.Models;
+using GPA.DAL.Extended;
 
 /*
  * Project Name: GPA  
@@ -23,21 +24,11 @@ namespace GPA.Controllers
     public class StudentController : Controller
     {
         private GPAEntities db = new GPAEntities();
-
+        private ISearch<string, IQueryable<UserDetail>> studentSearch = new StudentSearch();
         // GET: /Student/
         public ActionResult Index(string searchString)
         {
-           
-            var students = (from u in db.Users
-                           join ud in db.UserDetails on u.UserID equals ud.UserID
-                           where u.Role== "Admin"
-                           select ud);
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                students = students.Where(s => s.FName.ToUpper().Contains(searchString.ToUpper()) 
-                    || s.LName.ToUpper().Contains(searchString.ToUpper()));
-            }
-            return View(students.ToList());
+            return View(studentSearch.FindByName(searchString));
         }
             
         // GET: /Student/Details/5

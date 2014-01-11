@@ -7,11 +7,14 @@
 
 <div class="panel panel-default">
     <div class="panel-heading"> Select Option to Export the report</div>
-    <div class="panel-body">
-    <div><a href="@Url.Action("Report", new { id = "PDF", userId = ViewBag.UserId, reportName = ViewBag.ReportName })"> Report in PDF</a></div>
-    <div><a href="@Url.Action("Report", new { id = "Excel", userId = ViewBag.UserId, reportName = ViewBag.ReportName })">Report in Excel</a></div>
-    <div><a href="@Url.Action("Report", new { id = "Word", userId = ViewBag.UserId, reportName = ViewBag.ReportName })"> Report in Word</a></div>
-    <div><a href="@Url.Action("Report", new { id = "Image", userId = ViewBag.UserId, reportName = ViewBag.ReportName })"> Report in Image</a></div>
-    </div>      
+    <div class="panel-body">        
+        <a href="@Url.Action("Report", new { id = "PDF", userId = ViewBag.UserId, reportName = ViewBag.ReportName })">PDF</a>
+        --
+        <a href="@Url.Action("Report", new { id = "Excel", userId = ViewBag.UserId, reportName = ViewBag.ReportName })">Excel</a>
+        --
+        <a href="@Url.Action("Report", new { id = "Word", userId = ViewBag.UserId, reportName = ViewBag.ReportName })"> Word</a>
+        --
+        <a href="@Url.Action("Report", new { id = "Image", userId = ViewBag.UserId, reportName = ViewBag.ReportName })"> Image</a>
+    </div>
 </div>
-   
+

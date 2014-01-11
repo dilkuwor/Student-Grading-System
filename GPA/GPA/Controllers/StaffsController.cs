@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using GPA.Models;
+using GPA.DAL.Extended;
 
 /*
  * Project Name: GPA  
@@ -22,16 +23,11 @@ namespace GPA.Controllers
     public class StaffsController : Controller
     {
         private GPAEntities db = new GPAEntities();
-
+        private ISearch<string, IQueryable<UserDetail>> stuffSearch = new StaffSearh();
         // GET: /Staffs/
         public ActionResult Index(String searchString)
         {
-            var staffs = db.Users.Where(s => s.Role == "Staff").Include(u => u.UserDetails);
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                staffs = staffs.Where(s => s.UserName.ToUpper().Contains(searchString.ToUpper()) && s.Role == "Staff");
-            }
-            return View(staffs.ToList());
+            return View(stuffSearch.FindByName(searchString).ToList());
         }
 
         // GET: /Staffs/Details/5
@@ -41,11 +37,14 @@ namespace GPA.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            UserDetail user = (from u in db.UserDetails
+                               where u.UserID == id
+                               select u).SingleOrDefault();
             if (user == null)
             {
                 return HttpNotFound();
             }
+
             return View(user);
         }
 
