@@ -18,5 +18,5 @@ namespace GPA.DAL.Extended
     interface ISearch<T,R>
     {
        R FindByName(T input);
-    }
+    }   
 }

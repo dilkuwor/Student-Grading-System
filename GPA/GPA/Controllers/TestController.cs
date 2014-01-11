@@ -24,7 +24,7 @@ namespace GPA.Controllers
         {
             AccountManager accountManager = new AccountManager();
             accountManager.InsertTestData();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Account", "Login");
         }
 
 	}

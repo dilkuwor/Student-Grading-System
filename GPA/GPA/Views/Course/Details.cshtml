@@ -53,7 +53,7 @@
                     @Html.DisplayFor(modelItem => item.UserID)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
+                    @Html.DisplayFor(modelItem => item.FName) @Html.DisplayFor(modelItem => item.LName)
                 </td>
             </tr>
         }
@@ -61,6 +61,5 @@
 
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

@@ -1,63 +1,279 @@
 ﻿@model GPA.Models.DashbordViewModel
+           @{
+               var model = Model;
+               var appmodel = Model.AdminViewModel.ApplicationSettingViewModel;
+               var feedbackmodel = Model.FeedbackViewModel;
+           }
 
-<h1>Admin Dashbord</h1>
-
-
-<div class="panel panel-default disabled">
-    <div class="panel-heading">Course Signup Request</div>
-    <div class="panel-body">
-        <table class="table">
-            <tr>
-                <th>
-                    @*@Html.DisplayNameFor(model => model.FeedbackReadViewModel.FromId)*@
+@*
+    <div class="panel panel-default disabled">
+        <div class="panel-heading">Course Signup Request</div>
+        <div class="panel-body">
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FeedbackReadViewModel.FromId)
                     Course ID
                 </th>
-                <th>
-                    Course Name
-                </th>
+<th>
+    Course Name
+</th>
 
-                <th>
-                    Student Name
-                </th>
+<th>
+    Student Name
+</th>
 
 
             </tr>
 
-            @foreach (var item in Model.AdminViewModel.RequestedCourses)
+@foreach (var item in Model.AdminViewModel.RequestedCourses)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CourseName)
-                    </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseName)
+        </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StudentName)
-                    </td>
-                    <td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StudentName)
+        </td>
+        <td>
 
-                        @Html.ActionLink("Approve Request", "CourseSignupRequestApprove", "Course", new { courseid = item.RequestID }, null)
+            @Html.ActionLink("Approve Request", "CourseSignupRequestApprove", "Course", new { courseid = item.RequestID }, null)
 
-                    </td>
+        </td>
 
-                </tr>
+    </tr>
             }
 
         </table>
     </div>
+</div>*@
+<div>
+    <ul class="nav nav-tabs">
+@if ((string)TempData["current"] == "feedback")
+{
+     <li >
+            <a href="#CourseSignUp" data-toggle="tab">Course Approval</a>
+        </li>
+}
+else
+{
+    <li class="active">
+            <a href="#CourseSignUp" data-toggle="tab">Course Approval</a>
+        </li>
+}
+        
+        <li>
+            <a href="#EnterStudentGrade" data-toggle="tab">Enter Student Grade</a>
+        </li>
+        <li>
+            <a href="#GenerateReport" data-toggle="tab">Report</a>
+        </li>
+
+        @if ((string)TempData["current"] == "feedback")
+        {
+            <li class="active">
+                <a href="#FeedbackTab" data-toggle="tab">Feedback</a>
+            </li>
+
+        }
+        else
+        {
+            <li>
+                <a href="#FeedbackTab" data-toggle="tab">Feedback</a>
+            </li>
+        }
+
+        <li>
+            <a href="#Settings" data-toggle="tab">Settings</a>
+        </li>
+        <li>
+            <a href="#UserImport" data-toggle="tab">User Import</a>
+        </li>
+        <li>@Html.ActionLink("Student", "Index", "Student")</li>
+        <li>@Html.ActionLink("Staff", "Index", "Staffs")</li>
+        <li>@Html.ActionLink("Faculty", "Index", "Faculties")</li>
+        <li>@Html.ActionLink("Course", "Index", "Course")</li>
+    </ul>
 </div>
 
-
-<div class="panel panel-default disabled">
-    <div class="panel-heading">Enter Student Grade</div>
-    <div class="panel-body">
-        <table class="table">
-            </table>
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade" id="EnterStudentGrade">
+        <div class="panel-body">
+            @{Html.RenderPartial("~/Views/Account/_GradeEnterFormPartial.cshtml", model);}
         </div>
     </div>
+
+    <div class="tab-pane fade" id="UserImport">
+        <div class="panel-body">
+            @{Html.RenderPartial("~/Views/ImportData/ImportFromExternalFile.cshtml", model);}
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="GenerateReport">
+        <div class="panel-body">
+            <div class="panel panel-default">
+                @*<div class="panel-heading"></div>*@
+                <div class="panel-body">
+                    @using (Html.BeginForm("Index", "Report", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        <input type="submit" value="Generate Report" class="btn btn-primary" />
+
+                        @*@Html.ActionLink("User Report", "Index", "Report", new { @class = "btn btn-primary" })*@
+                    }
+
+
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="Settings">
+                <div class="panel-body">
+                    <div class="panel panel-default">
+                        @*<div class="panel-heading"></div>*@
+                        <div class="panel-body">
+                            @{Html.RenderPartial("~/Views/Account/ApplicationSetting.cshtml", appmodel);}
+                            </div>
+                        </div>
+                            
+                        </div>
+                    </div>
+
+@if ((string)TempData["current"] == "feedback")
+{
+     <div class="tab-pane fade" id="CourseSignUp">
+
+        <div class="panel-body">
+            <div class="panel panel-default">
+                <table class="table" style="padding-top:3px;">
+                    <tr>
+                        <th>
+                            @*@Html.DisplayNameFor(model => model.FeedbackReadViewModel.FromId)*@
+                            Course ID
+                        </th>
+                        <th>
+                            Course Name
+                        </th>
+
+                        <th>
+                            Student Name
+                        </th>
+
+
+                    </tr>
+
+                    @foreach (var item in Model.AdminViewModel.RequestedCourses)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CourseName)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudentName)
+                            </td>
+                            <td>
+
+                                @Html.ActionLink("Approve Request", "CourseSignupRequestApprove", "Course", new { courseid = item.RequestID }, null)
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </table>
+            </div>
+            </div>
+        </div>
+}
+else
+{
+     <div class="tab-pane fade active in" id="CourseSignUp">
+
+        <div class="panel-body">
+            <div class="panel panel-default">
+                <table class="table" style="padding-top:3px;">
+                    <tr>
+                        <th>
+                            @*@Html.DisplayNameFor(model => model.FeedbackReadViewModel.FromId)*@
+                            Course ID
+                        </th>
+                        <th>
+                            Course Name
+                        </th>
+
+                        <th>
+                            Student Name
+                        </th>
+
+
+                    </tr>
+
+                    @foreach (var item in Model.AdminViewModel.RequestedCourses)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CourseName)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudentName)
+                            </td>
+                            <td>
+
+                                @Html.ActionLink("Approve Request", "CourseSignupRequestApprove", "Course", new { courseid = item.RequestID }, null)
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </table>
+            </div>
+            </div>
+        </div>
+}
+   
+
+    @if ((string)TempData["current"] == "feedback")
+    {
+        <div class="tab-pane fade active in" id="FeedbackTab">
+            <div class="panel-body">
+                @{Html.RenderPartial("~/Views/Feedback/index.cshtml", feedbackmodel);}
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="tab-pane fade" id="FeedbackTab">
+            <div class="panel-body">
+                @{Html.RenderPartial("~/Views/Feedback/index.cshtml", feedbackmodel);}
+            </div>
+        </div>
+    }
+
+
+    </div>
+
+        <!-- add D.Shrestha End -->
+
+
+
+
+
+
 
 
 

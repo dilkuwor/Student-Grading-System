@@ -21,10 +21,13 @@ namespace GPA.DAL.Extended
         private GPAEntities db = new GPAEntities();
         public IQueryable<UserDetail> FindByName(string search)
         {
-            var staffs = (from u in db.Users
-                          join ud in db.UserDetails on u.UserID equals ud.UserID
-                          where u.Role == "Staff"
-                          select ud);
+
+            var staffs = (from u in db.UserDetails
+                          join ur in db.UserRoles on u.RegistrationID equals ur.UserRefID
+                          join role in db.Roles on ur.RoleRef_ID equals role.Role_ID
+                          where role.RoleName == "Staff"
+                          select u);
+
             if (!String.IsNullOrEmpty(search))
             {
                 staffs = staffs.Where(s => s.FName.ToUpper().Contains(search.ToUpper())

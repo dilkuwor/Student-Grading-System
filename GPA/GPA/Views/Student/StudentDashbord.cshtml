@@ -1,18 +1,105 @@
 ﻿@model GPA.Models.DashbordViewModel
 
-<h1>Student Dashbord</h1>
+@{
+    var feedbackmodel = Model.FeedbackViewModel;
+    var studentmodel = Model;
+
+}
 
 
-<ul class="nav nav-tabs">
-    <li class="active"><a href="#">Course Taken</a></li>
-    <li><a href="#">Course Signup</a></li>
-    <li><a href="#">Feedback</a></li>
-    <li><a href="#">Report</a></li>
-</ul>
+
+
+<div>
+    <ul class="nav nav-tabs">
+       
+        @if ((string)TempData["current"] == "feedback" || (string)TempData["current"] == "coursesignup")
+        {
+            <li ><a href="#CourseTaken" data-toggle="tab">Course Taken</a></li>
+
+        }
+        else
+        {
+            <li class="active"><a href="#CourseTaken" data-toggle="tab">Course Taken</a></li>
+        }
+
+@if ((string)TempData["current"] == "coursesignup")
+{
+    <li class="active"><a href="#CourseSignup" data-toggle="tab">Course Signup</a></li>
+}
+else
+{
+    <li><a href="#CourseSignup" data-toggle="tab">Course Signup</a></li>
+}
+        
+       
+        <li><a href="#GenerateReport" data-toggle="tab">Report</a></li>
+        
+        
+            @if ((string)TempData["current"] == "feedback")
+            {
+        <li class="active">
+            <a href="#FeedbackTab" data-toggle="tab">Feedback</a>
+        </li>
+
+}
+        else
+        {
+        <li>
+            <a href="#FeedbackTab" data-toggle="tab">Feedback</a>
+        </li>
+}
+           
+        
+
+    </ul>
+</div>
 <div>
 
-    
-</div>
+    <div id="myTabContent" class="tab-content">
+@if ((string)TempData["current"] == "feedback")
+{
+    <div class="tab-pane fade active in" id="FeedbackTab">
+        <div class="panel-body">
+            @{Html.RenderPartial("~/Views/Feedback/index.cshtml", feedbackmodel);}
+        </div>
+    </div>
+}
+else
+{
+     <div class="tab-pane fade" id="FeedbackTab">
+            <div class="panel-body">
+                @{Html.RenderPartial("~/Views/Feedback/index.cshtml", feedbackmodel);}
+            </div>
+        </div>
+}
+       
+        <div class="tab-pane fade" id="CourseTaken">
+            <div class="panel-body">
+                @{Html.RenderPartial("~/Views/Student/_CourseTakenPartial.cshtml", studentmodel);}
+            </div>
+        </div>
+
+@if ((string)TempData["current"] == "coursesignup")
+{
+    <div class="tab-pane fade active in" id="CourseSignup">
+        <div class="panel-body">
+            @{Html.RenderPartial("~/Views/Student/_CourseSignUpPartial.cshtml", studentmodel);}
+        </div>
+    </div>
+
+}
+else
+{
+    <div class="tab-pane fade" id="CourseSignup">
+            <div class="panel-body">
+                @{Html.RenderPartial("~/Views/Student/_CourseSignUpPartial.cshtml", studentmodel);}
+            </div>
+        </div>
+
+}
+        
+    </div>
+    </div>
 
 
 <script type="text/javascript">

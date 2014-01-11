@@ -2,8 +2,8 @@
 @{
     var model1 = Model;
 }
-<div class="panel panel-default disabled">
-    <div class="panel-heading">Course Signup Request</div>
+<div class="panel panel-default">
+    @*<div class="panel-heading"></div>*@
     <div class="panel-body">
 
         @using (Html.BeginForm("GetCourseByCourseID", "Course", FormMethod.Post, new { @id = "courseform", @class = "form-horizontal", onchange = "return myfunc();", DashbordViewModel = Model, role = "form" }))

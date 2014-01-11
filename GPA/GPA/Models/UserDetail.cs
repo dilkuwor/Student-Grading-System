@@ -20,6 +20,7 @@ namespace GPA.Models
             this.CourseUsers = new HashSet<CourseUser>();
             this.Feedbacks = new HashSet<Feedback>();
             this.Feedbacks1 = new HashSet<Feedback>();
+            this.UserRoles = new HashSet<UserRole>();
         }
     
         public int RegistrationID { get; set; }
@@ -39,5 +40,6 @@ namespace GPA.Models
         public virtual ICollection<Feedback> Feedbacks { get; set; }
         public virtual ICollection<Feedback> Feedbacks1 { get; set; }
         public virtual User User { get; set; }
+        public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

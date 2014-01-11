@@ -14,12 +14,15 @@ namespace GPA.Models
         public StudentViewModel StudentViewModel { get; set; }
         public AdminViewModel AdminViewModel { get; set; }
         public GradeEnterFormViewModel GradeEnterFormViewModel { get; set; }
+        public FeedbackViewModel FeedbackViewModel { get; set; }
     }
 
 
     public class AdminViewModel
     {
         public List<CourseUserRequest> RequestedCourses { get; set; }
+
+        public ApplicationSettingViewModel ApplicationSettingViewModel { get; set; }
     }
 
     public class GradeEnterFormViewModel

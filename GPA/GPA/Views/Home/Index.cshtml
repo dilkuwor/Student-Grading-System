@@ -4,10 +4,7 @@
     var model = Model;
 }
 
-<div class="jumbotron">
-    <h1>GPA System</h1>
-    
-</div>
+
 
 <div class="row">
     <div class="col-md-4">
@@ -19,11 +16,34 @@
     <div class="col-md-4">
         
     </div>
+    @{
+        switch (((GPA.Models.Role)Session["Role"]).RoleName)
+        {
+            case "Admin":
+                {
+                    Html.RenderPartial("~/Views/Account/_AdminDashbordPartial.cshtml", model);
+                   
+                    break;
+                }
+                
+            case "Student":
+                { 
+                    
+                    Html.RenderPartial("~/Views/Student/StudentDashbord.cshtml", model);
+                break;
+                }
+            case "Staff":
+                break;
+                    
+            default:
+                break;
+                
+        }
+    }
 
-   @{Html.RenderPartial("~/Views/Student/StudentDashbord.cshtml", model);}
 
-    @{Html.RenderPartial("~/Views/Account/_AdminDashbordPartial.cshtml", model);}
-    @{Html.RenderPartial("~/Views/Account/_GradeEnterFormPartial.cshtml", model);}
+    
+   
 
     
    

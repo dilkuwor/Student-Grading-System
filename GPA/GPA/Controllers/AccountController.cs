@@ -63,7 +63,7 @@ namespace GPA.Controllers
             if (amanager.ValidateUser(model, out user))
             {
                 //Session["userID"] = user.UserID;
-                TempData["currentUserID"] = user.UserID;
+                Session["currentUserID"] = user.UserID;
                 AuthenticateUser au = new AuthenticateUser();
 
                 if (amanager.IsUserRegistered(user))
@@ -97,33 +97,58 @@ namespace GPA.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LoginVerification(UserVerificationViewModel model)
         {
-            int userId = (int)TempData["currentUserID"];
+            int userId = (int)Session["currentUserID"];
 
             AccountManager am = new AccountManager();
             if (am.GetUserVerificationCode(userId) == model.VerificationCode)
             {
-                String returnUrl = null;             
-                CreateSession(userId);
-                return RedirectToLocal(returnUrl);
-            }
-            
-            ModelState.AddModelError("", "The verification code is incorrect");
-            return View(model);
+                String returnUrl = null;   
+                UserDetail udetail = am.FindUserByUserID(userId);
+                List<Role> roles =am.GetUsrRoles(udetail.RegistrationID);
+                if (roles.Count() > 1)
+                {
+                    return RedirectToAction("RoleSelectionPartial", "Account");
+                }
+                else
+                {
 
+                    CreateSession(userId, roles[0].Role_ID);
+                    return RedirectToLocal(returnUrl);
+                }
+                
+            }
+            else
+            {
+                ModelState.AddModelError("", "The verification code is incorrect");
+                return View(model);
+            }        
            
+                       
         }
 
-        public void CreateSession(int userId)
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult LoginWithRole(RoleViewModel model)
         {
-            User currentUser = null;
+            String returnUrl = null;
+            int userId = (int)Session["currentUserID"];
+            CreateSession(userId,model.RoleID);
+            return RedirectToLocal(returnUrl);
+        }
+
+        public void CreateSession(int userId,int roleid)
+        {
+            UserDetail currentUser = null;           
             using (var db = new GPAEntities())
             {
-                currentUser = db.Users.Where(r => r.UserID == userId).Single();
+                currentUser = db.UserDetails.Where(r => r.UserID == userId).Single();
+                
             }
             AccountManager am = new AccountManager();
-            Session["UserExist"] = "True";
-            Session["User"] = currentUser.UserName;
+            
             Session["CurrentUser"] = currentUser;
+            Session["Role"] = am.GetRoleByRoleID(roleid);
            
         }
 
@@ -138,6 +163,24 @@ namespace GPA.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult RoleSelectionPartial()
+        {
+            //UserVerificationViewModel uverification = new UserVerificationViewModel();
+            AccountManager amanager = new AccountManager();
+            int userId = (int)Session["currentUserID"];
+            UserDetail udetail = amanager.FindUserByUserID(userId);
+            RoleViewModel rolemodel = new RoleViewModel();
+            rolemodel.RoleList = (from r in amanager.GetUsrRoles(udetail.RegistrationID)
+                                          select new SelectListItem
+                                          {
+                                              Text = r.RoleName,
+                                              Value = r.Role_ID.ToString()
+                                          }).ToList();
+            //uverification.RoleViewModel = rolemodel;
+            return View(rolemodel);
+        }
+
 
 
         // GET: /Account/Register
@@ -146,6 +189,11 @@ namespace GPA.Controllers
         {
             
             RegisterViewModel registerViewModel = new RegisterViewModel();
+            int currentUserId = (int)Session["currentUserID"];
+            AccountManager amanager = new AccountManager();
+            User user = amanager.GetDefaultUserByID(currentUserId);
+            registerViewModel.RegisterUserViewModel = new RegisterUserViewModel();
+            registerViewModel.RegisterUserViewModel.Email = user.UserName;
             RoleViewModel model = new RoleViewModel();         
             return View(registerViewModel);
         }
@@ -163,7 +211,7 @@ namespace GPA.Controllers
             {
                 
                 AccountManager accountManager = new AccountManager();
-                accountManager.RegisterUser(model, (int)TempData["currentUserID"]);
+                accountManager.RegisterUser(model, (int)Session["currentUserID"]);
 
             }
 
@@ -183,15 +231,16 @@ namespace GPA.Controllers
             //WebSecurity.Logout();
             
             ClearSession();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         public void ClearSession()
         {
             Session.Clear();
-            Session["UserExist"] = null;
-            Session["User"] = null;
-            Session["CurrentUser"] = null;
+            //Session["UserExist"] = null;
+            //Session["User"] = null;
+            //Session["CurrentUser"] = null;
+            //Session["currentUserID"] = null;
         }
 
 

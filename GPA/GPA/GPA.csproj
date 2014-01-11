@@ -179,7 +179,9 @@
     <Compile Include="DAL\Extended\CourseUserRequest.cs" />
     <Compile Include="DAL\Extended\ECourse.cs" />
     <Compile Include="DAL\Extended\EStudent.cs" />
+    <Compile Include="DAL\Extended\FacultySearch.cs" />
     <Compile Include="DAL\Extended\StudentSearch.cs" />
+    <Compile Include="DAL\Extended\StaffSearh.cs" />
     <Compile Include="DAL\Interface\ISearch.cs" />
     <Compile Include="DAL\Extended\UserFeedback.cs" />
     <Compile Include="DAL\Manager\FeedbackManager.cs" />
@@ -187,6 +189,7 @@
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="DAL\Manager\CourseManager.cs" />
     <Compile Include="DAL\Manager\StudentManager.cs" />
+    <Compile Include="DAL\Util\DynamicNavigation.cs" />
     <Compile Include="DAL\Util\Helper.cs" />
     <Compile Include="DAL\Util\SendEmail.cs" />
     <Compile Include="DAL\Util\TextValue.cs" />
@@ -281,6 +284,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\core.css" />
+    <Content Include="Content\footer_logo.png" />
     <Content Include="Content\migrationScripts\FindGPA_SP.sql" />
     <Content Include="Content\migrationScripts\GetEcourses.sql" />
     <Content Include="Content\migrationScripts\GPADBScript.sql" />
@@ -396,11 +400,13 @@
     <Content Include="Views\Account\_GradeEntryPartial.cshtml" />
     <Content Include="Views\Student\_CourseTakenPartial.cshtml" />
     <Content Include="Views\Student\_CourseSignUpPartial.cshtml" />
+    <Content Include="Views\Account\RoleSelectionPartial.cshtml" />
     <Content Include="Views\Faculties\Create.cshtml" />
     <Content Include="Views\Faculties\Delete.cshtml" />
     <Content Include="Views\Faculties\Details.cshtml" />
     <Content Include="Views\Faculties\Edit.cshtml" />
     <Content Include="Views\Faculties\Index.cshtml" />
+    <Content Include="Views\Account\_FacultyDashboardPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Report\GradeReport.cshtml" />

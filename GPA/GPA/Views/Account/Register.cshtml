@@ -32,7 +32,8 @@
      <div class="form-group">
         @Html.LabelFor(m => m.RegisterUserViewModel.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.RegisterUserViewModel.Email, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.RegisterUserViewModel.Email, new { @class = "form-control", @disabled = "disabled" })
+            @Html.HiddenFor(m => m.RegisterUserViewModel.Email);
         </div>
     </div>
     
