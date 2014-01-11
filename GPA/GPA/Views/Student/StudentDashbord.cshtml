@@ -97,6 +97,23 @@ else
         </div>
 
 }
+        <div class="tab-pane fade" id="GenerateReport">
+            <div class="panel-body">
+                <div class="panel panel-default">
+                    @*<div class="panel-heading"></div>*@
+                    <div class="panel-body">
+                        @using (Html.BeginForm("Index", "Report", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            <input type="submit" value="Generate Report" class="btn btn-primary" />
+
+                            @*@Html.ActionLink("User Report", "Index", "Report", new { @class = "btn btn-primary" })*@
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
         
     </div>
     </div>

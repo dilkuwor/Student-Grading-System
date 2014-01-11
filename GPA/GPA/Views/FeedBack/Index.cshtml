@@ -104,11 +104,11 @@
     </form>
     
     <!--<div class="panel panel-default" id="replyFeedback" style="margin-top:10px;">-->
-    <div class="panel panel-default" id="feedbackDiv" style="margin-top:10px;">
+    <div class="panel panel-default" id="feedbackDiv" style="margin-top:10px; ">
         <div class="panel-heading">
             <h3 class="panel-title">Reply Feedback</h3>
         </div>
-        @using (Html.BeginForm("SendFeedback", "Feedback", FormMethod.Post, new { role = "form", id = "myform" }))
+        @using (Html.BeginForm("SendFeedback", "Home", FormMethod.Post, new { role = "form", id = "myform" }))
         {
             @Html.AntiForgeryToken()
             <div class="panel-body">
@@ -134,16 +134,16 @@
 else
 {
     <div>
-        <input type="submit" id="btnFeedback" value="Send Feedback" class="btn btn-default" />
+        <input type="submit" id="btnFeedback" value="Send Feedback" class="btn btn-default" onclick="return showDiv();"/>
     </div>
     
     <!--<div class="panel panel-default" id="sendFeedback" style="margin-top:10px;">-->
-    <div class="panel panel-default hidden" id="feedbackDiv" style="margin-top:10px;">
+    <div class="panel panel-default" id="feedbackDiv" style="margin-top:10px; visibility:collapse">
         <div class="panel-heading">
             <h3 class="panel-title">Send Feedback</h3>
         </div>
 
-        @using (Html.BeginForm("SendFeedback", "Feedback", FormMethod.Post, new { role = "form", id = "myform" }))
+        @using (Html.BeginForm("SendFeedback", "Home", FormMethod.Post, new { role = "form", id = "myform" }))
         {
             @Html.AntiForgeryToken()
             <div class="panel-body">
@@ -171,9 +171,9 @@ else
 }
 
 
-<!--
+
 <script src="@Url.Content("~/Scripts/gpascript.js")" type="text/javascript"></script>
--->
+
 
 
 <!--
@@ -189,56 +189,58 @@ else
 
 @*Scripts.Render("~/bundles/jqueryval")*@
 
-@section Scripts{
-    <script type="text/javascript">
+<script type="text/javascript">
 
-        $("#btnFeedback").click(
-            function () {
-                if ($('#feedbackDiv').hasClass("hidden")) {
-                    $('#feedbackDiv').addClass("show");
-                    $('#feedbackDiv').removeClass("hidden");
+    $("#btnFeedback").click(
+        
+        function () {
+            alert('hi');
+            if ($('#feedbackDiv').hasClass("hidden")) {
+                $('#feedbackDiv').addClass("show");
+                $('#feedbackDiv').removeClass("hidden");
 
-                    $('#btnFeedback').addClass("active");
-                    $('#feedbackResult').html("");
-                } else {
-                    $('#feedbackDiv').addClass("hidden");
-                    $('#feedbackDiv').removeClass("show");
+                $('#btnFeedback').addClass("active");
+                $('#feedbackResult').html("");
+            } else {
+                $('#feedbackDiv').addClass("hidden");
+                $('#feedbackDiv').removeClass("show");
 
-                    $('#btnFeedback').removeClass("active");
-                }
-            });
-
-        $("#mybtn").bind("click", 
-        //$("#mybtn").click(
-            
-            function f(event) {
-                // show spinner
-                $('#feedbackResult').html("<img src='/Content/ajax-loader.gif' style='align-content:center'/>");
-                debugger
-                var form = $('#myform') || $('#Feedback');
-                $.ajax({
-                    type: "POST",
-                    url: form.attr('action'),
-                    data: form.serialize()
-                })
-                .success(function (data, textStatus, jqXHR ) {
-                    //alert('you message has been submitted');
-                    // set message
-                    $('#feedbackResult').html(data);
-                    // clear form
-                    $("#btnReset").trigger("click");
-                    // hide form
-                    $("#btnFeedback").trigger("click");
-                })
-                .error(function (xhr, ajaxOptions, thrownError) {
-                    // alert message ?
-                    alert(xhr.status);
-                });
-                return false;
+                $('#btnFeedback').removeClass("active");
             }
-        );
+        });
 
-        //at Scripts.Render("~/bundles/jqueryval")
+    $("#mybtn").bind("click",
+    //$("#mybtn").click(
+
+        function f(event) {
+            // show spinner
+            $('#feedbackResult').html("<img src='/Content/ajax-loader.gif' style='align-content:center'/>");
+            debugger
+            var form = $('#myform') || $('#Feedback');
+            $.ajax({
+                type: "POST",
+                url: form.attr('action'),
+                data: form.serialize()
+            })
+            .success(function (data, textStatus, jqXHR) {
+                //alert('you message has been submitted');
+                // set message
+                $('#feedbackResult').html(data);
+                // clear form
+                $("#btnReset").trigger("click");
+                // hide form
+                $("#btnFeedback").trigger("click");
+            })
+            .error(function (xhr, ajaxOptions, thrownError) {
+                // alert message ?
+                alert(xhr.status);
+            });
+            return false;
+        }
+    );
+
+    //at Scripts.Render("~/bundles/jqueryval")
 </script>
- } 
+
+
 

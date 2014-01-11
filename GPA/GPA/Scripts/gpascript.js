@@ -1,7 +1,9 @@
 ﻿
-function hideDiv() { 
+function hideDiv() {
+    debugger;
     if (document.getElementById) { // DOM3 = IE5, NS6 
-        document.getElementById('sendFeedback').style.visibility = 'hidden'; 
+        
+        document.getElementById('feedbackDiv').style.visibility = 'collapse';
     } 
     else { 
         if (document.layers) { // Netscape 4 
@@ -14,17 +16,21 @@ function hideDiv() {
 }
 
 function showDiv() {
-    debugger
+    debugger;
+    
     if ($('#btnFeedback').hasClass('active')) {
         hideDiv();
         $('#btnFeedback').removeClass('active')
         return;
     }
-    if (document.getElementById) { // DOM3 = IE5, NS6 
-        debugger;
+    else {
         $('#btnFeedback').addClass('active');
-        document.getElementById('sendFeedback').style.display = 'block';
-        document.getElementById('sendFeedback').style.visibility = 'visible';
+    }
+    if (document.getElementById) { // DOM3 = IE5, NS6 
+        
+       
+        document.getElementById('feedbackDiv').style.display = 'block';
+        document.getElementById('feedbackDiv').style.visibility = 'visible';
        
     } 
     else { 

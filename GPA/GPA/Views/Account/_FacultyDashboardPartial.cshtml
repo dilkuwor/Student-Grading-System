@@ -8,16 +8,39 @@
         <li class="active">
             <a href="#FeedbackTab" data-toggle="tab">Feedback</a>
         </li>
-        <li class="active">
-            <a href="#ReportTab" data-toggle="tab">Report</a>
+        <li>@Html.ActionLink("Student", "Index", "Student")</li>
+        <li>@Html.ActionLink("Staff", "Index", "Staffs")</li>
+        
+        <li>@Html.ActionLink("Course", "Index", "Course")</li>
+        <li >
+            <a href="#GenerateReport" data-toggle="tab">Report</a>
         </li>
         </ul>
     </div>
 
 <div id="myTabContent" class="tab-content">
-    <div class="tab-pane fade" id="FeedbackTab">
+    <div class="tab-pane fade active in" id="FeedbackTab">
         <div class="panel-body">
             @{Html.RenderPartial("~/Views/Feedback/index.cshtml", feedbackmodel);}
+        </div>
+    </div>
+
+
+    <div class="tab-pane fade" id="GenerateReport">
+        <div class="panel-body">
+            <div class="panel panel-default">
+                @*<div class="panel-heading"></div>*@
+                <div class="panel-body">
+                    @using (Html.BeginForm("Index", "Report", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        <input type="submit" value="Generate Report" class="btn btn-primary" />
+
+                        @*@Html.ActionLink("User Report", "Index", "Report", new { @class = "btn btn-primary" })*@
+                    }
+
+
+                </div>
+            </div>
         </div>
     </div>
 
