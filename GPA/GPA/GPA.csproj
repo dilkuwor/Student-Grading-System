@@ -181,7 +181,7 @@
     <Compile Include="DAL\Extended\EStudent.cs" />
     <Compile Include="DAL\Extended\FacultySearch.cs" />
     <Compile Include="DAL\Extended\StudentSearch.cs" />
-    <Compile Include="DAL\Extended\StuffSearh.cs" />
+    <Compile Include="DAL\Extended\StaffSearh.cs" />
     <Compile Include="DAL\Interface\ISearch.cs" />
     <Compile Include="DAL\Extended\UserFeedback.cs" />
     <Compile Include="DAL\Manager\FeedbackManager.cs" />

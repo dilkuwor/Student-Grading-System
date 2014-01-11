@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Students</h2>
 @using (Html.BeginForm("Index", "Student", FormMethod.Get))
 {
     <p>
@@ -24,7 +24,7 @@
         </th>
        
         <th>
-           StudentID
+           Student ID
         </th>
         <th></th>
     </tr>
@@ -43,7 +43,6 @@
             @Html.DisplayFor(modelItem => item.UserID)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.UserID }) |
             @Html.ActionLink("Details", "Details", new { id = item.UserID }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.UserID })
         </td>

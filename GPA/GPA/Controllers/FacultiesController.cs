@@ -22,11 +22,11 @@ namespace GPA.Controllers
     public class FacultiesController : Controller
     {
         private GPAEntities db = new GPAEntities();
-        private ISearch<string, IQueryable<User>> facultySearch = new StaffSearh();
+        private ISearch<string, IQueryable<UserDetail>> facultySearch = new FacultySearch();
         // GET: /Faculties/
         public ActionResult Index(string searchString)
         {
-            return View(facultySearch.FindByName(searchString).Include(u => u.UserDetails).ToList());
+            return View(facultySearch.FindByName(searchString).ToList());
         }
 
         // GET: /Faculties/Details/5
@@ -36,11 +36,14 @@ namespace GPA.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            UserDetail user = (from u in db.UserDetails
+                               where u.UserID == id
+                               select u).SingleOrDefault();
             if (user == null)
             {
                 return HttpNotFound();
             }
+
             return View(user);
         }
 
