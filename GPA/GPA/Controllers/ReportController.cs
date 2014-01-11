@@ -10,6 +10,18 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+/*
+ * Project Name: GPA  
+ * Date Started: 01/04/2014
+ * Description: Handles user login and registration module
+ * Module Name: User Administration Module(001)
+ * Developer Name: Dil Kuwor, Laxaman Adhikari
+ * Version: 0.1
+ * Date Modified:01/06/2014 Laxman Adhikari
+ * Date Modified:01/08/2014 Laxman Adhikari
+ * 
+ */
+
 namespace GPA.Controllers
 {
     public class ReportController : Controller
@@ -74,11 +86,6 @@ namespace GPA.Controllers
             {
                 using (var ctx = new GPAEntities())
                 {
-                    //var idParam = new SqlParameter
-                    //{
-                    //    ParameterName = "StudentID",
-                    //    Value = int.Parse(model.UserID.ToString())
-                    //};
                     model.GPAStudentCourse = ctx.Database.SqlQuery<StudentCourse_Result>("exec StudentCourse").ToList<StudentCourse_Result>();
                     ViewBag.UserID = model.UserID;
                     ViewBag.Reporttype = "Student Course Enrollment";
@@ -162,15 +169,10 @@ namespace GPA.Controllers
 
                     using (var ctx = new GPAEntities())
                     {
-                        //var idParam = new SqlParameter
-                        //{
-                        //    ParameterName = "StudentID",
-                        //    Value = userId
-                        //};
                         studentcourse = ctx.Database.SqlQuery<StudentCourse_Result>("exec StudentCourse").ToList<StudentCourse_Result>();
                     }
 
-                    reportDataSource = new ReportDataSource("CourseStudentDataSet", studentcourse);
+                    reportDataSource = new ReportDataSource("dsStudentCourse", studentcourse);
                     lr.DataSources.Add(reportDataSource);
 
                 }

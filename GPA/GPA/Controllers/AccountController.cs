@@ -17,10 +17,11 @@ using GPA.DAL.Util;
  * Project Name: GPA  
  * Date Started: 01/01/2014
  * Description: Handles user login and registration module
- * Module Name: User Administration Module
+ * Module Name: User Administration Module(001)
  * Developer Name: Dil Kuwor, Laxaman Adhikari
  * Version: 0.1
- * Date Modified:
+ * Date Modified:01/06/2014 Dil Kuwor
+ * Date Modified:01/10/2014 Laxman Adhikari
  * 
  */
 
