@@ -25,10 +25,11 @@ namespace GPA.DAL.Extended
 
         IQueryable<UserDetail> ISearch<string, IQueryable<UserDetail>>.FindByName(string search)
         {
-            var students = (from u in db.Users
-                            join ud in db.UserDetails on u.UserID equals ud.UserID
-                            where u.Role == "Student"
-                            select ud);
+            var students = (from u in db.UserDetails
+                            join ur in db.UserRoles on u.RegistrationID equals ur.UserRefID
+                            join role in db.Roles on ur.RoleRef_ID equals role.Role_ID
+                            where role.RoleName == "Student"
+                            select u);
             if (!String.IsNullOrEmpty(search))
             {
                 students = students.Where(s => s.FName.ToUpper().Contains(search.ToUpper())

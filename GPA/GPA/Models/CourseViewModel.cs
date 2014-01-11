@@ -39,6 +39,6 @@ namespace GPA.Models
 
         public IEnumerable<SelectListItem> CoursesList { get; set; }
 
-        public List<User> students { get; set; }
+        public List<UserDetail> students { get; set; }
     }
 }
