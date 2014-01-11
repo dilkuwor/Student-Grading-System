@@ -1042,6 +1042,16 @@ namespace GPA {
             
             private global::System.Data.DataColumn columnUserID;
             
+            private global::System.Data.DataColumn columnId;
+            
+            private global::System.Data.DataColumn columnUserRefID;
+            
+            private global::System.Data.DataColumn columnRoleRef_ID;
+            
+            private global::System.Data.DataColumn columnRole_ID;
+            
+            private global::System.Data.DataColumn columnRoleName;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public GetUserDetailsDataTable() {
@@ -1165,6 +1175,46 @@ namespace GPA {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn IdColumn {
+                get {
+                    return this.columnId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn UserRefIDColumn {
+                get {
+                    return this.columnUserRefID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RoleRef_IDColumn {
+                get {
+                    return this.columnRoleRef_ID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn Role_IDColumn {
+                get {
+                    return this.columnRole_ID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RoleNameColumn {
+                get {
+                    return this.columnRoleName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1200,7 +1250,7 @@ namespace GPA {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public GetUserDetailsRow AddGetUserDetailsRow(string FName, string LName, string Email, string Address, string City, string State, string Zip, string LandNumber, string MobileNumber, int UserID) {
+            public GetUserDetailsRow AddGetUserDetailsRow(string FName, string LName, string Email, string Address, string City, string State, string Zip, string LandNumber, string MobileNumber, int UserID, int UserRefID, int RoleRef_ID, string RoleName) {
                 GetUserDetailsRow rowGetUserDetailsRow = ((GetUserDetailsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1213,7 +1263,12 @@ namespace GPA {
                         Zip,
                         LandNumber,
                         MobileNumber,
-                        UserID};
+                        UserID,
+                        null,
+                        UserRefID,
+                        RoleRef_ID,
+                        null,
+                        RoleName};
                 rowGetUserDetailsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowGetUserDetailsRow);
                 return rowGetUserDetailsRow;
@@ -1221,9 +1276,11 @@ namespace GPA {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public GetUserDetailsRow FindByRegistrationID(int RegistrationID) {
+            public GetUserDetailsRow FindByRegistrationIDIdRole_ID(int RegistrationID, int Id, int Role_ID) {
                 return ((GetUserDetailsRow)(this.Rows.Find(new object[] {
-                            RegistrationID})));
+                            RegistrationID,
+                            Id,
+                            Role_ID})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1254,6 +1311,11 @@ namespace GPA {
                 this.columnLandNumber = base.Columns["LandNumber"];
                 this.columnMobileNumber = base.Columns["MobileNumber"];
                 this.columnUserID = base.Columns["UserID"];
+                this.columnId = base.Columns["Id"];
+                this.columnUserRefID = base.Columns["UserRefID"];
+                this.columnRoleRef_ID = base.Columns["RoleRef_ID"];
+                this.columnRole_ID = base.Columns["Role_ID"];
+                this.columnRoleName = base.Columns["RoleName"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1281,12 +1343,23 @@ namespace GPA {
                 base.Columns.Add(this.columnMobileNumber);
                 this.columnUserID = new global::System.Data.DataColumn("UserID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnUserID);
+                this.columnId = new global::System.Data.DataColumn("Id", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnId);
+                this.columnUserRefID = new global::System.Data.DataColumn("UserRefID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnUserRefID);
+                this.columnRoleRef_ID = new global::System.Data.DataColumn("RoleRef_ID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRoleRef_ID);
+                this.columnRole_ID = new global::System.Data.DataColumn("Role_ID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRole_ID);
+                this.columnRoleName = new global::System.Data.DataColumn("RoleName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRoleName);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnRegistrationID}, true));
+                                this.columnRegistrationID,
+                                this.columnId,
+                                this.columnRole_ID}, true));
                 this.columnRegistrationID.AutoIncrement = true;
                 this.columnRegistrationID.AllowDBNull = false;
                 this.columnRegistrationID.ReadOnly = true;
-                this.columnRegistrationID.Unique = true;
                 this.columnFName.AllowDBNull = false;
                 this.columnFName.MaxLength = 2147483647;
                 this.columnLName.AllowDBNull = false;
@@ -1300,6 +1373,16 @@ namespace GPA {
                 this.columnLandNumber.MaxLength = 50;
                 this.columnMobileNumber.MaxLength = 50;
                 this.columnUserID.AllowDBNull = false;
+                this.columnId.AutoIncrement = true;
+                this.columnId.AllowDBNull = false;
+                this.columnId.ReadOnly = true;
+                this.columnUserRefID.AllowDBNull = false;
+                this.columnRoleRef_ID.AllowDBNull = false;
+                this.columnRole_ID.AutoIncrement = true;
+                this.columnRole_ID.AllowDBNull = false;
+                this.columnRole_ID.ReadOnly = true;
+                this.columnRoleName.AllowDBNull = false;
+                this.columnRoleName.MaxLength = 50;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1435,13 +1518,11 @@ namespace GPA {
             
             private global::System.Data.DataColumn columnCourseName;
             
-            private global::System.Data.DataColumn columnCDate;
-            
-            private global::System.Data.DataColumn columnFName;
-            
-            private global::System.Data.DataColumn columnLName;
-            
             private global::System.Data.DataColumn columnRegistrationID;
+            
+            private global::System.Data.DataColumn columnFname;
+            
+            private global::System.Data.DataColumn columnLname;
             
             private global::System.Data.DataColumn columnEmail;
             
@@ -1488,33 +1569,25 @@ namespace GPA {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn CDateColumn {
-                get {
-                    return this.columnCDate;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn FNameColumn {
-                get {
-                    return this.columnFName;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn LNameColumn {
-                get {
-                    return this.columnLName;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn RegistrationIDColumn {
                 get {
                     return this.columnRegistrationID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FnameColumn {
+                get {
+                    return this.columnFname;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn LnameColumn {
+                get {
+                    return this.columnLname;
                 }
             }
             
@@ -1563,14 +1636,13 @@ namespace GPA {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public StudentCourseRow AddStudentCourseRow(string CourseName, string CDate, string FName, string LName, string Email) {
+            public StudentCourseRow AddStudentCourseRow(string CourseName, string Fname, string Lname, string Email) {
                 StudentCourseRow rowStudentCourseRow = ((StudentCourseRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         CourseName,
-                        CDate,
-                        FName,
-                        LName,
                         null,
+                        Fname,
+                        Lname,
                         Email};
                 rowStudentCourseRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowStudentCourseRow);
@@ -1602,10 +1674,9 @@ namespace GPA {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
                 this.columnCourseName = base.Columns["CourseName"];
-                this.columnCDate = base.Columns["CDate"];
-                this.columnFName = base.Columns["FName"];
-                this.columnLName = base.Columns["LName"];
                 this.columnRegistrationID = base.Columns["RegistrationID"];
+                this.columnFname = base.Columns["Fname"];
+                this.columnLname = base.Columns["Lname"];
                 this.columnEmail = base.Columns["Email"];
             }
             
@@ -1614,30 +1685,26 @@ namespace GPA {
             private void InitClass() {
                 this.columnCourseName = new global::System.Data.DataColumn("CourseName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCourseName);
-                this.columnCDate = new global::System.Data.DataColumn("CDate", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnCDate);
-                this.columnFName = new global::System.Data.DataColumn("FName", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnFName);
-                this.columnLName = new global::System.Data.DataColumn("LName", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnLName);
                 this.columnRegistrationID = new global::System.Data.DataColumn("RegistrationID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnRegistrationID);
+                this.columnFname = new global::System.Data.DataColumn("Fname", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFname);
+                this.columnLname = new global::System.Data.DataColumn("Lname", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLname);
                 this.columnEmail = new global::System.Data.DataColumn("Email", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnEmail);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnRegistrationID}, true));
                 this.columnCourseName.AllowDBNull = false;
                 this.columnCourseName.MaxLength = 2147483647;
-                this.columnCDate.AllowDBNull = false;
-                this.columnCDate.MaxLength = 10;
-                this.columnFName.AllowDBNull = false;
-                this.columnFName.MaxLength = 2147483647;
-                this.columnLName.AllowDBNull = false;
-                this.columnLName.MaxLength = 50;
                 this.columnRegistrationID.AutoIncrement = true;
                 this.columnRegistrationID.AllowDBNull = false;
                 this.columnRegistrationID.ReadOnly = true;
                 this.columnRegistrationID.Unique = true;
+                this.columnFname.AllowDBNull = false;
+                this.columnFname.MaxLength = 2147483647;
+                this.columnLname.AllowDBNull = false;
+                this.columnLname.MaxLength = 50;
                 this.columnEmail.AllowDBNull = false;
                 this.columnEmail.MaxLength = 2147483647;
             }
@@ -2107,6 +2174,61 @@ namespace GPA {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Id {
+                get {
+                    return ((int)(this[this.tableGetUserDetails.IdColumn]));
+                }
+                set {
+                    this[this.tableGetUserDetails.IdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int UserRefID {
+                get {
+                    return ((int)(this[this.tableGetUserDetails.UserRefIDColumn]));
+                }
+                set {
+                    this[this.tableGetUserDetails.UserRefIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int RoleRef_ID {
+                get {
+                    return ((int)(this[this.tableGetUserDetails.RoleRef_IDColumn]));
+                }
+                set {
+                    this[this.tableGetUserDetails.RoleRef_IDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Role_ID {
+                get {
+                    return ((int)(this[this.tableGetUserDetails.Role_IDColumn]));
+                }
+                set {
+                    this[this.tableGetUserDetails.Role_IDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string RoleName {
+                get {
+                    return ((string)(this[this.tableGetUserDetails.RoleNameColumn]));
+                }
+                set {
+                    this[this.tableGetUserDetails.RoleNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsAddressNull() {
                 return this.IsNull(this.tableGetUserDetails.AddressColumn);
             }
@@ -2205,45 +2327,34 @@ namespace GPA {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string CDate {
-                get {
-                    return ((string)(this[this.tableStudentCourse.CDateColumn]));
-                }
-                set {
-                    this[this.tableStudentCourse.CDateColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string FName {
-                get {
-                    return ((string)(this[this.tableStudentCourse.FNameColumn]));
-                }
-                set {
-                    this[this.tableStudentCourse.FNameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string LName {
-                get {
-                    return ((string)(this[this.tableStudentCourse.LNameColumn]));
-                }
-                set {
-                    this[this.tableStudentCourse.LNameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int RegistrationID {
                 get {
                     return ((int)(this[this.tableStudentCourse.RegistrationIDColumn]));
                 }
                 set {
                     this[this.tableStudentCourse.RegistrationIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Fname {
+                get {
+                    return ((string)(this[this.tableStudentCourse.FnameColumn]));
+                }
+                set {
+                    this[this.tableStudentCourse.FnameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Lname {
+                get {
+                    return ((string)(this[this.tableStudentCourse.LnameColumn]));
+                }
+                set {
+                    this[this.tableStudentCourse.LnameColumn] = value;
                 }
             }
             
@@ -2535,7 +2646,8 @@ namespace GPA.GPADataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = "Data Source=MEHRDAD\\GRE;Initial Catalog=GPA;Integrated Security=True";
+            this._connection.ConnectionString = "Data Source=DPK-PC;Initial Catalog=GPA;Integrated Security=True;MultipleActiveRes" +
+                "ultSets=True;Application Name=EntityFramework";
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2717,7 +2829,8 @@ namespace GPA.GPADataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = "Data Source=MEHRDAD\\GRE;Initial Catalog=GPA;Integrated Security=True";
+            this._connection.ConnectionString = "Data Source=DPK-PC;Initial Catalog=GPA;Integrated Security=True;MultipleActiveRes" +
+                "ultSets=True;Application Name=EntityFramework";
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2901,6 +3014,11 @@ namespace GPA.GPADataSetTableAdapters {
             tableMapping.ColumnMappings.Add("LandNumber", "LandNumber");
             tableMapping.ColumnMappings.Add("MobileNumber", "MobileNumber");
             tableMapping.ColumnMappings.Add("UserID", "UserID");
+            tableMapping.ColumnMappings.Add("Id", "Id");
+            tableMapping.ColumnMappings.Add("UserRefID", "UserRefID");
+            tableMapping.ColumnMappings.Add("RoleRef_ID", "RoleRef_ID");
+            tableMapping.ColumnMappings.Add("Role_ID", "Role_ID");
+            tableMapping.ColumnMappings.Add("RoleName", "RoleName");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -2908,7 +3026,8 @@ namespace GPA.GPADataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = "Data Source=MEHRDAD\\GRE;Initial Catalog=GPA;Integrated Security=True";
+            this._connection.ConnectionString = "Data Source=DPK-PC;Initial Catalog=GPA;Integrated Security=True;MultipleActiveRes" +
+                "ultSets=True;Application Name=EntityFramework";
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3082,10 +3201,9 @@ namespace GPA.GPADataSetTableAdapters {
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "StudentCourse";
             tableMapping.ColumnMappings.Add("CourseName", "CourseName");
-            tableMapping.ColumnMappings.Add("CDate", "CDate");
-            tableMapping.ColumnMappings.Add("FName", "FName");
-            tableMapping.ColumnMappings.Add("LName", "LName");
             tableMapping.ColumnMappings.Add("RegistrationID", "RegistrationID");
+            tableMapping.ColumnMappings.Add("Fname", "Fname");
+            tableMapping.ColumnMappings.Add("Lname", "Lname");
             tableMapping.ColumnMappings.Add("Email", "Email");
             this._adapter.TableMappings.Add(tableMapping);
         }
@@ -3094,7 +3212,8 @@ namespace GPA.GPADataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = "Data Source=MEHRDAD\\GRE;Initial Catalog=GPA;Integrated Security=True";
+            this._connection.ConnectionString = "Data Source=DPK-PC;Initial Catalog=GPA;Integrated Security=True;MultipleActiveRes" +
+                "ultSets=True;Application Name=EntityFramework";
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
