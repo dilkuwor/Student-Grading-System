@@ -6,10 +6,10 @@
     @*<div class="panel-heading"></div>*@
     <div class="panel-body">
 
-        @using (Html.BeginForm("GetCourseByCourseID", "Course", FormMethod.Post, new { @id = "courseform", @class = "form-horizontal", onchange = "return myfunc();", DashbordViewModel = Model, role = "form" }))
+        @using (Html.BeginForm("GetCourseByCourseID", "Course", FormMethod.Post, new { @id = "courseform", @class = "form-horizontal", onchange = "return myfunc();", DashbordViewModel = Model, @courseid = Model.GradeEnterFormViewModel.CourseID, role = "form" }))
         {
 
-            @Html.LabelFor(model => model.GradeEnterFormViewModel.CourseID)
+            @Html.LabelFor(model=>model.GradeEnterFormViewModel.CourseID)
             @Html.DropDownListFor(model => model.GradeEnterFormViewModel.CourseID, Model.GradeEnterFormViewModel.CourseList, new { @id = "cmbcourse", @class = "form-control" })
             <div style="margin-top:10px;">
 

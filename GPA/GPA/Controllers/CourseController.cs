@@ -13,11 +13,12 @@ using GPA.DAL.Extended;
  * Project Name: GPA  
  * Date Started: 01/06/2014
  * Description: Handles the Course module
- * Module Name: User Administration Module
- * Developer Name: Mehrdad Panahandeh
+ * Module Name: Course Management and Grade Module
+ * Developer Name: Mehrdad Panahandeh/ Sunil
  * Version: 0.1
+ * Date Modified: 01/9/2014
  * Date Modified: 01/10/2014
- * Modified By: Kengsreng Tang
+ * Modified By: Kengsreng Tang/ Dil Kuwor
  * Modified Description: Intergrated Search Module
  * 
  */
@@ -179,27 +180,32 @@ namespace GPA.Controllers
         [AllowAnonymous]
         public ActionResult AddGrade(DashbordViewModel model,FormCollection formCollection)
         {
-            string[] studentids = formCollection["item.RegistrationID"].Split(',');
-            string[] gradeids = formCollection["GradeEnterFormViewModel.CourseID"].Split(',');
-            //string[] _gradeids = new string[gradeids.Count()-1];
-            //for (int count = 1; count < gradeids.Count(); count++)
-            //{
-            //    _gradeids[count-1] = gradeids[count];
-            //}
-            string[] extracredits = formCollection["count"].Split(',');
+            string[] studentids = null;
+            if(formCollection["item.RegistrationID"]!=null)
+                studentids = formCollection["item.RegistrationID"].Split(',');
+            string[] gradeids = formCollection["GradeEnterFormViewModel.GradeID"].Split(',');
+           
+            string[]  extracredits  = formCollection["count"].Split(',');
+
+            int courseid = (int)TempData["CourseID"]; 
+            if(studentids==null||gradeids==null||extracredits==null)
+                return RedirectToAction("Index", "Home");
+
             CourseManager cmanager = new CourseManager();
-            cmanager.AddStudentGrades( gradeids,studentids, extracredits, model.GradeEnterFormViewModel.CourseID);
+            cmanager.AddStudentGrades(gradeids, studentids, extracredits, courseid);
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
 
             Helper helper = new Helper();
-            helper.SendGradeNotification(studentids, model.GradeEnterFormViewModel.CourseID, gradeids);
+            helper.SendGradeNotification(studentids, courseid, gradeids);
             return RedirectToAction("Index","Home");
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult GetCourseByCourseID(DashbordViewModel model)
+        public ActionResult GetCourseByCourseID(DashbordViewModel model,string courseid)
         {
+            TempData["CourseID"] = model.GradeEnterFormViewModel.CourseID;
+
             CourseManager cmanager = new CourseManager();
             GradeEnterFormViewModel grademodel = new GradeEnterFormViewModel();
             grademodel.CourseList = cmanager.GetCourseForDropdown();

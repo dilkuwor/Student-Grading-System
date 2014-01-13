@@ -9,6 +9,18 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
+/*
+ * Project Name: GPA  
+ * Date Started: 01/06/2014
+ * Description: Sends email
+ * Module Name: Email Module
+ * Module Number: 008-100-101
+ * Developer Name: Dipesh Shrestha/ Dil
+ * Version: 0.1
+ * Date Modified:
+ * 
+ */
+
 namespace GPA.Controllers
 {
     public class FeedbackController : Controller

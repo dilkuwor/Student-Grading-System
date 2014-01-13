@@ -5,7 +5,17 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+/*
+ * Project Name: GPA  
+ * Date Started: 01/08/2014
+ * Description: Integration of the different modules based on the roles.
+ * Module Name: Authoerization
+ * Module Number: 008-100-101
+ * Developer Name: Dil/Laxman
+ * Version: 0.1
+ * Date Modified:
+ * 
+ */
 
 namespace GPA.Models
 {
@@ -40,6 +50,7 @@ namespace GPA.Models
 
         [Display(Name="Course")]
         public int CourseID { get; set; }
+        public int GradeID { get; set; }
 
         public GradeEnterFormViewModel()
         {

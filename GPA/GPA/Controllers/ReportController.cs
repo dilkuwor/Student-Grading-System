@@ -13,10 +13,10 @@ using System.Web.Mvc;
 /*
  * Project Name: GPA  
  * Date Started: 01/04/2014
- * Description: Handles user login and registration module
- * Module Name: User Administration Module(001)
+ * Description: Handles Reports
+ * Module Name: Report Modules(006)
  * Developer Name: Dil Kuwor, Laxaman Adhikari
- * Version: 0.1
+ * Version: 0.3
  * Date Modified:01/06/2014 Laxman Adhikari
  * Date Modified:01/08/2014 Laxman Adhikari
  * 

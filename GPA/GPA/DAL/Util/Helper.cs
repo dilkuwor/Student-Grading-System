@@ -77,14 +77,14 @@ namespace GPA.DAL.Util
                 int _gradeid;
                 for (int count = 0; count < studentid.Count(); count++)
                 {
-                    _studentid= int.Parse(studentid[count]);
+                    _studentid = int.Parse(studentid[count]);
                     _gradeid = int.Parse(gradeid[count]);
                     user = db.UserDetails.Where(r => r.RegistrationID == _studentid).Single();
                     grade = db.Grades.Where(r => r.Id == _gradeid).Single();
                     course = db.Courses.Where(r => r.Id == courseid).Single();
-                    email = String.Format(emailpattern+table, course.CourseName, grade.GradeScore);
+                    email = String.Format(emailpattern + table, course.CourseName, grade.GradeScore);
 
-                    
+
                     String subject = "Your Grades are Published.";
                     try
                     {

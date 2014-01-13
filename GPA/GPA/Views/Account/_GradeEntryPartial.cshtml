@@ -1,16 +1,38 @@
 ﻿@model GPA.Models.DashbordViewModel
-  
-  
+@{
+
+    var gradGrid = new WebGrid(
+        Model.GradeEnterFormViewModel.Students,
+        rowsPerPage:10,
+        defaultSort: "FName",
+        columnNames: new[] { "RegistrationID","FName","LName"}
+        );
+}
+
+
 @using (Html.BeginForm("AddGrade", "Course", FormMethod.Post, new { @class = "form-horizontal", DashbordViewModel = Model, role = "form" }))
 {
 
-    if (true)
+    @gradGrid.GetHtml(
+    fillEmptyRows:false,
+    mode:WebGridPagerModes.All,
+    columns:gradGrid.Columns(
+    
+    gradGrid.Column("RegistrationID",header:"ID"),
+    gradGrid.Column("FName",header:"First Name"),
+    gradGrid.Column("LName",header:"Last Name"),
+    
+    gradGrid.Column(format: (item) =>
+                             Html.DropDownListFor(model => model.GradeEnterFormViewModel.GradeID, Model.GradeEnterFormViewModel.Grades, string.Empty, new { @class = "form-control" }))
+        ));
+    
+    @*if (true)
     {
         int count = 0;
         <table class="table">
             <tr>
                 <th>
-                    @*@Html.DisplayNameFor(model => model.FeedbackReadViewModel.FromId)*@
+                    @Html.DisplayNameFor(model => model.FeedbackReadViewModel.FromId)
                     StudentID
                 </th>
                 <th>
@@ -47,7 +69,7 @@
                     </td>
                     <td>
 
-                        @Html.DropDownListFor(model => model.GradeEnterFormViewModel.CourseID, Model.GradeEnterFormViewModel.Grades, string.Empty, new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.GradeEnterFormViewModel.GradeID, Model.GradeEnterFormViewModel.Grades, string.Empty, new { @class = "form-control" })
 
                     </td>
                     <td>
@@ -58,11 +80,11 @@
                 count++;
             }
         </table>
-    }
-    
-    <input type="submit" class="btn btn-default btn-primary"  />
+    }*@
 
-    
-    }
+    <input type="submit" class="btn btn-default btn-primary" />
 
-  
+
+}
+
+
